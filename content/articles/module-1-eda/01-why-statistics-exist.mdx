@@ -1,0 +1,87 @@
+---
+title: "Tại sao thống kê tồn tại?"
+module: 1
+moduleSlug: "eda"
+topic: "EDA"
+readingTime: 5
+tags: ["EDA", "Tư-Duy"]
+publishedAt: 2024-01-15
+excerpt: "Thống kê không phải là môn toán khô khan. Nó ra đời để giải quyết bài toán cốt lõi nhất của nhân loại: làm sao phân biệt điều thật với điều ngẫu nhiên?"
+featured: true
+order: 1
+---
+
+Hãy tưởng tượng bạn là chủ một tiệm cà phê nhỏ ở Hà Nội. Tháng trước, bạn quyết định thêm món "Matcha Latte" vào menu. Kết quả? Doanh thu tuần đầu tăng 15%.
+
+Bạn hào hứng. Bạn kể cho người thân nghe. Bạn tính toán mở thêm chi nhánh dựa trên con số đó.
+
+Nhưng khoan đã — con số 15% đó có thực sự nói lên điều gì, hay chỉ là may mắn ngẫu nhiên của một tuần khách đông bất thường?
+
+## Vấn đề mà mọi người phải đối mặt
+
+Đây không phải vấn đề của riêng bạn. Nó là vấn đề của tất cả mọi người đưa ra quyết định dựa trên dữ liệu — từ bác sĩ thử thuốc mới trên bệnh nhân, đến kỹ sư A/B test giao diện ứng dụng, đến nhà đầu tư chứng khoán phân tích xu hướng thị trường.
+
+Câu hỏi luôn là: **Đây là tín hiệu thật, hay chỉ là nhiễu ngẫu nhiên?**
+
+Thống kê ra đời chính xác để trả lời câu hỏi đó.
+
+## Thống kê là gì — thực ra
+
+Nếu phải giải thích thống kê trong một câu, tôi sẽ nói:
+
+> Thống kê là bộ công cụ giúp bạn tách **tín hiệu** (signal) khỏi **nhiễu** (noise) trong một thế giới tràn ngập sự bất định.
+
+Nghe có vẻ đơn giản. Nhưng hãy để ý hai từ quan trọng: **tín hiệu** và **nhiễu**.
+
+**Tín hiệu** là thứ thật sự đang xảy ra — món Matcha Latte thực sự hợp khẩu vị khách hàng ở khu vực của bạn.
+
+**Nhiễu** là những biến động ngẫu nhiên không có nghĩa gì — tuần đó trời mưa, người ta vào quán tránh mưa nhiều hơn bình thường; hoặc đơn giản là do may mắn.
+
+Không có công cụ thống kê, bạn không thể phân biệt được hai thứ này. Bạn chỉ thấy: tuần này +15%, tuần sau -3%, tuần sau nữa +8%... và cố gắng tìm một "câu chuyện" giải thích cho mớ số ngẫu nhiên đó. Não người rất giỏi tìm kiếm pattern, ngay cả khi pattern đó không tồn tại.
+
+## Ba câu hỏi mà thống kê trả lời
+
+Trong suốt 9 module của lộ trình học này, tất cả những gì chúng ta học đều xoay quanh ba câu hỏi cốt lõi:
+
+**1. Mô tả — Dữ liệu đang nói gì?**
+Trước khi kết luận bất cứ điều gì, bạn cần hiểu dữ liệu trông như thế nào. Giá trị trung bình là bao nhiêu? Dữ liệu phân tán đến mức nào? Có điểm bất thường nào không? Đây là lãnh địa của *thống kê mô tả* (descriptive statistics) — Module 1.
+
+**2. Suy luận — Điều này có thật không?**
+Doanh thu tăng 15% có ý nghĩa thống kê, hay chỉ là ngẫu nhiên? Đây là *kiểm định giả thuyết* (hypothesis testing) — Module 4.
+
+**3. Dự đoán — Điều gì sẽ xảy ra tiếp theo?**
+Nếu tôi giảm giá Matcha Latte 10%, doanh thu sẽ tăng bao nhiêu? Đây là *hồi quy* (regression) và *học máy* (machine learning) — Modules 6 và 7.
+
+## Ví dụ thực tế: Tiệm cà phê và quyết định dựa trên dữ liệu
+
+Quay lại câu chuyện ban đầu. Bạn có doanh thu 8 tuần trước và sau khi thêm Matcha Latte:
+
+```python
+import pandas as pd
+import numpy as np
+
+# Doanh thu 4 tuần trước khi thêm Matcha (triệu đồng)
+truoc = [42, 38, 45, 40]
+
+# Doanh thu 4 tuần sau khi thêm Matcha
+sau = [48, 44, 51, 46]
+
+truoc_tb = np.mean(truoc)  # 41.25
+sau_tb   = np.mean(sau)    # 47.25
+
+tang = (sau_tb - truoc_tb) / truoc_tb * 100
+print(f"Doanh thu trung bình tăng: {tang:.1f}%")
+# → Doanh thu trung bình tăng: 14.5%
+```
+
+Con số 14.5% trông có vẻ thuyết phục. Nhưng câu hỏi thống kê đúng là: **Nếu Matcha Latte thực sự không có tác động gì, xác suất chúng ta thấy sự chênh lệch này chỉ do may mắn là bao nhiêu?**
+
+Đó chính xác là câu hỏi mà *kiểm định t* (t-test) trong Module 4 sẽ trả lời. Và khi bạn chạy phép kiểm định đó, bạn sẽ có một con số cụ thể — không phải cảm giác.
+
+## Tóm tắt
+
+**Thống kê tồn tại vì thế giới có sự bất định, và bất kỳ quyết định nào dựa trên dữ liệu mà không có công cụ thống kê đều là cờ bạc — dù bạn có biết hay không.**
+
+---
+
+*Bài tiếp theo: [Mean vs Median: Tại sao số trung bình đôi khi "nói dối"?](/articles/foundations/mean-vs-median)*

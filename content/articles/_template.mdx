@@ -1,0 +1,115 @@
+---
+# ═══════════════════════════════════════════════════════════
+#  TEMPLATE — Copy file này, đổi tên, rồi điền nội dung vào
+#  Xem bài mẫu: module-1-foundations/01-why-statistics-exist.mdx
+# ═══════════════════════════════════════════════════════════
+
+title: "Tên khái niệm: Câu chuyện thực tế liên quan"
+# Ví dụ: "Mean vs Median: Tiệm trà sữa của bạn Nam"
+# Format:  "Khái niệm: Hook thực tế" — max 70 ký tự
+
+module: 1
+# Số module từ 1 đến 9
+
+moduleSlug: "foundations"
+# Phải khớp chính xác một trong các giá trị sau:
+# foundations | sql | python | statistics | visualization | ml | deep-learning | mlops | ethics
+
+topic: "EDA"
+# Label hiển thị trên card, viết HOA, max 15 ký tự
+# Ví dụ: EDA | PROBABILITY | SAMPLING | INFERENCE | REGRESSION | VISUALIZATION
+
+readingTime: 8
+# Ước tính số phút đọc (200 từ/phút cho tiếng Việt, +50% nếu có công thức)
+# 800 từ ≈ 4 phút | 1500 từ ≈ 7 phút | 2000 từ ≈ 10 phút
+
+tags: ["Tag1", "Tag2"]
+# Mảng string, không có dấu #, tối đa 4 tag
+# Gợi ý: EDA | Statistics | Python | SQL | ML | Bayesian | Testing | Visualization
+
+publishedAt: 2024-01-15
+# Ngày xuất bản thực tế, format YYYY-MM-DD
+# Để là ngày hiện tại khi bạn publish
+
+excerpt: "Tóm tắt bài viết, hiển thị trong thẻ meta description. Tối đa 160 ký tự. Câu hỏi hoặc vấn đề cốt lõi của bài."
+
+featured: false
+# Chỉ một bài duy nhất trong toàn site được đặt true
+# Bài này sẽ xuất hiện ở vị trí hero trên homepage
+
+order: 1
+# Vị trí bài trong module, bắt đầu từ 1
+# Module 1 có thể có order 1, 2, 3... theo trình tự học
+---
+
+{/* ═══════════════════════════════════════════════════════════
+    HƯỚNG DẪN VIẾT — Xóa phần này khi publish
+    
+    CẤU TRÚC MỖI BÀI:
+    1. HOOK        — Câu chuyện/tình huống thực tế (1-3 đoạn)
+    2. VẤN ĐỀ      — Tại sao câu hỏi này quan trọng (1-2 đoạn)
+    3. KHÁI NIỆM   — Giải thích bằng ngôn ngữ thường (không công thức trước)
+    4. CÔNG THỨC   — Nếu cần, giới thiệu sau khi đã có trực giác
+    5. VÍ DỤ       — Áp dụng lại câu chuyện mở đầu
+    6. TÓM TẮT     — Một câu duy nhất, có thể kể lại ở bữa ăn tối
+
+    PHONG CÁCH:
+    - Dùng "bạn" để xưng hô với người đọc
+    - Viết chủ động: "Thống kê giúp bạn..." không phải "Bạn được giúp..."
+    - Tránh: "Như chúng ta đã biết", "Rõ ràng là", "Đơn giản là"
+    - Giới thiệu thuật ngữ: "độ lệch chuẩn (standard deviation)" — tiếng Việt trước
+    
+    VÍ DỤ CÚ PHÁP:
+    - Code block:  ```python ... ```
+    - Inline math: $\sigma$
+    - Display math: $$\sigma = \sqrt{...}$$
+    - Callout:     <Callout type="tip">...</Callout>
+    ═══════════════════════════════════════════════════════════ */}
+
+## Hook — Câu chuyện mở đầu
+
+[Viết 1-3 đoạn. Bắt đầu bằng một tình huống cụ thể, gần gũi với người đọc.
+Mục tiêu: tạo ra một câu hỏi mà người đọc muốn biết câu trả lời TRƯỚC KHI giải thích lý thuyết.]
+
+Hãy tưởng tượng bạn là...
+
+## Vấn đề
+
+[1-2 đoạn. Phát biểu lại câu hỏi từ hook, giải thích tại sao nó quan trọng với data analyst.]
+
+## Khái niệm: [Tên khái niệm]
+
+[Giải thích bằng ngôn ngữ thường, không dùng công thức. 2-4 đoạn.
+Dùng phép ẩn dụ, so sánh với thứ gì đó quen thuộc.]
+
+### Công thức
+
+[Nếu bài có công thức, để ở đây — SAU khi đã giải thích trực giác.]
+
+$$
+\text{Công thức ở đây}
+$$
+
+Trong đó:
+- $x$ là...
+- $\mu$ (mu) là...
+
+### Ví dụ thực tế
+
+[Quay lại câu chuyện mở đầu. Áp dụng khái niệm vào tình huống đó.
+Nếu có code Python, để ở đây với dữ liệu thực/gần thực.]
+
+```python
+# Mô tả bằng tiếng Việt
+import pandas as pd
+
+data = [...]  # dữ liệu từ câu chuyện
+
+# Tính toán
+result = ...
+print(f"Kết quả: {result}")
+```
+
+## Tóm tắt
+
+**[Một câu duy nhất tóm gọn điều quan trọng nhất của bài. Câu này phải đủ rõ để bạn kể lại được ở bữa ăn tối với người không biết thống kê.]**

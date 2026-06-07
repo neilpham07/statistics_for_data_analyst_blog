@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Geist and JetBrains Mono are represented by standard high-quality sans/mono fallbacks for this environment -->
+<style>
+        body {
+            font-family: 'Source Serif 4', serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .font-ui-nav, .font-ui-label { font-family: 'Geist', system-ui, sans-serif; }
+        .font-code { font-family: 'JetBrains Mono', monospace; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        /* Custom scrollbar for library feel */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e3e1ec; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c4c7c7; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#100069",
+                      "outline-variant": "#c4c7c7",
+                      "surface-container-low": "#f4f2fd",
+                      "outline": "#747878",
+                      "tertiary-fixed-dim": "#95d3ba",
+                      "surface-tint": "#5f5e5e",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-surface": "#2f3038",
+                      "error": "#ba1a1a",
+                      "surface-bright": "#fbf8ff",
+                      "tertiary-fixed": "#b0f0d6",
+                      "secondary-fixed": "#e3dfff",
+                      "inverse-primary": "#c8c6c5",
+                      "on-secondary-fixed-variant": "#372abf",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed-dim": "#c3c0ff",
+                      "on-background": "#1a1b22",
+                      "primary-fixed": "#e5e2e1",
+                      "on-tertiary-container": "#528f79",
+                      "surface-container-high": "#e8e7f1",
+                      "surface-container": "#eeedf7",
+                      "on-error": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "primary-container": "#1c1b1b",
+                      "tertiary-container": "#002117",
+                      "on-secondary-container": "#fffbff",
+                      "surface-variant": "#e3e1ec",
+                      "surface": "#fbf8ff",
+                      "on-error-container": "#93000a",
+                      "on-primary-fixed-variant": "#474746",
+                      "tertiary": "#000000",
+                      "secondary": "#4e45d5",
+                      "on-surface": "#1a1b22",
+                      "on-primary-container": "#858383",
+                      "surface-dim": "#dad9e3",
+                      "on-primary-fixed": "#1c1b1b",
+                      "on-tertiary-fixed": "#002117",
+                      "background": "#fbf8ff",
+                      "secondary-container": "#6860ef",
+                      "inverse-on-surface": "#f1effa",
+                      "surface-container-highest": "#e3e1ec",
+                      "on-surface-variant": "#444748",
+                      "on-tertiary-fixed-variant": "#0b513d",
+                      "primary": "#000000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "2rem",
+                      "sidebar-width": "280px",
+                      "content-narrow": "720px",
+                      "container-max": "1200px",
+                      "stack-sm": "0.5rem",
+                      "stack-lg": "4rem",
+                      "stack-md": "1.5rem"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Source Serif 4"],
+                      "ui-nav": ["Geist", "sans-serif"],
+                      "body-lg": ["Source Serif 4"],
+                      "headline-md": ["Source Serif 4"],
+                      "headline-lg": ["Source Serif 4"],
+                      "body-md": ["Source Serif 4"],
+                      "code": ["JetBrains Mono", "monospace"],
+                      "ui-label": ["Geist", "sans-serif"],
+                      "display": ["Source Serif 4"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "ui-nav": ["13px", {"lineHeight": "1.5", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "1.75", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "code": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "ui-label": ["14px", {"lineHeight": "1", "fontWeight": "500"}],
+                      "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background selection:bg-secondary-fixed">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md text-on-background dark:text-on-background tracking-tight">The Knowledge Library</span>
+<nav class="hidden md:flex items-center gap-6 font-ui-nav text-ui-nav">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Articles</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Resources</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Github</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 bg-primary text-on-primary font-ui-label text-ui-label rounded-lg hover:opacity-90 transition-all active:scale-95">Subscribe</button>
+</div>
+</header>
+<div class="flex max-w-container-max mx-auto pt-16">
+<!-- Left Sidebar: Learning Path -->
+<aside class="hidden lg:flex flex-col gap-y-stack-sm pt-stack-md border-r border-outline-variant/20 overflow-y-auto fixed left-[calc(50%-600px)] top-16 h-screen w-sidebar-width bg-transparent">
+<div class="px-4 mb-6">
+<h3 class="font-headline-md text-headline-md">Learning Path</h3>
+<p class="font-ui-label text-ui-label text-on-surface-variant opacity-70">Curated Curriculum</p>
+</div>
+<nav class="flex flex-col font-ui-label text-ui-label space-y-1">
+<a class="group py-3 flex items-center gap-3 text-on-surface-variant pl-4 hover:border-l-2 hover:border-outline-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="book">book</span>
+                    Module 1: Foundations
+                </a>
+<a class="group py-3 flex items-center gap-3 text-on-surface-variant pl-4 hover:border-l-2 hover:border-outline-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="database">database</span>
+                    Module 2: SQL Mastery
+                </a>
+<a class="group py-3 flex items-center gap-3 text-on-surface-variant pl-4 hover:border-l-2 hover:border-outline-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="code">code</span>
+                    Module 3: Python for Data
+                </a>
+<a class="group py-3 flex items-center gap-3 text-secondary dark:text-secondary-fixed border-l-2 border-secondary pl-4 font-bold bg-surface-container-low transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="calculate">calculate</span>
+                    Module 4: Statistics
+                </a>
+<a class="group py-3 flex items-center gap-3 text-on-surface-variant pl-4 hover:border-l-2 hover:border-outline-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="analytics">analytics</span>
+                    Module 5: Visualization
+                </a>
+<a class="group py-3 flex items-center gap-3 text-on-surface-variant pl-4 hover:border-l-2 hover:border-outline-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="science">science</span>
+                    Module 6: Machine Learning
+                </a>
+<a class="group py-3 flex items-center gap-3 text-on-surface-variant pl-4 hover:border-l-2 hover:border-outline-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="psychology">psychology</span>
+                    Module 7: Deep Learning
+                </a>
+<a class="group py-3 flex items-center gap-3 text-on-surface-variant pl-4 hover:border-l-2 hover:border-outline-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+                    Module 8: MLOps
+                </a>
+<a class="group py-3 flex items-center gap-3 text-on-surface-variant pl-4 hover:border-l-2 hover:border-outline-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="policy">policy</span>
+                    Module 9: Ethics
+                </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 lg:ml-sidebar-width px-gutter pt-stack-md pb-stack-lg max-w-full lg:max-w-[calc(100%-280px)]">
+<!-- Hero Section -->
+<section class="mb-stack-lg flex flex-col items-center text-center py-16 bg-[#fdfbf7] rounded-xl border border-outline-variant/10">
+<span class="font-ui-label text-ui-label text-secondary tracking-widest uppercase mb-4">Masterclass Series</span>
+<h1 class="font-display text-display max-w-[800px] mb-6">Statistics for Data Analysts</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-content-narrow mb-10">
+                    Học thống kê không phải để giải phương trình, mà để thấu hiểu câu chuyện đằng sau những con số thô.
+                </p>
+<div class="flex flex-col sm:flex-row items-center gap-4 w-full max-w-xl px-4">
+<div class="relative flex-1 group w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-white border border-outline-variant/40 rounded-lg focus:ring-0 focus:border-primary font-ui-nav text-ui-nav outline-none transition-all" placeholder="Tìm kiếm bài viết (Cmd + K)" type="text"/>
+</div>
+<button class="w-full sm:w-auto px-8 py-4 bg-primary text-on-primary font-ui-label text-ui-label rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                        Bắt đầu đọc từ Bài 1
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Featured Post -->
+<section class="max-w-content-narrow mx-auto mb-stack-lg">
+<article class="group cursor-pointer">
+<div class="flex items-center gap-3 mb-6 font-ui-label text-ui-label text-outline">
+<span class="text-secondary font-bold">BÀI VIẾT NỔI BẬT</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+                            5 phút đọc
+                        </span>
+</div>
+<h2 class="font-display text-[40px] leading-tight mb-8 group-hover:text-secondary transition-colors">
+                        Tại sao thống kê tồn tại?
+                    </h2>
+<div class="font-body-lg text-body-lg text-on-surface-variant space-y-6 mb-10">
+<p>
+                            Hãy tưởng tượng bạn là chủ một tiệm cà phê. Làm sao bạn biết chắc rằng việc thêm "Matcha Latte" vào menu sẽ thực sự tăng doanh thu, hay đó chỉ là một sự may mắn ngẫu nhiên của một vài thực khách?
+                        </p>
+<p>
+                            Thống kê ra đời để giải quyết bài toán lớn nhất của nhân loại: <strong>Sự bất định.</strong> Nó là bộ lọc giúp chúng ta tách biệt "tín hiệu" (signal) khỏi "nhiễu" (noise) trong một thế giới tràn ngập dữ liệu.
+                        </p>
+</div>
+<div class="w-full h-[400px] bg-surface-container-low rounded-xl overflow-hidden mb-10 border border-outline-variant/20 flex items-center justify-center">
+<img alt="Statistical visualization" class="w-full h-full object-cover opacity-80" data-alt="A sophisticated minimalist line-drawing illustration showing a series of bell curves and scatter plots overlapping in a clean, architectural style. The palette is muted with light cream and deep slate gray lines, creating a professional academic atmosphere. The lighting is soft and even, highlighting the precision of the geometric data patterns." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo5nYxZAQwuJLGQG7aZtQIk4XEPpbCiyxj2ByxSMT-qtSU3wvz6p0ir-g-uMQiVGQbmo3Hx3F2humjfKDGOTvngGywd_geYdlu0Wdowj-fmyfNZkDQ4vsfCLsNb6TvnAsfERZHSgS5qdLh3-FkSuONsRlDsW-M7ONZ0C3jHqKiaHoG1gqgQ6sMY5wZT2hllMpxnnWLPJkS0i3KzlAp8WwAIWwNi6GxyUkIRaU8AArtwr871wctZC3YE7thm71zwMGUpJtxfZ24RMU"/>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center font-ui-label text-secondary font-bold">TL</div>
+<div>
+<p class="font-ui-label text-ui-label font-bold">The Library Editorial</p>
+<p class="font-ui-label text-[12px] text-outline">Chủ biên: Nam Nguyễn</p>
+</div>
+</div>
+</article>
+</section>
+<!-- Article Grid -->
+<section class="mt-stack-lg">
+<div class="flex items-center justify-between mb-12 border-b border-outline-variant/20 pb-4">
+<h3 class="font-headline-lg text-headline-lg">Lộ trình &amp; Thống kê thực chiến</h3>
+<a class="font-ui-label text-ui-label text-secondary flex items-center gap-1 hover:underline" href="#">
+                        Xem tất cả bài viết
+                        <span class="material-symbols-outlined text-[18px]" data-icon="north_east">north_east</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Card 1 -->
+<div class="group flex flex-col p-8 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:border-secondary hover:shadow-sm transition-all duration-300">
+<div class="flex items-center gap-2 font-code text-[12px] text-secondary mb-4">
+<span>MODULE 1</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_right_alt">arrow_right_alt</span>
+<span>EDA</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-4 group-hover:text-secondary transition-colors">Mean vs Median: Tiệm trà sữa của bạn Nam</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 line-clamp-3">
+                            Tại sao số trung bình lại "nói dối" khi có sự xuất hiện của những khách hàng đại gia? Cách chọn thước đo đúng để không bị lạc lối trong dữ liệu doanh thu.
+                        </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-high rounded text-[12px] font-ui-label text-on-surface-variant">#EDA</span>
+<span class="px-2 py-1 bg-surface-container-high rounded text-[12px] font-ui-label text-on-surface-variant">#Kinh-Doanh</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group flex flex-col p-8 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:border-secondary hover:shadow-sm transition-all duration-300">
+<div class="flex items-center gap-2 font-code text-[12px] text-secondary mb-4">
+<span>MODULE 1</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_right_alt">arrow_right_alt</span>
+<span>PROBABILITY</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-4 group-hover:text-secondary transition-colors">Xác suất có điều kiện: Bài toán Monty Hall</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 line-clamp-3">
+                            Bạn nên đổi cửa hay giữ nguyên? Khám phá tư duy Bayes đằng sau những quyết định phản trực giác nhưng cực kỳ chính xác.
+                        </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-high rounded text-[12px] font-ui-label text-on-surface-variant">#Bayesian</span>
+<span class="px-2 py-1 bg-surface-container-high rounded text-[12px] font-ui-label text-on-surface-variant">#Logic</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group flex flex-col p-8 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:border-secondary hover:shadow-sm transition-all duration-300">
+<div class="flex items-center gap-2 font-code text-[12px] text-secondary mb-4">
+<span>MODULE 2</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_right_alt">arrow_right_alt</span>
+<span>SAMPLING</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-4 group-hover:text-secondary transition-colors">Định lý giới hạn trung tâm (CLT)</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 line-clamp-3">
+                            "Phép màu" của thống kê: Tại sao mọi con đường đều dẫn về phân phối chuẩn? Giải thích đơn giản thông qua việc tung xúc xắc.
+                        </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-high rounded text-[12px] font-ui-label text-on-surface-variant">#Theory</span>
+<span class="px-2 py-1 bg-surface-container-high rounded text-[12px] font-ui-label text-on-surface-variant">#Distributions</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group flex flex-col p-8 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:border-secondary hover:shadow-sm transition-all duration-300">
+<div class="flex items-center gap-2 font-code text-[12px] text-secondary mb-4">
+<span>MODULE 3</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_right_alt">arrow_right_alt</span>
+<span>INFERENCE</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-4 group-hover:text-secondary transition-colors">P-value: Con số bị hiểu lầm nhiều nhất</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 line-clamp-3">
+                            Nếu p &lt; 0.05 thì kết quả là thật? Hãy cẩn thận với cái bẫy của ý nghĩa thống kê trong nghiên cứu khoa học.
+                        </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-high rounded text-[12px] font-ui-label text-on-surface-variant">#Testing</span>
+<span class="px-2 py-1 bg-surface-container-high rounded text-[12px] font-ui-label text-on-surface-variant">#Critical-Thinking</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full mt-stack-lg bg-surface-container-lowest dark:bg-surface-container-lowest py-12 border-t border-outline-variant/30">
+<div class="max-w-container-max mx-auto px-gutter flex flex-col md:flex-row justify-between items-center gap-8">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                © 2024 The Knowledge Library. Built for Data Analysts.
+            </p>
+<div class="flex gap-8 font-body-md text-body-md">
+<a class="text-outline hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-outline hover:text-primary transition-colors" href="#">Contact</a>
+<a class="text-outline hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+<script>
+        // Keyboard shortcut CMD+K for search simulation
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                document.querySelector('input[type="text"]').focus();
+            }
+        });
+
+        // Simple scroll reveal effect for sidebar highlight
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('aside nav a');
+            
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            // This is a placeholder for actual scroll-spy logic if IDs were mapped
+        });
+    </script>
+</body></html>

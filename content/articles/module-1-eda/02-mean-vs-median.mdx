@@ -1,0 +1,79 @@
+---
+title: "Mean vs Median: Tiệm trà sữa của bạn Nam"
+module: 1
+moduleSlug: "eda"
+topic: "EDA"
+readingTime: 8
+tags: ["EDA", "Kinh-Doanh"]
+publishedAt: 2024-01-22
+excerpt: "Tại sao số trung bình lại 'nói dối' khi có sự xuất hiện của những khách hàng đại gia? Cách chọn thước đo đúng để không bị lạc lối trong dữ liệu doanh thu."
+featured: false
+order: 2
+---
+
+{/* ═══════════════════════════════════════
+    HƯỚNG DẪN CHO BẠN:
+    
+    Bài này đã có tiêu đề và cấu trúc sẵn.
+    Bạn chỉ cần:
+    1. Viết phần nội dung vào từng section bên dưới
+    2. Dùng câu chuyện thực của chính bạn nếu có
+    3. Sau đó nhờ tôi review và chỉnh sửa
+    
+    Câu chuyện gợi ý: Một tiệm trà sữa có hầu hết khách
+    mua 30-50k, nhưng vài lần có khách mua cả đơn 500k+.
+    Số trung bình bị kéo lên bởi outlier, trong khi trung vị
+    phản ánh thực tế hơn.
+    ═══════════════════════════════════════ */}
+
+## Hook — Câu chuyện mở đầu
+
+[Viết câu chuyện của bạn ở đây. Gợi ý: bắt đầu bằng tình huống
+khi bạn hoặc ai đó dùng số trung bình và bị nó "lừa".]
+
+## Vấn đề
+
+[Tại sao việc chọn thước đo sai lại nguy hiểm với data analyst?]
+
+## Khái niệm: Trung bình và Trung vị
+
+### Trung bình (Mean)
+
+[Giải thích trung bình là gì, khi nào dùng đúng]
+
+$$
+\bar{x} = \frac{x_1 + x_2 + ... + x_n}{n} = \frac{\sum_{i=1}^{n} x_i}{n}
+$$
+
+Trong đó:
+- $\bar{x}$ (x-bar) là giá trị trung bình
+- $x_i$ là từng giá trị riêng lẻ
+- $n$ là tổng số quan sát
+
+### Trung vị (Median)
+
+[Giải thích trung vị, khi nào dùng đúng]
+
+### Khi nào dùng cái nào?
+
+[Quy tắc thực tế: phân phối lệch → trung vị; phân phối chuẩn → trung bình]
+
+### Ví dụ với Python
+
+```python
+import pandas as pd
+import numpy as np
+
+# Dữ liệu đơn hàng trà sữa (nghìn đồng)
+don_hang = [35, 42, 38, 45, 40, 500, 38, 36, 42, 39]
+
+trung_binh = np.mean(don_hang)
+trung_vi   = np.median(don_hang)
+
+print(f"Trung bình: {trung_binh:.0f}k")  # bị kéo lên bởi đơn 500k
+print(f"Trung vị:   {trung_vi:.0f}k")    # phản ánh thực tế hơn
+```
+
+## Tóm tắt
+
+**[Viết một câu tóm gọn bài học cốt lõi.]**
