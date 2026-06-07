@@ -59,14 +59,6 @@ export type StatisticsModule = {
 
 export const statisticsModules: StatisticsModule[] = [
   {
-    id: 0,
-    slug: 'introduction',
-    title: 'Introduction',
-    description: 'Tổng quan về thống kê — tại sao nó tồn tại và bạn cần nó ở đâu',
-    difficulty: 'Beginner',
-    hours: 2,
-  },
-  {
     id: 1,
     slug: 'eda',
     title: 'EDA',
