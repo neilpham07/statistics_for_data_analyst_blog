@@ -10,7 +10,7 @@ export const introTocItems: TocItem[] = [
 
 export function IntroductionContent() {
   return (
-    <article className="max-w-[720px] py-10 pr-8">
+    <article className="max-w-[720px] py-8 lg:py-10 lg:pr-8">
       {/* Eyebrow */}
       <p className="font-ui-label text-ui-label text-secondary uppercase tracking-widest mb-4">
         Giới thiệu

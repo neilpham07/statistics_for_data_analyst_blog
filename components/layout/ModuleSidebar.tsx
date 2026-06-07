@@ -16,7 +16,7 @@ export function ModuleSidebar() {
   return (
     <aside
       aria-label="Điều hướng module"
-      className="shrink-0 w-[280px] sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto pb-12 pt-8 pr-4 border-r border-outline-variant/30"
+      className="hidden lg:block shrink-0 w-[280px] sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto pb-12 pt-8 pr-4 border-r border-outline-variant/30"
     >
       {/* Home / Giới thiệu */}
       <div className="mb-6">

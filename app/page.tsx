@@ -37,7 +37,7 @@ export default function HomePage() {
         <main
           id="main-content"
           tabIndex={-1}
-          className="flex-1 min-w-0 px-10"
+          className="flex-1 min-w-0 px-4 sm:px-6 lg:px-10"
         >
           <IntroductionContent />
         </main>
