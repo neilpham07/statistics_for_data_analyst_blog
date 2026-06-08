@@ -249,12 +249,6 @@ export function EDAContent() {
           </p>
         </div>
 
-        <Note>
-          <strong>Ẩn dụ thám tử:</strong> EDA giống như thám tử đến hiện trường vụ án. Trước khi chỉ
-          tay kết tội ai, thám tử phải quan sát từng góc, tìm dấu vết bất thường, đặt câu hỏi. Bạn
-          chính là thám tử đó — và file dữ liệu thô là hiện trường.
-        </Note>
-
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
           Đây là dataset chúng ta sẽ dùng <strong className="text-on-surface">xuyên suốt toàn bộ module</strong> —
           10 đơn hàng mẫu từ một sàn TMĐT Việt Nam. Mỗi concept sẽ được minh họa trên chính dataset này:
