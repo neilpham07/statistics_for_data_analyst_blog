@@ -4,12 +4,104 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## CONTENT PHILOSOPHY (ĐỌC TRƯỚC KHI LÀM BẤT CỨ ĐIỀU GÌ)
+
+Đây không phải website dạy thống kê theo kiểu giáo trình đại học.
+
+Đây là nền tảng học **Statistics for Data Analysts** dành cho:
+- Người chưa biết thống kê
+- Người mới học Data Analytics
+- Junior Data Analyst / Business Analyst
+- Những người muốn hiểu cách dùng dữ liệu để ra quyết định
+
+**Mục tiêu cuối cùng không phải giúp người học nhớ công thức. Mục tiêu là giúp họ hiểu:**
+- Vì sao khái niệm thống kê tồn tại
+- Nó giải quyết vấn đề gì trong thực tế
+- Khi nào nên dùng / khi nào không nên dùng
+- Những sai lầm thường gặp
+- Cách áp dụng vào công việc Data Analyst
+
+### Nguyên tắc giảng dạy — BẮTBUỘC
+
+Không được bắt đầu bằng định nghĩa. Không được bắt đầu bằng công thức. Không được bắt đầu bằng khái niệm học thuật.
+
+**Luôn bắt đầu theo thứ tự:**
+
+```
+Business Context
+↓
+Business Question
+↓
+Vì sao cách suy nghĩ thông thường chưa đủ
+↓
+Statistical Concept
+↓
+Ứng dụng thực tế
+↓
+Sai lầm thường gặp
+↓
+Kết luận kinh doanh
+```
+
+### 5 câu hỏi mỗi khái niệm PHẢI trả lời được
+
+1. Khái niệm này tồn tại để giải quyết vấn đề gì?
+2. Nếu không có khái niệm này thì chuyện gì xảy ra?
+3. Khi nào nên sử dụng?
+4. Khi nào không nên sử dụng?
+5. Sai lầm phổ biến nhất của Data Analyst là gì?
+
+Nếu chưa trả lời được 5 câu hỏi này → nội dung chưa hoàn chỉnh.
+
+### Thực chiến hơn học thuật
+
+Nếu phải chọn giữa: (A) giải thích đúng tuyệt đối theo giáo trình, và (B) giúp người mới hiểu được cách áp dụng trong công việc — ưu tiên B, sau đó mới bổ sung độ chính xác học thuật.
+
+**Tiêu chí kiểm tra:** Người đọc sau mỗi bài phải có cảm giác *"Ngày mai đi làm tôi có thể áp dụng điều này."*
+
+### Tránh ẩn dụ chung chung
+
+Hạn chế tối đa: thám tử điều tra, bác sĩ khám bệnh, phi công, đầu bếp, siêu anh hùng. Những ẩn dụ này ít giúp người học hiểu cách áp dụng trong công việc thực tế.
+
+**Ưu tiên tuyệt đối:** Ecommerce, Product Analytics, Marketing Analytics, Customer Analytics, Conversion Optimization, Revenue Analysis.
+
+### Case Study — Sợi chỉ đỏ xuyên suốt
+
+Case Study không phải phần bonus cuối bài. Case Study phải xuất hiện **xuyên suốt toàn bộ module** — mỗi concept được reveal khi case study cần nó.
+
+Ví dụ Module EDA: CEO hỏi *"Tôi muốn hiểu khách hàng hiện tại."* → Distribution, Mean/Median, Variability, Percentiles, Outliers, Correlation lần lượt trả lời câu hỏi đó → tổng hợp insight cuối module.
+
+Người học phải cảm thấy *"Tôi đang giải quyết bài toán kinh doanh"*, không phải *"Tôi đang học các khái niệm rời rạc."*
+
+---
+
+## DATA UNIVERSE — ShopNow (DÙNG XUYÊN SUỐT)
+
+Toàn bộ website xoay quanh **một** doanh nghiệp E-Commerce giả lập: **ShopNow**.
+
+**Datasets:**
+
+| Table | Nội dung |
+|---|---|
+| `customers` | customer_id, age, gender, city, tier, registered_at |
+| `orders` | order_id, customer_id, order_date, revenue, status |
+| `order_items` | item_id, order_id, product_id, quantity, unit_price |
+| `products` | product_id, name, category, base_price |
+| `sessions` | session_id, customer_id, date, duration_sec, source |
+| `campaigns` | campaign_id, name, channel, start_date, budget, impressions |
+| `payments` | payment_id, order_id, method, amount, status |
+
+**Không được** liên tục đổi ví dụ giữa: điểm thi học sinh, chiều cao, cân nặng, khảo sát dân số, nhiệt độ thời tiết — trừ khi thật sự cần thiết để minh họa concept không thể dùng E-commerce.
+
+Tất cả module phải sử dụng chung hệ sinh thái ShopNow để người học cảm giác đang làm việc tại một công ty thực tế.
+
+---
+
 ## Project Vision
 
-**The Knowledge Library** (Thư Viện Tri Thức) is a Vietnamese-language statistics education platform authored by Nam Nguyễn. It teaches statistics to data analysts not through equations, but through real-world stories — coffee shops, bubble tea, dice, everyday business decisions.
+**The Knowledge Library** (Thư Viện Tri Thức) là nền tảng giáo dục thống kê tiếng Việt, tác giả Nam Nguyễn. Dạy thống kê qua lăng kính E-commerce và nghiệp vụ thực tế — không phải phương trình, không phải giáo trình.
 
 > "Học thống kê không phải để giải phương trình, mà để thấu hiểu câu chuyện đằng sau những con số thô."
-> ("Learn statistics not to solve equations, but to understand the story behind raw numbers.")
 
 "Digital reading room" aesthetic — calm, precise, authoritative. Built for depth, not virality.
 
@@ -17,11 +109,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Target Audience
 
-**Primary:** Vietnamese data analysts and aspiring data scientists, 22–35 years old, with coding ability but limited formal statistics training.
+**Primary:** Vietnamese data analysts và aspiring data scientists, 22–35 tuổi, biết code nhưng ít nền tảng thống kê chính thức.
 
-**What they already know:** SQL, basic Python, how to run a `groupby`. What they struggle with: when to use which statistical test, what p-value actually means, how to communicate uncertainty to stakeholders.
+**Đã biết:** SQL, Python cơ bản (`groupby`, `merge`, `matplotlib`). **Chưa biết:** khi nào dùng test nào, p-value thật sự nghĩa là gì, cách communicate uncertainty với stakeholder.
 
-**What they do NOT need:** Academic proofs, Greek notation without explanation, or English jargon left untranslated.
+**Không cần:** Academic proofs, Greek notation không giải thích, English jargon không dịch.
 
 ---
 
@@ -35,7 +127,7 @@ npm run lint         # next lint
 npm run start        # Serve the production build locally
 ```
 
-**Always run `npm run typecheck` after editing TypeScript files.** Strict mode is on — implicit `any` fails the build.
+**Luôn chạy `npm run typecheck` sau khi edit TypeScript.** Strict mode bật — implicit `any` fail build.
 
 ---
 
@@ -50,50 +142,70 @@ npm run start        # Serve the production build locally
 | Fonts | `next/font/google` for Source Serif 4 + JetBrains Mono; `geist` npm package for Geist Sans/Mono |
 | Deployment | **Vercel** |
 
-**No CMS. No database.** All content data is TypeScript constants in `lib/data.ts`. MDX files in `content/articles/` are written content — not yet wired to Next.js rendering (that's a v2 task).
+**No CMS. No database.** All content data is TypeScript constants in `lib/data.ts`. MDX files in `content/articles/` are written content — not yet wired to Next.js rendering (v2 task).
 
 ---
 
 ## Architecture
 
-### How data flows
+### Data flow
 
 ```
 lib/data.ts          → TypeScript constants (modules, questions, roadmap steps, etc.)
 lib/types.ts         → Shared type definitions
                           ↓
 components/sections/ → Server components that import directly from lib/data.ts
+components/modules/  → One component per module page (e.g. EDAContent.tsx)
                           ↓
-app/page.tsx         → Composes all section components (no sidebar, full-width)
-app/layout.tsx       → Root: loads fonts, wraps with Header + Footer + global metadata
+app/page.tsx         → Homepage (3-column: Sidebar | Intro | TOC)
+app/modules/[slug]/  → Module pages (same 3-column layout)
+app/layout.tsx       → Root: fonts, metadata, Header + Footer
 ```
 
 No API routes. No `getServerSideProps`. No data fetching — everything is static import at build time.
 
+### Page layout pattern
+
+All reading pages use the same 3-column layout:
+```tsx
+<div className="flex max-w-container-max mx-auto pt-16 min-h-screen">
+  <ModuleSidebar />   {/* hidden on < lg */}
+  <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-10">
+    <Content />
+  </main>
+  <TableOfContents /> {/* hidden on < xl */}
+</div>
+```
+
 ### Server vs Client components
 
-Default is server component (no directive). Use `'use client'` only when browser APIs are needed:
-- `SearchBar.tsx` — keyboard event listener (`Cmd+K`)
-- `SearchTrigger.tsx` — same
-
-Everything else in `components/` is a server component.
+Default is server component (no directive). `'use client'` only when browser APIs are needed:
+- `ModuleSidebar.tsx` — `usePathname()` for active state
+- `TableOfContents.tsx` — `IntersectionObserver` scroll-spy
+- `SearchBar.tsx` / `SearchTrigger.tsx` — keyboard events
 
 ### Font loading
 
-Three CSS variables are injected in `app/layout.tsx` and consumed by `tailwind.config.ts`:
+Three CSS variables in `app/layout.tsx`, consumed by `tailwind.config.ts`:
 - `--font-source-serif-4` → `font-display`, `font-headline-lg`, `font-body-lg`, `font-body-md`
 - `--font-geist-sans` → `font-ui-nav`, `font-ui-label`
 - `--font-jetbrains-mono` / `--font-geist-mono` → `font-code`
 
-**Never mix typography roles.** A button uses `font-ui-label` (Geist). A heading uses `font-headline-lg` (Source Serif 4). Using Source Serif 4 on a button breaks the system.
+**Never mix typography roles.** A button uses `font-ui-label` (Geist). A heading uses `font-headline-lg` (Source Serif 4).
 
 ### Button pattern
 
-`components/ui/Button.tsx` exports two separate components to avoid TypeScript strict union issues:
-- `Button` — renders a `<button>` element
-- `ButtonLink` — renders an `<a>` element
+`components/ui/Button.tsx` exports two separate components:
+- `Button` — renders `<button>`
+- `ButtonLink` — renders `<a>`
 
-Never use a polymorphic `as` prop pattern — TypeScript strict mode rejects it.
+Never use a polymorphic `as` prop — TypeScript strict mode rejects it.
+
+### Tailwind color rules
+
+- Only use design token names in className: `bg-secondary`, `text-on-surface`, `border-outline-variant`
+- **Never** use default Tailwind palette colors (`red-*`, `blue-*`, `green-*`) — they may not be generated by JIT. The project's Tailwind config only guarantees the custom tokens defined in `tailwind.config.ts`.
+- For error/warning states: use `error`, `error-container`, `on-error-container` tokens.
 
 ---
 
@@ -105,68 +217,51 @@ statistic_for_da_blog/
 ├── .claude/
 │   ├── design/
 │   │   ├── DESIGN.md         # Source of truth for all design tokens
-│   │   ├── landscape.html    # Static Tailwind prototype (reference implementation)
-│   │   └── landscape.png
-│   └── docs/                 # Development documentation (architecture, deployment, ADRs)
-│       └── decisions/        # Architecture Decision Records
+│   │   └── landscape.html    # Static Tailwind prototype (reference)
+│   └── docs/                 # Architecture docs, ADRs
 │
 ├── app/
-│   ├── globals.css       # Tailwind base, skip-nav, selection color
-│   ├── layout.tsx        # Root layout: fonts, metadata, Header+Footer wrapper
-│   └── page.tsx          # Homepage — composes 8 section components
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── page.tsx              # Homepage (Intro content)
+│   └── modules/
+│       └── eda/page.tsx      # /modules/eda
 │
 ├── components/
 │   ├── layout/
-│   │   ├── Header.tsx    # Fixed glass nav bar
-│   │   └── Footer.tsx    # Site footer with quote
-│   ├── sections/         # One component per homepage section (all server components)
-│   │   ├── HeroSection.tsx
-│   │   ├── WhyStatisticsSection.tsx
-│   │   ├── WhatIsStatisticsSection.tsx
-│   │   ├── AnalyticsRoadmap.tsx
-│   │   ├── LearningRoadmapSection.tsx
-│   │   ├── QuestionsSection.tsx
-│   │   ├── FeaturedModulesSection.tsx
-│   │   ├── PhilosophySection.tsx
-│   │   ├── SearchBar.tsx       # 'use client' — keyboard handler
-│   │   └── SearchTrigger.tsx   # 'use client' — same
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   ├── ModuleSidebar.tsx  # 'use client' — active state via usePathname
+│   │   └── TableOfContents.tsx# 'use client' — scroll-spy IntersectionObserver
+│   ├── modules/
+│   │   └── EDAContent.tsx    # Module 1 content + edaTocItems export
+│   ├── sections/
+│   │   └── IntroductionContent.tsx
 │   └── ui/
-│       ├── Button.tsx    # Button + ButtonLink exports
-│       └── Tag.tsx       # Small label chip
+│       ├── Button.tsx
+│       └── Tag.tsx
 │
 ├── lib/
-│   ├── data.ts           # All site data: modules, questions, roadmap steps, etc.
-│   └── types.ts          # Shared TypeScript types
+│   ├── data.ts               # All site data constants
+│   └── types.ts
 │
-├── content/
-│   └── articles/         # MDX files — written content (not yet rendered by Next.js)
-│       ├── _template.mdx              # Copy this to start a new article
-│       ├── module-1-foundations/
-│       └── module-X-name/
+├── content/articles/         # MDX files (not yet rendered — v2 task)
 │
-├── public/
-│   └── og/               # Pre-generated OG images (1200×630)
-│
-├── tailwind.config.ts    # All design tokens — colors, fonts, spacing, radii
-├── next.config.ts
-└── tsconfig.json
+└── tailwind.config.ts        # All design tokens
 ```
 
 **Rules:**
-- `app/` only composes layouts and passes props — no business logic
+- `app/` only composes layouts — no business logic
 - `components/ui/` must be stateless, no data imports
-- `components/sections/` may import from `lib/data.ts` but not from each other
-- Never hardcode hex values in component files — always use token names (`bg-secondary`, `text-on-surface`)
+- `components/modules/` exports both the content component AND the `tocItems` array
+- Never hardcode hex values in component files — always use token names
 
 ---
 
 ## Curriculum Modules
 
-The platform teaches **statistics specifically** (not a general DA curriculum). Module 0 is the entry point.
-
 | # | Slug | Focus | Difficulty | Hours |
 |---|---|---|---|---|
-| 0 | `introduction` | Why statistics exists | Beginner | 2h |
 | 1 | `eda` | Exploratory Data Analysis | Beginner | 8h |
 | 2 | `sampling` | Sampling & estimation | Beginner | 6h |
 | 3 | `statistical-inference` | Hypothesis testing, p-value, CI | Intermediate | 10h |
@@ -176,37 +271,43 @@ The platform teaches **statistics specifically** (not a general DA curriculum). 
 | 7 | `machine-learning` | Supervised ML | Advanced | 14h |
 | 8 | `unsupervised-learning` | Clustering & dimensionality | Advanced | 10h |
 
+Note: Module 0 (Introduction) is served by the homepage (`app/page.tsx`) — no dedicated route.
+
 ---
 
-## Article Frontmatter Schema
+## Module Component Pattern
 
-Every article `.mdx` file must have this frontmatter:
+Each module page follows this structure:
 
-```yaml
----
-title: "Mean vs Median: Tiệm trà sữa của bạn Nam"
-module: 1                          # integer 0–8
-moduleSlug: "eda"                  # matches module slug above
-topic: "EDA"                       # short uppercase label
-readingTime: 8                     # minutes, integer
-tags: ["EDA", "Kinh-Doanh"]
-publishedAt: 2024-01-15            # ISO date
-excerpt: "Tại sao số trung bình lại 'nói dối'..."  # max 160 chars
-featured: false                    # true = highlighted (one at a time)
-order: 2                           # position within module (1-indexed)
----
+```tsx
+// components/modules/[ModuleName]Content.tsx
+export const moduleTocItems: TocItem[] = [ ... ]
+
+export function [ModuleName]Content() {
+  return (
+    <article className="max-w-[720px] py-8 lg:py-10 lg:pr-8">
+      {/* Learning Objectives block */}
+      {/* Sections follow Content Philosophy order */}
+    </article>
+  )
+}
 ```
 
-Article file naming: `[order]-[short-slug].mdx`
-Example: `content/articles/module-1-eda/02-mean-vs-median.mdx`
-
-URL pattern: `/articles/[moduleSlug]/[slug]`
+Helper components in each module file:
+- `SectionTitle` — `<h2>` with `scroll-mt-24`
+- `Code` — light bg `<pre>` block
+- `Output` — dark bg (`bg-inverse-surface`) output block
+- `Note` — indigo left-border callout (insight/tip)
+- `ScenarioBlock` — business problem hook (indigo border, labeled "Bài toán thực tế")
+- `WarningBlock` — important warning (uses `error-container` token)
+- `Mistakes` — common mistakes list (uses `error` token, left red border)
+- `QuickSummary` — end-of-section summary (uses `surface-container-low`)
 
 ---
 
 ## Design System
 
-All tokens are defined in `tailwind.config.ts` and documented in `.claude/design/DESIGN.md`. Always consult it when in doubt.
+All tokens defined in `tailwind.config.ts`, documented in `.claude/design/DESIGN.md`.
 
 ### Key Color Tokens
 
@@ -217,14 +318,17 @@ All tokens are defined in `tailwind.config.ts` and documented in `.claude/design
 | `secondary` | `#4e45d5` | Indigo — links, active states, CTAs |
 | `outline-variant` | `#c4c7c7` | Hairline separators |
 | `surface-container-low` | `#f4f2fd` | Active/hover backgrounds |
-| `inverse-surface` | `#2f3038` | Dark section backgrounds |
+| `inverse-surface` | `#2f3038` | Dark section backgrounds (code output) |
+| `error` | `#ba1a1a` | Warning/error borders and text |
+| `error-container` | `#ffdad6` | Warning/error backgrounds |
+| `on-error-container` | `#93000a` | Warning/error label text |
 
 ### Elevation
 
 No drop shadows ever. Depth is tonal only:
 - Cards: `border border-outline-variant/30`
-- Card hover: `hover:border-secondary/40` (color shift only)
-- Dark sections: use `bg-inverse-surface`
+- Card hover: `hover:border-secondary/40`
+- Dark sections: `bg-inverse-surface`
 
 ### Shapes
 
@@ -234,7 +338,7 @@ No drop shadows ever. Depth is tonal only:
 
 ### Motion
 
-Always use `motion-safe:` prefix on transitions: `motion-safe:transition-colors`, `motion-safe:transition-all`. Never use bare `transition-*`.
+Always `motion-safe:` prefix: `motion-safe:transition-colors`. Never bare `transition-*`.
 
 ---
 
@@ -244,78 +348,66 @@ Always use `motion-safe:` prefix on transitions: `motion-safe:transition-colors`
 
 - `strict: true` — no exceptions, no `any`
 - Prefer `type` over `interface` for data shapes
-- Use `unknown` and narrow explicitly if type is truly unknown
 
 ### Components
 
-- All props typed with a local `type Props = { ... }` at the top of the component
-- No inline `<style>` tags — Tailwind utility classes only
-- `'use client'` only when browser APIs are required (keyboard events, `window`, `localStorage`)
-
-### Tailwind
-
-- Never hardcode hex in className — use token names
-- `@apply` in `globals.css` only for prose content inside MDX
+- All props typed with `type Props = { ... }` at top of component
+- No inline `<style>` — Tailwind only
+- `'use client'` only when browser APIs required
 
 ### Formatting
 
 - 2-space indentation
 - Single quotes in TypeScript; double quotes in HTML attributes
 - No semicolons in `.ts`/`.tsx`
-- Trailing commas in multi-line objects and arrays
+- Trailing commas in multi-line objects/arrays
 
 ---
 
 ## SEO & Accessibility
 
-### Every page must have
-
-- `<title>` — format: `"Article Title | The Knowledge Library"`
-- `<meta name="description">` — max 160 characters
+Every page must have:
+- `<title>` — format: `"Page Title | The Knowledge Library"`
+- `<meta name="description">` — max 160 chars
 - `<link rel="canonical">` — always explicit
-- OG image from `public/og/` (1200×630)
-- JSON-LD structured data (`Article` type for posts, `WebSite` for homepage)
 - `<html lang="vi">` — never change to `en`
 
-### Accessibility rules
-
-- All interactive elements reachable by keyboard
-- Skip nav: `<a href="#main-content" class="sr-only focus:not-sr-only">` in Header
+Accessibility rules:
+- All interactive elements keyboard-reachable
 - `aria-current="page"` on active nav links
-- Minimum font size: `12px` even for metadata
-- Heading levels must not skip (`h1` → `h2` → `h3`, never `h1` → `h3`)
-- Color is never the sole indicator of state — always pair with border, text, or icon change
-- Use `next/image` for all images (auto WebP + prevents CLS)
+- Heading levels must not skip (`h1` → `h2` → `h3`)
+- Color never sole indicator of state
 
 ---
 
 ## Content Writing Guidelines
 
-### Voice
+### Giọng văn
 
-- First person: "Hãy tưởng tượng bạn là chủ một tiệm cà phê..."
-- Address reader as "bạn" (singular you)
-- Conversational but authoritative — not academic, not casual chat
-- Avoid filler: "Như chúng ta đã biết", "Rõ ràng là", "Đơn giản là"
+- Ngắn gọn, rõ ràng, thực tế — giống Senior DA hướng dẫn Junior
+- Address reader as "bạn"
+- Tránh lan man, triết lý, văn vẻ, kéo dài bài để tăng độ dài
+- Tránh filler: "Như chúng ta đã biết", "Rõ ràng là", "Đơn giản là"
+- Nếu một đoạn không giúp người đọc hiểu hoặc áp dụng tốt hơn → loại bỏ
 
-### Article Structure (always follow this order)
+### Cấu trúc mỗi section (bắt buộc)
 
-1. **Hook** — real-world scenario that creates cognitive tension (max 2 paragraphs)
-2. **The problem** — why this matters
-3. **The concept** — story first, formula second
-4. **The formula** (if needed) — one block, every symbol defined in Vietnamese
-5. **Applied example** — work through the hook scenario
-6. **The takeaway** — one sentence, dinner-table repeatable
+1. **ScenarioBlock** — Business context + Business Question cụ thể
+2. **Tại sao cách thông thường chưa đủ** — tạo cognitive need cho concept
+3. **Statistical Concept** — giải thích, trực quan hóa nếu cần
+4. **Khi nào dùng / khi nào không dùng**
+5. **Code + Output** — ShopNow dataset, chạy được thật
+6. **Mistakes block** — 3–4 sai lầm thường gặp
+7. **QuickSummary** — 3 bullets tóm tắt
 
-### Mathematical content
+### Code requirements
 
-- Intuition before formula, always
-- `$$` for display equations, `$` for inline
-- Every symbol defined: write "where $\sigma$ (sigma) là độ lệch chuẩn", never just "where $\sigma$ is standard deviation"
-- Python preferred over R; use believable mock data (no `foo`, `bar`, `x`, `y`)
-- Every code block must run as written — no pseudocode
+- Python preferred, dùng `pandas` / `matplotlib` / `seaborn`
+- Dataset phải từ ShopNow universe (không dùng foo/bar/x/y)
+- Mọi code block phải chạy được như viết — không pseudocode
+- Output block phải match code block bên trên
 
-### Vocabulary (introduce once as Vietnamese (English), then Vietnamese-only)
+### Vocabulary (giới thiệu một lần: Vietnamese (English), sau đó Vietnamese-only)
 
 | Concept | Term |
 |---|---|
@@ -330,29 +422,49 @@ Always use `motion-safe:` prefix on transitions: `motion-safe:transition-colors`
 
 ---
 
+## Article Frontmatter Schema
+
+```yaml
+---
+title: "Mean vs Median: Khi nào CEO bị báo cáo sai"
+module: 1
+moduleSlug: "eda"
+topic: "EDA"
+readingTime: 8
+tags: ["EDA", "Kinh-Doanh"]
+publishedAt: 2024-01-15
+excerpt: "Revenue trung bình 452k — con số đó đang nói dối bạn."
+featured: false
+order: 2
+---
+```
+
+File naming: `[order]-[short-slug].mdx`
+URL pattern: `/articles/[moduleSlug]/[slug]`
+
+---
+
 ## Roadmap
 
-### v1 (Current — in progress)
+### v1 (Current)
 
-- Next.js 15 App Router landing page with 8 sections
-- Module 0–8 statistics curriculum structure
-- Design system in Tailwind
-- MDX content files (not yet rendered — static writing workspace)
+- Next.js 15 App Router, 3-column reading layout
+- Module 1 (EDA) fully written with ShopNow dataset
+- Mobile responsive (sidebar hidden < lg)
 - Vercel deployment
 
 ### v2 (Next)
 
 - Wire MDX rendering: `app/articles/[moduleSlug]/[slug]/page.tsx` + `next-mdx-remote`
-- Article listing page: `app/articles/page.tsx`
-- Module pages: `app/modules/[slug]/page.tsx`
-- Reading progress bar, related articles widget
-- Dark mode (`darkMode: "class"` already configured in Tailwind)
+- Migrate EDAContent.tsx content to MDX
+- Modules 2–4 (Sampling, Statistical Inference, A/B Testing)
+- Dark mode
 
 ### v3
 
-- Interactive charts (Observable Plot or Vega-Lite)
+- Interactive charts (Observable Plot)
 - In-browser Python via Pyodide
-- Full-text search (Pagefind or Orama)
+- Full-text search
 
 ### Out of Scope (Never)
 
