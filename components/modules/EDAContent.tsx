@@ -725,9 +725,9 @@ Dưới 30    40,000     13,000  22,000     55,000   26,500`}
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Nhóm 30+ có median 250K — không quá khác nhóm dưới 30 (40K) về "giá trị điển hình."
-          Nhưng std của nhóm 30+ là 2.95 triệu — cho thấy trong nhóm này có cả user giao dịch rất nhỏ
-          lẫn rất lớn (8.5M). Đây là thông tin quan trọng cho Risk Team khi đánh giá khả năng vay.
+          Nhóm 30+ có median 250K, nhóm dưới 30 chỉ 40K — chênh nhau hơn 6 lần về "user điển hình."
+          Nhưng điều đáng chú ý hơn: std của nhóm 30+ là 2.95 triệu — cho thấy trong nhóm này có cả user giao dịch rất nhỏ
+          lẫn rất lớn (8.5M). Một nhóm vừa có median cao vừa có variability lớn — đây là thông tin quan trọng cho Risk Team khi đánh giá khả năng vay.
         </p>
 
         <div className="border border-outline-variant/30 bg-surface-container rounded-xl divide-y divide-outline-variant/20 my-6">
