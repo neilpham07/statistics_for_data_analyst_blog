@@ -213,9 +213,9 @@ export function EDAContent() {
           </p>
           <div className="space-y-2 mt-1">
             {[
-              { from: 'Analytics Lead', msg: '"QR GMV giảm 12% so với tháng trước. Trước khi ai đó đưa ra kết luận — hãy hiểu dữ liệu trước đã."' },
+              { from: 'Analytics Lead', msg: '"QR TPV giảm 12% so với tháng trước. Trước khi ai đó đưa ra kết luận — hãy hiểu dữ liệu trước đã."' },
               { from: 'Growth Manager', msg: '"Acquisition campaign tháng này vẫn đang chạy bình thường. Nghĩa là vấn đề ở phía retention hay transaction?"' },
-              { from: 'Merchant BU', msg: '"Merchant mới onboard tháng trước có vẻ ổn. Vậy tại sao GMV lại giảm?"' },
+              { from: 'Merchant BU', msg: '"Merchant mới onboard tháng trước có vẻ ổn. Vậy tại sao TPV lại giảm?"' },
             ].map((q) => (
               <div key={q.from} className="flex gap-3 items-start">
                 <span className="font-ui-label text-[0.6875rem] text-secondary uppercase tracking-wider shrink-0 pt-0.5 w-24">
@@ -309,7 +309,7 @@ print(df.head())`}
             {
               step: '01',
               title: 'Hiểu Business Question',
-              body: 'Bạn đang cố trả lời câu hỏi gì? "QR GMV giảm ở nhóm nào?" hay "User segment nào đang churn?" — câu hỏi quyết định bạn nhìn vào cột nào, nhóm nào.',
+              body: 'Bạn đang cố trả lời câu hỏi gì? "QR TPV giảm ở nhóm nào?" hay "User segment nào đang churn?" — câu hỏi quyết định bạn nhìn vào cột nào, nhóm nào.',
               tags: ['Trước khi code'],
             },
             {
@@ -333,7 +333,7 @@ print(df.head())`}
             {
               step: '05',
               title: 'Tìm Relationships & Tóm tắt Insights',
-              body: 'GMV cao hơn ở nhóm nào? User segment nào giao dịch nhiều nhất? Province nào đang giảm? Correlation và groupby giúp trả lời những câu hỏi này.',
+              body: 'TPV cao hơn ở nhóm nào? User segment nào giao dịch nhiều nhất? Province nào đang giảm? Correlation và groupby giúp trả lời những câu hỏi này.',
               tags: ['Correlation', 'groupby', 'Visualization'],
             },
           ].map((item) => (
@@ -1162,7 +1162,7 @@ avg_amount         0.12          0.61        1.00
           SECTION 11 — Case Study
       ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="case-study" className="mb-16">
-        <SectionTitle id="case-study">11. Case Study: QR GMV giảm 12% — tìm nguyên nhân</SectionTitle>
+        <SectionTitle id="case-study">11. Case Study: QR TPV giảm 12% — tìm nguyên nhân</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
           Cuối tuần đầu tiên tại SnowTech. Bạn tổng hợp lại toàn bộ EDA và chuẩn bị trình bày
@@ -1174,7 +1174,7 @@ avg_amount         0.12          0.61        1.00
             {
               finding: 'Distribution: right-skewed',
               detail: 'Median QR transaction = 165K VND. Mean = 1.013M — bị inflate bởi Power Users. F&B là category phổ biến nhất (40% giao dịch) nhưng amount thấp nhất.',
-              implication: 'Nếu F&B transactions giảm, GMV giảm ít nhưng giao dịch count giảm nhiều. Nếu Retail giảm, GMV giảm nhiều hơn.',
+              implication: 'Nếu F&B transactions giảm, TPV giảm ít nhưng giao dịch count giảm nhiều. Nếu Retail giảm, TPV giảm nhiều hơn.',
             },
             {
               finding: 'Outlier: P_008 (8.5M VND)',
@@ -1184,12 +1184,12 @@ avg_amount         0.12          0.61        1.00
             {
               finding: 'Phân bổ địa lý: HCM + HN = 80%',
               detail: 'HCM: 40%, HN: 40%, DN: 20%. Không có outlier địa lý bất thường.',
-              implication: 'Nếu GMV giảm đều cả HCM lẫn HN → vấn đề toàn quốc. Nếu giảm tập trung ở một tỉnh → vấn đề local.',
+              implication: 'Nếu TPV giảm đều cả HCM lẫn HN → vấn đề toàn quốc. Nếu giảm tập trung ở một tỉnh → vấn đề local.',
             },
             {
               finding: 'Correlation: txn_count vs total_amount = 0.84',
               detail: 'User giao dịch thường xuyên hơn → tổng chi tiêu cao hơn. Nhưng tần suất không liên quan đến size mỗi giao dịch.',
-              implication: 'Nếu GMV giảm do Casual Users giảm tần suất F&B → chiến lược CRM: re-engage Casual Users, không phải upsell.',
+              implication: 'Nếu TPV giảm do Casual Users giảm tần suất F&B → chiến lược CRM: re-engage Casual Users, không phải upsell.',
             },
           ].map((f, i) => (
             <div key={i} className="border border-outline-variant/30 rounded-xl p-5">
@@ -1211,9 +1211,9 @@ avg_amount         0.12          0.61        1.00
             <p className="font-ui-label text-ui-label text-on-surface mb-1">3 Insights chính</p>
             <ul className="space-y-1">
               {[
-                'QR transactions tập trung ở F&B (frequency cao, amount thấp). Power Users chiếm số ít nhưng đóng góp GMV không cân xứng.',
-                'Casual Users là nhóm có F&B transaction nhiều nhất — nếu nhóm này giảm frequency, GMV count giảm mạnh dù revenue impact nhỏ hơn.',
-                'Correlation txn_count–total_amount cao (0.84) → re-engagement là đòn bẩy quan trọng hơn upsell để recover GMV.',
+                'QR transactions tập trung ở F&B (frequency cao, amount thấp). Power Users chiếm số ít nhưng đóng góp TPV không cân xứng.',
+                'Casual Users là nhóm có F&B transaction nhiều nhất — nếu nhóm này giảm frequency, TPV count giảm mạnh dù revenue impact nhỏ hơn.',
+                'Correlation txn_count–total_amount cao (0.84) → re-engagement là đòn bẩy quan trọng hơn upsell để recover TPV.',
               ].map((item, i) => (
                 <li key={i} className="flex gap-2 font-body-md text-body-md text-on-surface-variant">
                   <span className="text-secondary shrink-0">{i + 1}.</span>
@@ -1233,7 +1233,7 @@ avg_amount         0.12          0.61        1.00
 
         <Note>
           EDA không kết thúc bằng một kết luận dứt khoát — nó kết thúc bằng những câu hỏi tốt hơn.
-          "QR GMV giảm 12%" → sau EDA → "Cần hiểu tại sao Casual Users giảm F&B transaction.
+          "QR TPV giảm 12%" → sau EDA → "Cần hiểu tại sao Casual Users giảm F&B transaction.
           Cần survey — và cần Sampling để survey đúng cách." Đó là lý do Module 2 tồn tại.
         </Note>
       </section>
