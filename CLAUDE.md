@@ -18,26 +18,74 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Practical First** — Mọi khái niệm phải gắn với tình huống công việc thực tế, không phải lý thuyết giáo trình.
 - **Business Problem First** — Không bao giờ bắt đầu bằng định nghĩa. Luôn bắt đầu bằng câu hỏi kinh doanh.
-- **Ecommerce Dataset First** — Tất cả ví dụ dùng ShopNow dataset. Tránh ví dụ generic (điểm thi, chiều cao, thời tiết).
+- **Fintech Dataset First** — Tất cả ví dụ dùng SnowTech universe. Tránh ví dụ generic (điểm thi, chiều cao, thời tiết, coin toss, dice, Titanic, Iris).
 - **Beginner Friendly** — Giả định người đọc không có nền tảng thống kê. Giải thích intuition trước formula.
 - **Avoid Academic Style** — Không Greek notation không giải thích. Không proof. Không "Như chúng ta đã biết".
 - **Avoid AI-sounding Content** — Giọng văn ngắn gọn, trực tiếp như Senior DA nói chuyện với Junior — không lan man, không viết như AI generate.
 
 ---
 
-## Data Universe — ShopNow
+## Data Universe — SnowTech
 
-Toàn bộ module dùng chung **một** công ty E-Commerce giả lập: **ShopNow**.
+Toàn bộ module dùng chung **một** công ty Fintech Super App giả lập: **SnowTech** (tương tự MoMo).
 
-| Dataset | Mô tả |
+**Quy mô:** 30M users · 500K merchants · 100M transactions/tháng · 12M MAU
+
+**Nhân vật:** Analytics Lead Tuấn, CRM Manager Linh, Growth Manager, Product Manager, Risk Team — KHÔNG dùng CEO.
+
+| Table | Columns chính |
 |---|---|
-| `customers` | customer_id, age, gender, city, tier, registered_at |
-| `orders` | order_id, customer_id, order_date, revenue, status |
-| `order_items` | item_id, order_id, product_id, quantity, unit_price |
-| `products` | product_id, name, category, base_price |
-| `campaigns` | campaign_id, name, channel, start_date, budget, impressions |
-| `sessions` | session_id, customer_id, date, duration_sec, source |
-| `payments` | payment_id, order_id, method, amount, status |
+| `mart.fct_qr_payments` | payment_id, merchant_id, user_id, amount, province, category, payment_time |
+| `mart.fct_wallet_transactions` | transaction_id, user_id, amount, transaction_type, transaction_status, created_at |
+| `mart.fct_loans` | loan_id, user_id, disbursement_amount, interest_rate, term_month, repayment_status, overdue_days |
+| `mart.fct_campaign_events` | campaign_id, user_id, event_type, impression, click, conversion, event_time |
+| `mart.dim_user` | user_id, age, gender, province, signup_date, user_segment, kyc_status |
+| `mart.dim_merchant` | merchant_id, merchant_name, merchant_type, province, onboard_date, merchant_segment |
+
+**Storyline xuyên suốt:** EDA → QR GMV giảm 12% → Sampling → Survey push CTR → Inference → CI cho investment decision → A/B Test → ...
+
+Context file đầy đủ: `context/snowtech_universe.md` · Example rules: `examples/example_rules.md`
+
+---
+
+## Module Architecture
+
+Mỗi module gồm 3 file liên kết:
+
+```
+lib/data.ts                              ← slug + metadata (sidebar render từ đây)
+app/modules/[slug]/page.tsx              ← Metadata + 3-column layout shell
+components/modules/[Name]Content.tsx     ← Toàn bộ nội dung + export TocItems
+```
+
+**Quy tắc quan trọng:** `slug` trong `lib/data.ts → statisticsModules[]` phải khớp chính xác với tên thư mục `app/modules/[slug]/`. Nếu không khớp, sidebar sẽ link sai.
+
+**3-column layout pattern** (dùng trong mọi module page):
+```tsx
+<div className="flex max-w-container-max mx-auto pt-16 min-h-screen">
+  <ModuleSidebar />                          // hidden lg:block — 280px
+  <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-10">
+    <[Name]Content />
+  </main>
+  <TableOfContents items={[name]TocItems} /> // hidden xl:block — 208px
+</div>
+```
+
+`TableOfContents` dùng `xl:block` (không phải `lg:block`) — intentional. Ở 1024px, sidebar 280px + TOC 208px không đủ chỗ cho content.
+
+**TocItems** phải export từ content component và `id` phải khớp với `id` của `<h2>` trong JSX (`scroll-mt-24` required trên mọi H2).
+
+---
+
+## Modules hiện có
+
+| Module | Slug | File |
+|---|---|---|
+| 1 — EDA | `eda` | `EDAContent.tsx` |
+| 2 — Sampling | `sampling` | `SamplingContent.tsx` |
+| 3 — Statistical Inference | `inference` | `InferenceContent.tsx` |
+
+Module mới cần thêm entry vào `statisticsModules` trong `lib/data.ts`.
 
 ---
 
@@ -47,12 +95,14 @@ Các agent chuyên biệt nằm trong `.claude/agents/`. Gọi agent phù hợp 
 
 | Agent | Vai trò | Khi nào dùng |
 |---|---|---|
-| `content-writer` | Viết nội dung module theo đúng teaching structure | Khi bắt đầu viết hoặc rewrite một section |
+| `senior-data-analyst` | Review business realism, DA thinking, analytics workflow | Khi viết hoặc rewrite section |
+| `human-editor` | Loại bỏ AI tone, cắt 30%, viết như người thật | Sau khi có draft |
 | `learning-reviewer` | Review learning experience, beginner-friendliness, cognitive load | Sau khi viết xong draft |
-| `senior-data-analyst` | Review business realism, analytics workflow, real-world applicability | Song song với learning-reviewer |
 | `statistician` | Review statistical accuracy, misconceptions, mathematical correctness | Sau khi content ổn về mặt pedagogy |
 | `seo-reviewer` | Review SEO, metadata, internal links, search intent | Trước khi publish |
 | `ui-ux-reviewer` | Review UX, information architecture, reading + mobile experience | Khi thêm component mới hoặc thay đổi layout |
+
+Priority khi conflict: Beginner Experience > Business Thinking > Human Readability > Statistical Correctness > SEO.
 
 ---
 
@@ -71,5 +121,6 @@ npm run build        # Production build
 - Chỉ dùng design tokens trong className — **không dùng** Tailwind default palette (`red-*`, `blue-*`). Dùng `error`, `error-container`, `on-error-container` cho warning/error states.
 - Luôn chạy `npm run typecheck` trước khi commit.
 - Server component mặc định. `'use client'` chỉ khi cần browser API.
+- Module content components không cần `'use client'` — pure JSX, không có state.
 
 **Full technical docs:** `.claude/docs/` · **Design tokens:** `.claude/design/DESIGN.md`
