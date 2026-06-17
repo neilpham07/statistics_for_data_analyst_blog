@@ -399,14 +399,14 @@ print(df.head())`}
               type: 'Categorical — Nominal',
               icon: 'Aa',
               desc: 'Nhãn phân loại, không có thứ tự.',
-              examples: 'province, category, user_segment',
+              examples: 'province, category, gender',
               analysis: 'Mode, Value counts, Bar chart',
             },
             {
               type: 'Categorical — Ordinal',
               icon: '↑',
               desc: 'Nhãn có thứ tự có ý nghĩa.',
-              examples: 'kyc_status (pending/verified), merchant_segment',
+              examples: 'user_segment (Casual < Regular < Power), kyc_status, merchant_segment',
               analysis: 'Median, Ordered bar chart',
             },
           ].map((d) => (
@@ -440,10 +440,9 @@ user_id         object   ← categorical (ID)
 amount           int64   ← numerical continuous ✓
 province        object   ← categorical nominal
 category        object   ← categorical nominal
-user_segment    object   ← categorical nominal
-age              int64   ← numerical discrete ✓
+user_segment    object   ← categorical ordinal (Casual < Regular < Power)
+age              int64   ← numerical continuous ✓
 
-# Missing values:
 payment_id      0
 user_id         0
 amount          0
@@ -461,8 +460,9 @@ dtype: int64`}
         ]} />
 
         <QuickSummary items={[
-          'Numerical (amount, age): dùng mean, median, std, histogram.',
-          'Categorical (province, category, segment): dùng value_counts(), mode, bar chart.',
+          'Numerical continuous (amount, age): dùng mean, median, std, histogram.',
+          'Categorical nominal (province, category, gender): dùng value_counts(), mode, bar chart.',
+          'Categorical ordinal (user_segment, kyc_status): có thứ tự — dùng median và ordered chart.',
           'Luôn chạy df.info() và df.isnull().sum() trước khi bất kỳ phân tích nào khác.',
         ]} />
       </section>
@@ -497,18 +497,18 @@ print(df.groupby('category')['amount'].agg(['count', 'mean', 'median']))`}
         </Code>
         <Output>{`count         10.000000
 mean     1,013,000.000000   ← bị kéo cao bởi P_008
-std      2,598,441.000000
+std      2,635,186.000000
 min         22,000.000000
-25%         36,500.000000
+25%         47,500.000000
 50%        165,000.000000   ← median ổn định hơn
-75%        357,500.000000
+75%        365,000.000000
 max      8,500,000.000000
 
          count      mean  median
 category
-F&B          4    37,500  40,000   ← nhỏ, thanh toán hàng ngày
+F&B          4    37,500  36,500   ← nhỏ, thanh toán hàng ngày
 Health       2   165,000 165,000
-Retail       4 2,412,500 385,000   ← mean bị kéo cao bởi P_008`}
+Retail       4 2,412,500 415,000   ← mean bị kéo cao bởi P_008`}
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
@@ -666,8 +666,8 @@ Segment phổ biến nhất: Regular
 
 user_segment
 Power      320,000   ← median Power user cao hơn hẳn
-Regular    250,000
-Casual      40,000   ← median Casual user rất thấp (F&B chủ yếu)`}
+Regular    280,000
+Casual      28,000   ← median Casual user rất thấp (F&B chủ yếu)`}
         </Output>
 
         <Mistakes items={[
@@ -698,11 +698,11 @@ Casual      40,000   ← median Casual user rất thấp (F&B chủ yếu)`}
 
         <ScenarioBlock>
           <p>
-            Risk Team hỏi: <em>"Loan amount của hai nhóm user trẻ (dưới 30) và trung niên (30+) có khác nhau không?"</em>
+            Risk Team hỏi: <em>"QR transaction amount của hai nhóm user trẻ (dưới 30) và trung niên (30+) có khác nhau không?"</em>
           </p>
           <p>
-            Nếu chỉ nhìn median, câu trả lời có thể là "giống nhau." Nhưng nếu nhìn variability —
-            bức tranh hoàn toàn khác.
+            Nhìn vào Median: nhóm 30+ là 350K, nhóm dưới 30 chỉ 36.5K — chênh nhau gần 10 lần.
+            Nhưng Median chỉ là một nửa câu chuyện. Khi nhìn thêm variability, bức tranh rủi ro mới thực sự lộ diện.
           </p>
         </ScenarioBlock>
 
@@ -718,16 +718,16 @@ stats = df.groupby('age_group')['amount'].agg([
 ])
 print(stats)`}
         </Code>
-        <Output>{`          median          std     min       max       iqr
+        <Output>{`          median          std     min       max     iqr
 age_group
-30+       250,000  2,950,000  22,000  8,500,000  292,500
-Dưới 30    40,000     13,000  22,000     55,000   26,500`}
+30+       350,000  3,351,000 150,000  8,500,000  217,500
+Dưới 30    36,500     15,199  22,000     55,000   21,000`}
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Nhóm 30+ có median 250K, nhóm dưới 30 chỉ 40K — chênh nhau hơn 6 lần về "user điển hình."
-          Nhưng điều đáng chú ý hơn: std của nhóm 30+ là 2.95 triệu — cho thấy trong nhóm này có cả user giao dịch rất nhỏ
-          lẫn rất lớn (8.5M). Một nhóm vừa có median cao vừa có variability lớn — đây là thông tin quan trọng cho Risk Team khi đánh giá khả năng vay.
+          Nhóm 30+ có median 350K, nhóm dưới 30 chỉ 36.5K — chênh nhau gần 10 lần về "user điển hình."
+          Nhưng điều đáng chú ý hơn: std của nhóm 30+ là 3.35 triệu — cho thấy trong nhóm này có cả user giao dịch rất nhỏ
+          lẫn rất lớn (8.5M). Một nhóm vừa có median cao vừa có variability lớn — đây là thông tin quan trọng cho Risk Team khi đánh giá rủi ro.
         </p>
 
         <div className="border border-outline-variant/30 bg-surface-container rounded-xl divide-y divide-outline-variant/20 my-6">
@@ -803,24 +803,24 @@ values = np.percentile(df['amount'], percentiles)
 for p, v in zip(percentiles, values):
     print(f"P{p:2d}: {v:>10,.0f} VND")`}
         </Code>
-        <Output>{`P10:     25,300 VND   ← 10% user chi dưới mức này
-P25:     36,500 VND   ← Q1: 25% user chi dưới mức này
+        <Output>{`P10:     27,400 VND   ← 10% user chi dưới mức này
+P25:     47,500 VND   ← Q1: 25% user chi dưới mức này
 P50:    165,000 VND   ← Median
-P75:    357,500 VND   ← Q3: 75% user chi dưới mức này
-P90:    783,000 VND
-P95:  4,327,500 VND   ← bắt đầu vùng "Power User heavy"
-P99:  8,245,000 VND`}
+P75:    365,000 VND   ← Q3: 75% user chi dưới mức này
+P90:  1,255,000 VND
+P95:  4,877,500 VND   ← bắt đầu vùng "Power User heavy"
+P99:  7,775,500 VND`}
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Câu trả lời cho CRM Manager: ngưỡng P75 = 357,500 VND. User có transaction amount trên
+          Câu trả lời cho CRM Manager: ngưỡng P75 = 365,000 VND. User có transaction amount trên
           mức này thuộc top 25% theo chi tiêu.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-6">
           {[
             {
-              name: 'Q1 (P25) = 36,500 VND',
+              name: 'Q1 (P25) = 47,500 VND',
               desc: '25% giao dịch có amount dưới ngưỡng này. Chủ yếu là F&B Casual users.',
             },
             {
@@ -828,12 +828,12 @@ P99:  8,245,000 VND`}
               desc: 'Median — user điển hình của SnowTech chi khoảng này mỗi giao dịch QR.',
             },
             {
-              name: 'Q3 (P75) = 357,500 VND',
+              name: 'Q3 (P75) = 365,000 VND',
               desc: 'Ngưỡng top 25% user chi tiêu nhiều. Dùng để target segment CRM.',
             },
             {
-              name: 'IQR = Q3 − Q1 = 321,000 VND',
-              desc: '50% user "mainstream" chi trong khoảng 36,500 – 357,500 VND.',
+              name: 'IQR = Q3 − Q1 = 317,500 VND',
+              desc: '50% user "mainstream" chi trong khoảng 47,500 – 365,000 VND.',
             },
           ].map((q) => (
             <div key={q.name} className="border border-outline-variant/30 rounded-xl p-4">
@@ -935,26 +935,26 @@ P99:  8,245,000 VND`}
           Để phát hiện outlier một cách có hệ thống, dùng IQR Method:
         </p>
 
-        <Code>{`Q1  = df['amount'].quantile(0.25)   # 36,500
-Q3  = df['amount'].quantile(0.75)   # 357,500
-IQR = Q3 - Q1                       # 321,000
+        <Code>{`Q1  = df['amount'].quantile(0.25)   # 47,500
+Q3  = df['amount'].quantile(0.75)   # 365,000
+IQR = Q3 - Q1                       # 317,500
 
-lower_fence = Q1 - 1.5 * IQR       # 36,500 - 481,500 = -445,000 → không có outlier phía dưới
-upper_fence = Q3 + 1.5 * IQR       # 357,500 + 481,500 = 839,000
+lower_fence = Q1 - 1.5 * IQR       # 47,500 - 476,250 = -428,750 → không có outlier phía dưới
+upper_fence = Q3 + 1.5 * IQR       # 365,000 + 476,250 = 841,250
 
 outliers = df[df['amount'] > upper_fence]
 print(f"Upper fence: {upper_fence:,.0f} VND")
 print()
 print(outliers[['payment_id', 'user_id', 'amount', 'category', 'user_segment']])`}
         </Code>
-        <Output>{`Upper fence: 839,000 VND
+        <Output>{`Upper fence: 841,250 VND
 
   payment_id user_id    amount category user_segment
 7      P_008   U8901  8500000   Retail        Power`}
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          P_008 vượt ngưỡng 839,000 VND — là outlier theo IQR method.
+          P_008 vượt ngưỡng 841,250 VND — là outlier theo IQR method.
           Bước tiếp theo: điều tra xem đây là loại outlier nào.
         </p>
 
@@ -1085,40 +1085,48 @@ Amount:       8,500,000 VND
           tuyến tính giữa hai biến numerical. Giá trị từ −1 đến +1:
         </p>
 
-        <Code>{`# Tạo user-level aggregation từ transaction data
-import pandas as pd
+        <Code>{`# Query user-level stats từ mart.fct_qr_payments (full dataset)
+# SELECT user_id, COUNT(*) txn_count, SUM(amount) total_amount, AVG(amount) avg_amount
+# FROM mart.fct_qr_payments GROUP BY user_id
 
-# Giả lập user stats từ full dataset (12M MAU)
-user_stats = df.groupby('user_id').agg(
-    txn_count=('payment_id', 'count'),
-    total_amount=('amount', 'sum'),
-    avg_amount=('amount', 'mean'),
-).reset_index()
+# Sample 10 users từ kết quả — mỗi user có nhiều giao dịch
+user_stats = pd.DataFrame({
+    'user_id':      ['U1234','U5678','U2345','U6789','U3456',
+                     'U7890','U4567','U8901','U1357','U2468'],
+    'txn_count':    [12,     45,     8,      23,     31,
+                     6,      38,     52,     9,      27],
+    'total_amount': [540000, 14400000, 176000, 10350000, 5580000,
+                     168000, 5700000, 44200000, 495000, 10260000],
+    'avg_amount':   [45000,  320000,  22000,  450000,  180000,
+                     28000,  150000,  850000,  55000,  380000],
+})
 
 # Correlation matrix
 corr = user_stats[['txn_count', 'total_amount', 'avg_amount']].corr()
 print(corr.round(2))`}
         </Code>
         <Output>{`              txn_count  total_amount  avg_amount
-txn_count          1.00          0.84        0.12
-total_amount       0.84          1.00        0.61
-avg_amount         0.12          0.61        1.00
+txn_count          1.00          0.79        0.77
+total_amount       0.79          1.00        0.95
+avg_amount         0.77          0.95        1.00
 
-→ txn_count vs total_amount: r = 0.84 (correlation cao)
-→ txn_count vs avg_amount:   r = 0.12 (gần như không có correlation)`}
+→ txn_count vs total_amount: r = 0.79 (correlation cao)
+→ txn_count vs avg_amount:   r = 0.77 (cũng cao — Power User effect)`}
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Kết quả: user giao dịch nhiều hơn có tổng chi tiêu nhiều hơn (r=0.84 — strong positive).
-          Nhưng giao dịch nhiều hơn <em>không</em> có nghĩa là mỗi giao dịch lớn hơn (r=0.12 — gần zero).
-          Product Manager cần hiểu sự khác biệt này trước khi thiết kế feature.
+          Kết quả: user giao dịch nhiều hơn có tổng chi tiêu nhiều hơn (r=0.79 — strong positive).
+          Điều thú vị: txn_count cũng tương quan cao với avg_amount (r=0.77) — Power Users vừa giao dịch
+          thường xuyên vừa mua hàng giá trị lớn (Retail, thiết bị điện tử). Đây là dấu hiệu của
+          confounding variable: <em>user_segment</em> ảnh hưởng đến cả hai chiều.
+          Product Manager cần phân tích theo segment riêng trước khi kết luận bất kỳ điều gì.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
           {[
-            { range: '0.7 – 1.0', label: 'Strong Positive', color: 'text-secondary', example: 'txn_count vs total_amount (0.84)' },
-            { range: '0.3 – 0.7', label: 'Moderate', color: 'text-on-surface-variant', example: 'total_amount vs avg_amount (0.61)' },
-            { range: '0.0 – 0.3', label: 'Weak / No linear', color: 'text-on-surface-variant/50', example: 'txn_count vs avg_amount (0.12)' },
+            { range: 'r = 0.79', label: 'txn_count → total_amount', color: 'text-secondary', example: 'User giao dịch nhiều → tổng chi tiêu cao hơn' },
+            { range: 'r = 0.77', label: 'txn_count → avg_amount', color: 'text-secondary', example: 'Power Users vừa giao dịch nhiều vừa amount lớn hơn' },
+            { range: 'r = 0.95', label: 'total_amount → avg_amount', color: 'text-secondary', example: 'Avg per-transaction size drive total spend mạnh nhất' },
           ].map((c) => (
             <div key={c.range} className="border border-outline-variant/30 rounded-xl p-4 text-center">
               <p className={`font-code text-[0.875rem] font-semibold mb-1 ${c.color}`}>{c.range}</p>
@@ -1130,13 +1138,13 @@ avg_amount         0.12          0.61        1.00
 
         <WarningBlock title="⚠ Correlation ≠ Causation — Lỗi phổ biến nhất trong phân tích">
           <p>
-            r=0.84 giữa txn_count và total_amount <strong>không có nghĩa là</strong>{' '}
-            "tăng transaction frequency sẽ tăng tổng chi tiêu."
+            r=0.77 giữa txn_count và avg_amount <strong>không có nghĩa là</strong>{' '}
+            "tăng tần suất giao dịch sẽ làm user chi nhiều hơn mỗi lần."
           </p>
           <p>
-            Có thể cả hai đều bị ảnh hưởng bởi một biến thứ ba: <em>user engagement level</em>.
-            User engaged hơn thì vừa giao dịch nhiều hơn, vừa chi tiêu nhiều hơn — nhưng chỉ push
-            thêm notification không nhất thiết tạo ra engagement.
+            Cả hai đều bị ảnh hưởng bởi một biến thứ ba: <em>user_segment</em>.
+            Power Users vừa giao dịch thường xuyên hơn, vừa mua hàng giá trị cao hơn — không phải vì
+            tần suất cao gây ra amount cao. Chỉ tăng push notification không tạo ra Power User.
           </p>
           <p>
             Để xác nhận nhân quả, cần <strong>A/B Test</strong> — đó là Module 4.
@@ -1187,9 +1195,9 @@ avg_amount         0.12          0.61        1.00
               implication: 'Nếu TPV giảm đều cả HCM lẫn HN → vấn đề toàn quốc. Nếu giảm tập trung ở một tỉnh → vấn đề local.',
             },
             {
-              finding: 'Correlation: txn_count vs total_amount = 0.84',
-              detail: 'User giao dịch thường xuyên hơn → tổng chi tiêu cao hơn. Nhưng tần suất không liên quan đến size mỗi giao dịch.',
-              implication: 'Nếu TPV giảm do Casual Users giảm tần suất F&B → chiến lược CRM: re-engage Casual Users, không phải upsell.',
+              finding: 'Correlation: txn_count vs total_amount = 0.79',
+              detail: 'User giao dịch thường xuyên hơn → tổng chi tiêu cao hơn. txn_count và avg_amount đều strong (0.77) vì Power Users có cả hai chiều cao.',
+              implication: 'Nếu TPV giảm do Casual Users giảm tần suất F&B → chiến lược CRM: re-engage Casual Users. Cần phân tích theo segment để tránh kết luận sai.',
             },
           ].map((f, i) => (
             <div key={i} className="border border-outline-variant/30 rounded-xl p-5">
@@ -1213,7 +1221,7 @@ avg_amount         0.12          0.61        1.00
               {[
                 'QR transactions tập trung ở F&B (frequency cao, amount thấp). Power Users chiếm số ít nhưng đóng góp TPV không cân xứng.',
                 'Casual Users là nhóm có F&B transaction nhiều nhất — nếu nhóm này giảm frequency, TPV count giảm mạnh dù revenue impact nhỏ hơn.',
-                'Correlation txn_count–total_amount cao (0.84) → re-engagement là đòn bẩy quan trọng hơn upsell để recover TPV.',
+                'Correlation txn_count–total_amount (0.79) và txn_count–avg_amount (0.77) đều cao → cần phân tích theo segment để tách biệt hiệu ứng frequency vs size.',
               ].map((item, i) => (
                 <li key={i} className="flex gap-2 font-body-md text-body-md text-on-surface-variant">
                   <span className="text-secondary shrink-0">{i + 1}.</span>
