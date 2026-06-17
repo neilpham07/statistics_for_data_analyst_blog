@@ -427,12 +427,12 @@ print(sampling_frame['user_segment'].value_counts(normalize=True).mul(100).round
 user_segment
 Casual     60.0%   → 5,040,000 users
 Regular    35.0%   → 2,940,000 users
-Power       5.0%   →   420,000 users   ← chỉ 5% nhưng đóng góp ~60% GMV
+Power       5.0%   →   420,000 users   ← chỉ 5% nhưng đóng góp ~60% TPV
 Name: proportion, dtype: float64`}
         </Output>
 
         <Note>
-          Power Users chỉ chiếm 5% nhưng đóng góp ~60% GMV của SnowTech — đây là lý do
+          Power Users chỉ chiếm 5% nhưng đóng góp ~60% TPV của SnowTech — đây là lý do
           Stratified Sampling (Section 6) quan trọng hơn Simple Random Sampling trong bài toán này.
           Nếu chỉ random sample, bạn có thể chỉ lấy được ~100 Power Users trong 2,000 người — quá ít để phân tích riêng.
         </Note>
@@ -656,7 +656,7 @@ Name: count, dtype: int64`}
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
           Vấn đề lộ ra ngay: SRS cho ~90 Power Users trong sample — quá ít để phân tích riêng.
-          Power Users là nhóm đóng góp 60% GMV, và CRM Manager cần hiểu riêng hành vi của họ
+          Power Users là nhóm đóng góp 60% TPV, và CRM Manager cần hiểu riêng hành vi của họ
           với push notification. 90 người không đủ để rút ra kết luận đáng tin.
         </p>
 
@@ -956,7 +956,7 @@ Bootstrap std:    0.0107
             },
             {
               mistake: 'Dùng SRS khi có minority group quan trọng',
-              why: 'SRS cho ~90 Power Users trong 2,000 sample — không đủ để phân tích riêng nhóm đóng góp 60% GMV.',
+              why: 'SRS cho ~90 Power Users trong 2,000 sample — không đủ để phân tích riêng nhóm đóng góp 60% TPV.',
               fix: 'Dùng Stratified Sampling: over-sample Power Users lên 200 → phân tích riêng được, weight lại khi tổng hợp.',
             },
           ].map((m, i) => (

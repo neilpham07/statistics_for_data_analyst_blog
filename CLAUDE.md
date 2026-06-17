@@ -42,7 +42,7 @@ Toàn bộ module dùng chung **một** công ty Fintech Super App giả lập: 
 | `mart.dim_user` | user_id, age, gender, province, signup_date, user_segment, kyc_status |
 | `mart.dim_merchant` | merchant_id, merchant_name, merchant_type, province, onboard_date, merchant_segment |
 
-**Storyline xuyên suốt:** EDA → QR GMV giảm 12% → Sampling → Survey push CTR → Inference → CI cho investment decision → A/B Test → ...
+**Storyline xuyên suốt:** EDA → QR TPV giảm 12% → Sampling → Survey push CTR → Inference → CI cho investment decision → A/B Test → ...
 
 Context file đầy đủ: `context/snowtech_universe.md` · Example rules: `examples/example_rules.md`
 

@@ -918,7 +918,7 @@ else:
             {
               phase: 'Segment Analysis',
               finding: 'Power Users: 64% relevant. Regular: 65%. Casual: 66%.',
-              inference: 'Power Users thấy push ít relevant nhất — nhưng đây là nhóm đóng góp 60% GMV.',
+              inference: 'Power Users thấy push ít relevant nhất — nhưng đây là nhóm đóng góp 60% TPV.',
               implication: 'Personalization Engine cần ưu tiên Power Users với transaction-based targeting, không phải segment-based.',
             },
             {
