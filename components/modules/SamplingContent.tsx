@@ -93,7 +93,7 @@ function DADecision({ use, noUse, risk, decision }: {
   return (
     <div className="border border-secondary/25 bg-secondary/5 rounded-xl p-5 my-6">
       <p className="font-ui-label text-[0.625rem] text-secondary uppercase tracking-widest mb-4">
-        🎯 Nếu bạn là DA tại ShopNow
+        Nếu bạn là DA tại SnowTech
       </p>
       <div className="space-y-3">
         <div className="flex gap-3">
@@ -127,38 +127,38 @@ function DADecision({ use, noUse, risk, decision }: {
 
 function SamplingChecklist() {
   const items = [
-    { label: 'Population đã xác định chưa?', context: '"Chúng ta muốn kết luận về ai?" — phải trả lời câu này trước khi viết bất kỳ dòng code nào.' },
-    { label: 'Sampling Frame là gì?', context: 'Ai thực sự có thể tiếp cận? Khoảng cách giữa Population và Frame là bias bạn không thể xóa — chỉ có thể thừa nhận.' },
-    { label: 'Có bị thiếu nhóm khách hàng quan trọng không?', context: 'Offline customers, inactive accounts, khách mùa vụ — ai bị bỏ sót và điều đó ảnh hưởng gì đến kết luận?' },
-    { label: 'Có Sampling Bias không?', context: 'Response rate bao nhiêu? Ai không reply? Kênh phân phối survey có tạo selection bias không?' },
-    { label: 'Có cần Stratified Sampling không?', context: 'Có nhóm thiểu số quan trọng (VIP 5%) cần phân tích riêng không? Nếu có: Stratified, không phải SRS.' },
-    { label: 'Sample có đại diện không?', context: 'So sánh cơ cấu sample vs population theo customer_group, city, channel — sai lệch >5% từng nhóm là warning.' },
-    { label: 'Đã ghi rõ limitation của sample chưa?', context: '"Phân tích này dựa trên [n] khách hàng [điều kiện]. Không đại diện cho [nhóm bị bỏ sót]." — Câu này bắt buộc trong mọi báo cáo.' },
+    { label: 'Population được định nghĩa rõ', detail: '"30M user SnowTech" hay "8.4M user nhận push tháng 9"?' },
+    { label: 'Sampling frame có bao phủ đúng population', detail: 'Exclude user chưa KYC nếu họ không nhận được push.' },
+    { label: 'Sample size đủ lớn', detail: 'n=2,000 cho margin of error ~2% ở 95% CI.' },
+    { label: 'Phương pháp random hoặc stratified', detail: 'Tránh chỉ survey user active — đó là survivorship bias.' },
+    { label: 'Mỗi subgroup đủ lớn để phân tích riêng', detail: 'Nếu cần so sánh Power vs Casual: mỗi nhóm tối thiểu 100.' },
+    { label: 'Kết quả đi kèm confidence interval', detail: '"64% ± 2.1%" tốt hơn chỉ báo "64%".' },
   ]
   return (
-    <div className="border border-secondary/30 rounded-xl p-6 my-8">
-      <p className="font-ui-label text-[0.625rem] text-secondary uppercase tracking-widest mb-1">
-        Sampling Checklist — Dành cho Junior Data Analyst
-      </p>
-      <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-6">
-        Khi nhận yêu cầu khảo sát khách hàng — đi qua từng mục này trước khi bắt đầu.
-      </p>
-      <ul className="space-y-4">
+    <div className="border border-outline-variant/30 rounded-xl overflow-hidden my-6">
+      <div className="bg-surface-container px-5 py-3 border-b border-outline-variant/20">
+        <p className="font-ui-label text-[0.6875rem] text-on-surface font-semibold">
+          Sampling Checklist — trước khi bắt đầu bất kỳ survey nào
+        </p>
+      </div>
+      <div className="divide-y divide-outline-variant/20">
         {items.map((item, i) => (
-          <li key={i} className="flex gap-4">
-            <div className="w-5 h-5 rounded border-2 border-secondary/40 shrink-0 mt-0.5" />
-            <div>
-              <p className="font-ui-label text-ui-label text-on-surface">{item.label}</p>
-              <p className="font-body-md text-[0.75rem] text-on-surface-variant mt-0.5 leading-snug">{item.context}</p>
+          <div key={i} className="flex gap-4 px-5 py-3.5 hover:bg-surface-container/50 motion-safe:transition-colors">
+            <div className="w-5 h-5 rounded border-2 border-outline-variant/50 flex items-center justify-center shrink-0 mt-0.5">
+              <span className="w-2.5 h-2.5 rounded-sm bg-secondary/30" />
             </div>
-          </li>
+            <div>
+              <p className="font-body-md text-[0.8rem] text-on-surface font-medium">{item.label}</p>
+              <p className="font-body-md text-[0.75rem] text-on-surface-variant mt-0.5">{item.detail}</p>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   )
 }
 
-/* ── Standard Helpers ─────────────────────────────────────────────────────── */
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
 
 function SectionTitle({ id, children }: { id: string; children: React.ReactNode }) {
   return (
@@ -204,36 +204,6 @@ function WarningBlock({ title, children }: { title?: string; children: React.Rea
   )
 }
 
-function FlowRow({ nodes, caption }: {
-  nodes: Array<{ label: string; sub?: string; variant?: 'default' | 'primary' | 'warn' | 'ok' }>
-  caption?: string
-}) {
-  const cls: Record<string, string> = {
-    default: 'bg-surface-container border-outline-variant/40 text-on-surface',
-    primary: 'bg-secondary/10 border-secondary/40 text-secondary',
-    warn:    'bg-error-container/30 border-error-container text-on-error-container',
-    ok:      'bg-secondary/10 border-secondary/50 text-on-surface',
-  }
-  return (
-    <div className="my-6 overflow-x-auto">
-      <div className="flex items-center gap-2 min-w-fit pb-1">
-        {nodes.map((node, i) => (
-          <div key={i} className="flex items-center gap-2 shrink-0">
-            <div className={`border rounded-xl px-4 py-3 text-center min-w-[108px] ${cls[node.variant ?? 'default']}`}>
-              <div className="font-ui-label text-ui-label font-medium leading-tight">{node.label}</div>
-              {node.sub && <div className="text-[0.625rem] opacity-60 mt-0.5 leading-snug">{node.sub}</div>}
-            </div>
-            {i < nodes.length - 1 && (
-              <span className="text-on-surface-variant/40 text-base select-none">→</span>
-            )}
-          </div>
-        ))}
-      </div>
-      {caption && <p className="text-[0.6875rem] text-on-surface-variant/50 mt-2 font-ui-label">{caption}</p>}
-    </div>
-  )
-}
-
 function Mistakes({ items }: { items: string[] }) {
   return (
     <div className="border-l-2 border-error/50 bg-error-container/20 rounded-r-xl pl-5 py-4 pr-4 my-6">
@@ -270,6 +240,14 @@ function QuickSummary({ items }: { items: string[] }) {
   )
 }
 
+function IC({ children }: { children: string }) {
+  return (
+    <code className="font-code text-[0.875rem] bg-surface-container px-1.5 py-0.5 rounded text-secondary">
+      {children}
+    </code>
+  )
+}
+
 /* ── Main component ───────────────────────────────────────────────────────── */
 
 export function SamplingContent() {
@@ -277,31 +255,14 @@ export function SamplingContent() {
     <article className="max-w-[720px] py-8 lg:py-10 lg:pr-8">
 
       {/* ── Header ── */}
-      <p className="font-ui-label text-ui-label text-secondary uppercase tracking-widest mb-4">
-        Module 2
-      </p>
+      <p className="font-ui-label text-ui-label text-secondary uppercase tracking-widest mb-4">Module 2</p>
       <h1 className="font-display text-display text-on-surface mb-6 leading-[1.05]">
         Data Sampling
       </h1>
-
-      <div className="border border-outline-variant/30 bg-surface-container rounded-xl p-5 mb-8">
-        <p className="font-ui-label text-[0.625rem] text-secondary uppercase tracking-widest mb-3">
-          <a href="/modules/eda" className="text-secondary hover:underline">Tiếp nối từ Module 1 — EDA</a>
-        </p>
-        <p className="font-body-md text-body-md text-on-surface-variant">
-          Module EDA kết thúc với 3 insight: revenue lệch phải mạnh, 5% khách VIP tạo phần lớn
-          doanh thu, HCM và HN chiếm 80% thị trường. Tám phút sau khi bạn gửi báo cáo —
-        </p>
-        <p className="font-body-lg text-body-lg text-on-surface mt-3 italic">
-          "Good work. Nhưng những con số này có thật sự đại diện cho toàn bộ khách hàng không?
-          Chúng ta đang nói về 5 triệu người."
-        </p>
-        <p className="font-body-md text-[0.8rem] text-on-surface-variant/60 mt-2">— CEO, Slack, 08:55 sáng thứ Ba</p>
-      </div>
-
       <p className="font-body-lg text-body-lg text-on-surface-variant mb-10">
-        Câu hỏi đó dẫn đến một tuần làm việc mà bạn sẽ dùng lại nhiều lần trong sự nghiệp.
-        Đây là module về cách một Data Analyst suy nghĩ khi không thể đo toàn bộ.
+        SnowTech có 30 triệu user. Bạn không thể — và không cần — hỏi tất cả họ.
+        Sampling là kỹ năng chọn đúng người để hỏi, đúng cách, để câu trả lời
+        đại diện cho cả 30 triệu.
       </p>
 
       {/* ── Learning Objectives ── */}
@@ -311,18 +272,16 @@ export function SamplingContent() {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
-            'Giải thích tại sao sampling là cách làm đúng — không phải lối tắt',
-            'Phân biệt được Population, Sampling Frame và Sample trước khi viết query',
-            'Nhận ra Sampling Bias trước khi nó phá hỏng báo cáo của bạn',
-            'Chọn đúng giữa Random và Stratified Sampling trong từng tình huống',
-            'Dùng Bootstrap để trả lời "kết quả này có ổn định không?"',
-            'Viết phần Limitation trong báo cáo một cách trung thực và chuyên nghiệp',
-          ].map((obj, i) => (
-            <div key={i} className="flex gap-3 items-start">
-              <span className="text-secondary shrink-0 mt-0.5 font-ui-label">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span className="font-body-md text-body-md text-on-surface-variant">{obj}</span>
+            'Định nghĩa đúng Population và Sampling Frame cho mỗi survey',
+            'Phát hiện Sampling Bias trước khi nó làm hỏng kết quả',
+            'Chọn giữa Simple Random và Stratified Sampling',
+            'Tính sample size cần thiết để đạt margin of error mong muốn',
+            'Dùng Bootstrap để đánh giá độ ổn định của estimate',
+            'Thuyết phục stakeholder tại sao 2,000 user là đủ',
+          ].map((obj) => (
+            <div key={obj} className="flex gap-3 items-start">
+              <span className="text-secondary shrink-0 mt-0.5 font-semibold">✓</span>
+              <p className="font-body-md text-body-md text-on-surface-variant">{obj}</p>
             </div>
           ))}
         </div>
@@ -331,855 +290,776 @@ export function SamplingContent() {
       {/* ══════════════════════════════════════════════════════════════
           SECTION 1 — Tại sao Sampling tồn tại?
       ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
+      <section aria-labelledby="tai-sao-sampling" className="mb-16">
         <SectionTitle id="tai-sao-sampling">1. Tại sao Sampling tồn tại?</SectionTitle>
 
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Bạn đọc lại tin nhắn CEO. <em>"5 triệu người."</em> Ông ấy muốn biết những insight từ
-          EDA có đại diện cho toàn bộ không — và muốn hiểu sâu hơn về satisfaction của khách hàng
-          với giao hàng.
-        </p>
+        <SlackThread
+          channel="analytics-crm"
+          messages={[
+            {
+              from: 'CRM Manager Linh',
+              time: '9:14 SA',
+              text: 'Push CTR của chúng mình giảm từ 8% xuống 5.2% trong 3 tháng qua. Mình cần hiểu WHY. Có thể survey user không?',
+            },
+            {
+              from: 'DA Minh',
+              time: '9:18 SA',
+              text: 'Được. Hỏi hết 30M user hay một mẫu?',
+            },
+            {
+              from: 'CRM Manager Linh',
+              time: '9:19 SA',
+              text: 'Hỏi đủ để ra quyết định là được. Mình cần biết user nghĩ gì về push notification của mình.',
+            },
+            {
+              from: 'DA Minh',
+              time: '9:21 SA',
+              text: 'OK, mình đề xuất survey 2,000 user. Giải thích sau.',
+            },
+          ]}
+        />
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Bước đầu tiên bạn làm: kiểm tra scale thực sự của bài toán.
-        </p>
-
-        <Code>{`-- Data Warehouse, thứ Ba 09:02
-SELECT COUNT(DISTINCT customer_id) FROM orders;
--- 5,143,218
-
-SELECT COUNT(DISTINCT customer_id)
-FROM orders
-WHERE order_date >= DATE_TRUNC('month', CURRENT_DATE);
--- 1,247,891  (active trong tháng này)`}
-        </Code>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          1.2 triệu khách hàng có đơn hàng tháng này. CEO muốn biết họ cảm thấy thế nào về
-          giao hàng. Suy nghĩ đầu tiên của bạn: <em>khảo sát tất cả đi</em>.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Rồi bạn tính nhanh trên giấy:
+          CRM Manager Linh cần câu trả lời. Nhưng hỏi 30 triệu user là:
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
           {[
-            { label: 'Chi phí gửi SMS', value: '1.2M × 500₫', result: '= 600 triệu đồng' },
-            { label: 'Response rate thực tế', value: '~20%', result: '→ 240,000 phản hồi' },
-            { label: 'Xử lý phản hồi', value: '240K × 2 phút', result: '= 1,000 ngày/người' },
-          ].map((item) => (
-            <div key={item.label} className="bg-surface-container border border-outline-variant/30 rounded-xl p-4 text-center">
-              <p className="font-body-md text-[0.75rem] text-on-surface-variant mb-1">{item.label}</p>
-              <p className="font-ui-label text-ui-label text-on-surface">{item.value}</p>
-              <p className="font-body-md text-[0.8rem] text-secondary mt-1">{item.result}</p>
+            { label: 'Không thể về logistics', desc: 'Survey gửi đến 30M người → response rate 0.1% = 30,000 người cần review. Không ai làm được trong 1 tuần.' },
+            { label: 'Không cần thiết về thống kê', desc: 'Với 2,000 user được chọn đúng, margin of error chỉ ~2.2% — đủ chính xác để ra quyết định.' },
+            { label: 'Tốn kém không tương xứng', desc: 'Cost per survey × 30M >> Cost per survey × 2,000. Insight không tỷ lệ thuận với số người hỏi.' },
+          ].map((r) => (
+            <div key={r.label} className="border border-outline-variant/30 rounded-xl p-4">
+              <p className="font-ui-label text-ui-label text-on-surface mb-2">{r.label}</p>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant">{r.desc}</p>
             </div>
           ))}
         </div>
 
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          600 triệu đồng và 1,000 ngày làm việc nếu một người xử lý một mình — cho một báo cáo
-          cần có vào thứ Sáu. Không ai phê duyệt ngân sách đó. Không ai có thời gian đó.
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Đây là lý do Sampling tồn tại:{' '}
+          <strong className="text-on-surface">
+            bạn có thể rút ra kết luận đủ chính xác về cả 30 triệu user,
+            chỉ bằng cách hỏi đúng 2,000 người.
+          </strong>{' '}
+          Nhưng chỉ khi bạn chọn 2,000 người đó đúng cách.
         </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-2">
-          Không phải vì nhà thống kê thích lý thuyết. Mà vì thực tế <strong className="text-on-surface">
-          không bao giờ cho bạn đủ thời gian và tiền để đo tất cả</strong>.
-          Câu hỏi không phải "survey toàn bộ hay không?" — mà là
-          <strong className="text-on-surface"> "survey bao nhiêu người để kết quả đủ tin cậy?"</strong>
-        </p>
-
-        <FlowRow
-          nodes={[
-            { label: 'Câu hỏi CEO', sub: '1.2M customers', variant: 'primary' },
-            { label: 'Survey tất cả?', sub: '600M₫ · 4 ngày', variant: 'warn' },
-            { label: 'Chọn mẫu đại diện', sub: '~2,000 người', variant: 'default' },
-            { label: 'Tính toán', sub: 'Mean, CI, breakdown', variant: 'default' },
-            { label: 'Kết luận đủ tin cậy', sub: 'Sai lệch <0.5%', variant: 'ok' },
-          ]}
-          caption="Sampling không phải thỏa hiệp — đó là cách làm đúng trong thực tế"
-        />
 
         <Note>
-          EDA dùng data đã có sẵn trong database — không tốn chi phí thu thập.
-          Survey satisfaction thì phải đi hỏi từng người. Đó là lý do hai module dùng hai cách tiếp cận khác nhau.
+          Sampling không phải "hỏi ít người vì lười." Sampling là kỹ thuật có nguyên tắc
+          để lấy thông tin đại diện. Làm sai → kết quả lệch → quyết định sai. Làm đúng →
+          2,000 người nói lên tiếng nói của 30 triệu.
         </Note>
-
-        <DADecision
-          use="Mọi lúc cần thu thập dữ liệu chủ động (survey, user interview, usability test) mà không thể tiếp cận toàn bộ đối tượng. Database transaction thì không cần — full data đã có sẵn."
-          noUse="Khi bạn đã có full data trong database và query không ảnh hưởng production. Đừng sample dữ liệu đã có sẵn chỉ vì quen tay."
-          risk="Nhầm giữa 'có full data' và 'cần sampling': phân tích orders thì dùng toàn bộ bảng orders; khảo sát satisfaction thì phải sampling."
-          decision="Với bài toán CEO: survey 2,000 người từ 1.2M active customers. Chi phí 1 triệu đồng, xong trong 2 ngày, sai lệch <0.5%."
-        />
-
-        <QuickSummary items={[
-          'Sampling tồn tại vì thu thập toàn bộ thường không khả thi về thời gian, chi phí, và hạ tầng.',
-          '2,000 người với SRS cho margin of error ~2% ở mức 95% confidence cho overall estimate — đủ để ra quyết định tổng thể. Nếu cần phân tích theo nhóm nhỏ (VIP, một thành phố), cần Stratified.',
-          'Phân biệt: data transaction (đã có, dùng toàn bộ) vs data survey (phải thu thập, phải sampling).',
-        ]} />
       </section>
+
+      <hr className="border-outline-variant/20 mb-16" />
 
       {/* ══════════════════════════════════════════════════════════════
           SECTION 2 — Population vs Sample
       ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
+      <section aria-labelledby="population-vs-sample" className="mb-16">
         <SectionTitle id="population-vs-sample">2. Population vs Sample</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Thứ Ba 10:00. Bạn vào cuộc họp team để align về scope của survey.
-          Cuộc họp kéo dài 45 phút hơn dự kiến — vì một câu hỏi tưởng đơn giản:
-          <em> "Chúng ta khảo sát khách hàng nào?"</em>
+          Trước khi chọn sample, phải định nghĩa rõ ba khái niệm — vì mỗi khái niệm có thể
+          cho kết quả rất khác nhau nếu định nghĩa sai.
         </p>
 
-        <SlackThread
-          channel="data-team"
-          messages={[
-            { from: 'PM Linh', text: 'Survey toàn bộ khách hàng ShopNow nhé. CEO muốn insight tổng thể.', time: '10:03' },
-            { from: 'Analytics Lead Tuấn', text: 'Toàn bộ nghĩa là gì? 5.1M tài khoản đã đăng ký? 1.2M có đơn tháng này? Hay 400K người mở email marketing tuần trước?', time: '10:07' },
-            { from: 'PM Linh', text: '...khác nhau à?', time: '10:09' },
-            { from: 'Analytics Lead Tuấn', text: 'Ba con số đó sẽ cho ba kết quả khác nhau. Phải quyết định trước khi làm.', time: '10:11' },
-          ]}
-        />
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Tuấn hỏi đúng câu cần hỏi. Ba khái niệm dưới đây nghe đơn giản — nhưng lẫn lộn giữa
-          chúng là lý do phổ biến nhất khiến Junior DA phải làm lại survey từ đầu.
-        </p>
-
-        <FlowRow
-          nodes={[
-            { label: 'Population', sub: '5.1M tài khoản\n— muốn kết luận về nhóm này', variant: 'primary' },
-            { label: 'Sampling Frame', sub: '1.2M có đơn\n— có thể tiếp cận nhóm này', variant: 'default' },
-            { label: 'Sample', sub: '2,000 người\n— thực sự khảo sát nhóm này', variant: 'ok' },
-            { label: 'Inference', sub: '→ kết luận\nvề Population', variant: 'primary' },
-          ]}
-          caption="Ba nhóm này luôn khác nhau. Khoảng cách giữa chúng là nguồn gốc của mọi sai lệch."
-        />
-
-        <div className="border border-outline-variant/30 bg-surface-container rounded-xl divide-y divide-outline-variant/20 my-6">
+        <div className="border border-outline-variant/30 rounded-xl overflow-hidden my-6 divide-y divide-outline-variant/20">
           {[
             {
               term: 'Population',
-              desc: 'Tất cả đối tượng bạn muốn kết luận về. CEO hỏi về "toàn bộ khách hàng ShopNow" — đó là 5.1 triệu tài khoản.',
+              def: 'Toàn bộ đối tượng bạn muốn rút ra kết luận.',
+              snowtech: '30 triệu user SnowTech hiện có trong hệ thống.',
+              trap: 'Đừng định nghĩa quá rộng — nếu bạn chỉ care về user active, population là 12M MAU, không phải 30M.',
             },
             {
               term: 'Sampling Frame',
-              desc: 'Danh sách bạn thực sự có thể gửi survey đến. Chỉ có thể liên hệ 1.2 triệu khách có đơn tháng này. 3.9 triệu còn lại: không có số điện thoại active, không mở email, hoặc đã ngừng mua.',
+              def: 'Danh sách thực tế bạn có thể rút sample từ đó.',
+              snowtech: '8.4M user đã nhận push notification tháng 9 (có trong mart.fct_campaign_events).',
+              trap: '(Section 4 sẽ quay lại Sampling Frame.) Nếu Sampling Frame không bao phủ đủ Population, kết quả sẽ lệch — đây chính là nguồn gốc của Sampling Bias.',
             },
             {
               term: 'Sample',
-              desc: '2,000 người bạn thực sự khảo sát — được chọn từ Sampling Frame.',
+              def: 'Tập con được chọn ra từ Sampling Frame để khảo sát.',
+              snowtech: '2,000 user được chọn ngẫu nhiên từ 8.4M người trong frame.',
+              trap: 'Sample phải đại diện cho Population — không phải chỉ cho Sampling Frame.',
             },
           ].map((item) => (
-            <div key={item.term} className="px-5 py-4 flex gap-4 items-start">
-              <span className="font-ui-label text-ui-label text-secondary shrink-0 min-w-[120px]">{item.term}</span>
-              <p className="font-body-md text-[0.8rem] text-on-surface-variant">{item.desc}</p>
+            <div key={item.term} className="px-5 py-4">
+              <p className="font-ui-label text-ui-label text-secondary mb-1">{item.term}</p>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-1">{item.def}</p>
+              <p className="font-body-md text-[0.75rem] text-on-surface mb-1">
+                <span className="font-medium">SnowTech: </span>{item.snowtech}
+              </p>
+              <p className="font-body-md text-[0.75rem] text-on-surface-variant/60 italic">{item.trap}</p>
             </div>
           ))}
         </div>
 
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Lỗi mình hay thấy Junior mắc nhất: define Population quá rộng ("toàn bộ khách hàng")
-          trong khi Sampling Frame chỉ có data của tháng này. Hai cái đó không khớp — và kết quả
-          cuối cùng sẽ lệch theo cái khoảng cách đó, dù bạn làm mọi thứ khác đúng hoàn toàn.
-        </p>
+        <Code>{`import pandas as pd
+import numpy as np
 
-        <WarningBlock title="⚠ Survivorship Bias ẩn ngay trong bài toán này">
-          <p>
-            3.9 triệu tài khoản không active tháng này — họ không phải không tồn tại.
-            Một phần trong số họ đã <strong>ngừng mua vì không hài lòng</strong> và bạn không bao giờ
-            nghe được tiếng nói của họ.
-          </p>
-          <p>
-            EDA của module trước cũng chỉ nhìn thấy người đang mua — không nhìn thấy người đã rời đi.
-            Đây là giới hạn tự nhiên của mọi data analysis: bạn chỉ đo được người còn ở lại.
-            (Section 4 sẽ quay lại Survivorship Bias cùng với ba loại bias phổ biến khác.)
-          </p>
-          <p>
-            Không thể sửa được — nhưng phải thừa nhận trong báo cáo.
-          </p>
-        </WarningBlock>
+# Giả lập: 8.4M user đã nhận push (sampling frame của chúng ta)
+np.random.seed(42)
+n_frame = 8_400_000
 
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Quyết định của team sau 45 phút: <em>Sampling Frame = 1.2M khách có đơn tháng 6.
-          CEO sẽ được thông báo kết quả này không đại diện cho 3.9M tài khoản không active.</em>
-        </p>
+sampling_frame = pd.DataFrame({
+    'user_id':      [f'U{i:07d}' for i in range(n_frame)],
+    'user_segment': np.random.choice(
+        ['Power', 'Regular', 'Casual'],
+        p=[0.05, 0.35, 0.60],         # 5% Power, 35% Regular, 60% Casual
+        size=n_frame
+    ),
+    'province':     np.random.choice(
+        ['HCM', 'HN', 'DN', 'Khác'],
+        p=[0.35, 0.35, 0.10, 0.20],
+        size=n_frame
+    ),
+})
 
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Đây là quyết định đúng. Không phải vì 1.2M là con số "tốt hơn" — mà vì đó là
-          con số <strong className="text-on-surface">bạn có thể đứng sau và giải thích được</strong>.
-        </p>
+print(f"Sampling Frame: {len(sampling_frame):,} users")
+print()
+print(sampling_frame['user_segment'].value_counts(normalize=True).mul(100).round(1))`}
+        </Code>
+        <Output>{`Sampling Frame: 8,400,000 users
 
-        <DADecision
-          use="Trước mọi analysis — kể cả EDA. Hỏi ngay: 'Kết luận này áp dụng cho ai?' Trả lời câu đó trước khi viết dòng code đầu tiên."
-          noUse="Mình biết sếp sẽ giục. Vẫn phải xác định scope trước — làm không có scope thì gần như chắc chắn phải làm lại, và lần đó tốn thời gian hơn nhiều."
-          risk="Mở rộng kết luận ra ngoài Sampling Frame mà không nói rõ. 'Khách hàng ShopNow hài lòng 3.7/5' nghe khác với 'Khách hàng có đơn tháng 6 hài lòng 3.7/5' — nhưng Junior DA hay dùng câu đầu."
-          decision="Trong slide báo cáo: luôn có một dòng nhỏ 'Phân tích dựa trên 1.2M khách có đơn tháng 6/2024. Không bao gồm 3.9M tài khoản không active.' — Đây không phải dấu hiệu yếu. Đây là dấu hiệu của DA biết mình đang làm gì."
-        />
+user_segment
+Casual     60.0%   → 5,040,000 users
+Regular    35.0%   → 2,940,000 users
+Power       5.0%   →   420,000 users   ← chỉ 5% nhưng đóng góp ~60% GMV
+Name: proportion, dtype: float64`}
+        </Output>
 
-        <Mistakes items={[
-          'Dùng Sampling Frame như thể là Population — báo cáo "khách hàng ShopNow hài lòng X%" khi thực tế chỉ đo được người đang active.',
-          'Bỏ qua việc xác định Population trước khi sampling — sau khi có kết quả mới nhận ra câu hỏi ban đầu không rõ ràng.',
-          'Không ghi Sampling Frame trong báo cáo — stakeholder đọc xong hiểu nhầm phạm vi, ra quyết định sai.',
-        ]} />
+        <Note>
+          Power Users chỉ chiếm 5% nhưng đóng góp ~60% GMV của SnowTech — đây là lý do
+          Stratified Sampling (Section 6) quan trọng hơn Simple Random Sampling trong bài toán này.
+          Nếu chỉ random sample, bạn có thể chỉ lấy được ~100 Power Users trong 2,000 người — quá ít để phân tích riêng.
+        </Note>
 
         <QuickSummary items={[
-          'Population: muốn kết luận về ai. Sampling Frame: thực sự có thể tiếp cận ai. Sample: thực sự đo ai. Ba cái này luôn khác nhau.',
-          'Khoảng cách Population → Sampling Frame là bias tự nhiên của mọi survey — không thể xóa, chỉ có thể thừa nhận.',
-          'Quyết định Sampling Frame trước khi viết code. Ghi rõ nó trong mọi báo cáo.',
+          'Population: tất cả người bạn care (30M user). Sampling Frame: danh sách thực tế bạn có (8.4M nhận push). Sample: 2,000 người bạn hỏi.',
+          'Population ≠ Sampling Frame — đây là nguồn gốc của Coverage Bias.',
+          'Định nghĩa Population sai → câu trả lời đúng về sai đối tượng.',
         ]} />
       </section>
+
+      <hr className="border-outline-variant/20 mb-16" />
 
       {/* ══════════════════════════════════════════════════════════════
           SECTION 3 — Một mẫu tốt là gì?
       ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
+      <section aria-labelledby="mau-tot-la-gi" className="mb-16">
         <SectionTitle id="mau-tot-la-gi">3. Một mẫu tốt là gì?</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Thứ Ba 14:00. Bạn bắt đầu lấy sample đầu tiên.
-          Tưởng đơn giản. Nhưng intern của team đề xuất một cái gì đó khiến mọi người im lặng:
+          "Mẫu tốt" không phải là "mẫu lớn." Một mẫu 2,000 người được chọn đúng tốt hơn
+          mẫu 200,000 người được chọn sai. Hai tiêu chí quan trọng nhất:
         </p>
 
-        <SlackThread
-          channel="data-team"
-          messages={[
-            { from: 'Intern Minh', text: 'Hay mình chỉ khảo sát khách VIP thôi? Họ là nhóm quan trọng nhất theo EDA mà.', time: '14:03' },
-            { from: 'Analytics Lead Tuấn', text: 'Nếu làm vậy, kết quả sẽ nói lên điều gì?', time: '14:05' },
-            { from: 'Intern Minh', text: '...điều gì khách VIP cảm thấy?', time: '14:07' },
-            { from: 'Analytics Lead Tuấn', text: 'Đúng. Không phải điều toàn bộ khách hàng cảm thấy. CEO hỏi câu nào?', time: '14:08' },
-          ]}
-        />
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          <strong className="text-on-surface">Sample của bạn trả lời được câu hỏi của ai?</strong>{' '}
-          Đó là câu hỏi cần trả lời trước khi chọn bất kỳ ai.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Hãy xem ba cách lấy sample phổ biến nhất — và hậu quả của từng cách:
-        </p>
-
-        <div className="my-6 space-y-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-6">
           {[
             {
-              approach: 'Khảo sát chỉ khách VIP',
-              who: 'Ai được nghe: 60,000 khách VIP (5% population)',
-              bias: 'VIP có dedicated support, giao hàng ưu tiên → score cao hơn thực tế tổng thể',
-              result: 'Score: 4.3/5 → CEO kết luận "giao hàng đang tốt" → không đầu tư cải thiện → 95% khách Normal tiếp tục chịu trải nghiệm kém',
-              verdict: 'warn' as const,
+              criterion: 'Representative',
+              desc: 'Phân phối của mẫu phản ánh đúng phân phối của population.',
+              good: 'Sample 2,000 người có 5% Power Users — giống population.',
+              bad: 'Sample có 40% Power Users — không đại diện.',
             },
             {
-              approach: 'Khảo sát chỉ khách dùng App',
-              who: 'Ai được nghe: 780,000 khách App (65%)',
-              bias: 'App users tech-savvy hơn, track đơn tốt hơn, ít friction hơn → score cao hơn Web/Offline',
-              result: 'Score: 3.8/5 → bỏ qua 35% khách Web và Offline đang có trải nghiệm tệ nhất',
-              verdict: 'warn' as const,
+              criterion: 'Sufficient Size',
+              desc: 'Đủ lớn để Margin of Error chấp nhận được với mức confidence mong muốn.',
+              good: 'n=2,000 → MoE ≈ ±2.2% ở 95% CI — đủ để ra quyết định.',
+              bad: 'n=50 → MoE ≈ ±14% — khoảng quá rộng để có nghĩa.',
             },
-            {
-              approach: 'Random sample từ toàn bộ Sampling Frame',
-              who: 'Ai được nghe: mọi nhóm có xác suất bằng nhau',
-              bias: 'Không có selection bias có hệ thống',
-              result: 'Score: 3.7/5 → gần với ground truth. CEO có thông tin đúng để ra quyết định.',
-              verdict: 'ok' as const,
-            },
-          ].map((item) => (
-            <div key={item.approach} className={`border rounded-xl overflow-hidden ${item.verdict === 'warn' ? 'border-error-container' : 'border-secondary/30'}`}>
-              <div className={`px-5 py-3 ${item.verdict === 'warn' ? 'bg-error-container/20' : 'bg-secondary/5'}`}>
-                <p className={`font-ui-label text-ui-label ${item.verdict === 'warn' ? 'text-on-error-container' : 'text-secondary'}`}>
-                  {item.verdict === 'warn' ? '❌' : '✓'} {item.approach}
-                </p>
-              </div>
-              <div className="px-5 py-4 space-y-1.5">
-                <p className="font-body-md text-[0.8rem] text-on-surface-variant"><span className="text-on-surface font-medium">Ai được nghe:</span> {item.who.replace('Ai được nghe: ', '')}</p>
-                <p className="font-body-md text-[0.8rem] text-on-surface-variant"><span className="text-on-surface font-medium">Vấn đề:</span> {item.bias}</p>
-                <p className="font-body-md text-[0.8rem] text-on-surface-variant"><span className="text-on-surface font-medium">Hệ quả:</span> {item.result}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Sample tốt không phải sample lớn — là sample <strong className="text-on-surface">đại diện</strong>.
-          Cơ cấu của sample phải phản ánh đúng cơ cấu của population bạn muốn kết luận về.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Ba tiêu chí để đánh giá:
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
-          {[
-            { num: '01', title: 'Đại diện', desc: 'Cơ cấu sample khớp với population. VIP 5% → sample cũng ~5% VIP. HCM 40% → sample cũng ~40% HCM.' },
-            { num: '02', title: 'Ngẫu nhiên', desc: 'Mỗi người trong Sampling Frame có cơ hội bằng nhau được chọn. Không ưu tiên, không lọc, không tiện tay.' },
-            { num: '03', title: 'Đủ lớn', desc: 'Đủ để kết quả ổn định khi lấy lại. Với population triệu người: 1,000–2,000 thường là đủ.' },
           ].map((c) => (
-            <div key={c.num} className="bg-surface-container border border-outline-variant/30 rounded-xl p-4">
-              <p className="font-ui-label text-[0.625rem] text-secondary uppercase tracking-wider mb-2">{c.num}</p>
-              <p className="font-ui-label text-ui-label font-semibold text-on-surface mb-1">{c.title}</p>
-              <p className="font-body-md text-[0.8rem] text-on-surface-variant leading-snug">{c.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        <DADecision
-          use="Trước khi gửi survey: kiểm tra xem cơ cấu sample (VIP/Normal, city, channel) có khớp với population không. Nếu lệch >5% bất kỳ nhóm nào — resample."
-          noUse="Đừng sample theo những gì tiện lợi: không phải 2,000 người đầu tiên trong database, không phải người đang online, không phải người dễ liên hệ nhất."
-          risk="Convenience sampling tạo systematic bias — kết quả trông có vẻ đủ lớn nhưng luôn lệch về cùng một hướng và không thể sửa sau khi đã collect data."
-          decision="ShopNow: sau khi lấy random sample 2,000 người, chạy check nhanh: tỷ lệ VIP/Normal, HCM/tỉnh có khớp với population không? Nếu VIP ra <3% hoặc >7% thì resample."
-        />
-
-        <QuickSummary items={[
-          'Sample tốt = đại diện + ngẫu nhiên + đủ lớn. Thiếu một trong ba — kết quả không đáng tin.',
-          'Convenience sampling (lấy người dễ tiếp cận) tạo bias có hệ thống. Không thể sửa sau khi collect.',
-          'Sau khi lấy sample: kiểm tra cơ cấu so với population. Đây là QA bắt buộc trước khi gửi survey.',
-        ]} />
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          SECTION 4 — Sampling Bias
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
-        <SectionTitle id="sampling-bias">4. Sampling Bias</SectionTitle>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Thứ Năm 09:00. Survey đã gửi đi. 2,000 tin nhắn SMS.
-          Kết quả bắt đầu về. Đến 14:00, bạn nhìn vào dashboard:
-          400 phản hồi — response rate 20%.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Bạn bắt đầu tính mean. Analytics Lead Tuấn đi ngang qua, nhìn màn hình và hỏi một câu
-          khiến bạn dừng lại:
-        </p>
-
-        <SlackThread
-          channel="data-analytics"
-          messages={[
-            { from: 'Analytics Lead Tuấn', text: '1,600 người không reply — họ là ai?', time: '14:23' },
-            { from: 'Bạn', text: 'Họ... không reply thôi.', time: '14:25' },
-            { from: 'Analytics Lead Tuấn', text: 'Người hài lòng có xu hướng im lặng. Người tức giận thì hay phản hồi. Kết quả của bạn đang đo gì — satisfaction của 400 người hay của 2,000 người?', time: '14:27' },
-          ]}
-        />
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Đây là <strong className="text-on-surface">Sampling Bias</strong> — sai lệch xảy ra không phải
-          vì sample quá nhỏ, mà vì cách thu thập dữ liệu khiến một số nhóm có xác suất được đo
-          cao hơn hoặc thấp hơn thực tế.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Đây là <strong className="text-on-surface">Non-response Bias</strong> — loại bias xuất
-          hiện ngay trong bài toán này. 1,600 người không reply không phải ngẫu nhiên. Nghiên cứu
-          về survey behavior thường cho thấy người cảm xúc trung lập ít reply nhất, trong khi
-          người rất hài lòng hoặc rất bực bội có xu hướng phản hồi cao hơn. Kết quả của bạn có
-          thể đang bị kéo về một trong hai phía cực đoan, không phản ánh đúng silent majority.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-3">
-          Trong thực tế, bạn sẽ gặp thêm ba loại bias khác:
-        </p>
-
-        <div className="space-y-2 my-4">
-          {[
-            {
-              name: 'Survivorship Bias',
-              desc: '3.9M tài khoản không active không có trong Sampling Frame. Một số trong đó đã rời đi vì giao hàng tệ — bạn không bao giờ nghe được tiếng nói của họ.',
-            },
-            {
-              name: 'Selection Bias',
-              desc: 'Gửi survey qua App notification thay vì SMS → chỉ App users nhận được. 35% khách Web và Offline bị bỏ sót, trong khi họ thường có trải nghiệm kém hơn.',
-            },
-            {
-              name: 'Recency Bias',
-              desc: 'Chỉ khảo sát tháng 6 — khách mua mùa Tết hay 11.11 có hành vi và kỳ vọng khác. Kết quả không đại diện cho cả năm.',
-            },
-          ].map((b) => (
-            <div key={b.name} className="flex gap-3 px-4 py-3 border border-outline-variant/20 rounded-xl">
-              <span className="text-secondary shrink-0 font-ui-label text-ui-label mt-0.5">→</span>
-              <p className="font-body-md text-[0.8rem] text-on-surface-variant">
-                <span className="font-medium text-on-surface">{b.name}: </span>{b.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <WarningBlock title="⚠ Bias nguy hiểm hơn sample size nhỏ">
-          <p>
-            Sample 10,000 người nhưng toàn self-selected (tình nguyện reply) = <strong>kết quả sai hệ thống</strong>.
-          </p>
-          <p>
-            Sample 500 người thiết kế cẩn thận = <strong>kết quả đủ tin cậy</strong>.
-          </p>
-          <p>
-            Tăng sample size không chữa được bias. Bias phải được xử lý ở thiết kế, không phải ở số lượng.
-          </p>
-        </WarningBlock>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Biết tên các loại bias là bước đầu. Trong thực tế, khi nào cần check và cần làm gì?
-        </p>
-
-        <DADecision
-          use="Bias check là bước bắt buộc ngay khi nhận được kết quả survey — trước khi tính bất kỳ con số nào. Hỏi: 'Ai không reply? Tại sao? Họ có khác người reply không?'"
-          noUse="Không được bỏ qua bias check dù deadline gấp. Một báo cáo sai còn tệ hơn một báo cáo muộn. Trình bày kết quả bị bias cho CEO rồi bị phát hiện sau — ảnh hưởng uy tín lâu dài."
-          risk="Response rate thấp (<30%) là warning sign lớn nhất. Không phải kết quả tệ — mà là tín hiệu bạn cần điều tra thêm trước khi kết luận."
-          decision="ShopNow survey: response rate 20% → ghi vào slide 'Kết quả có thể bị ảnh hưởng bởi non-response bias. Người trung tính ít phản hồi nhất.' CEO cần biết điều này để calibrate quyết định."
-        />
-
-        <Mistakes items={[
-          'Tính mean từ 400 phản hồi rồi báo cáo như thể đó là ý kiến của 2,000 người — silent majority có thể rất khác.',
-          '"Response rate cao = không có bias" — sai. Nếu chỉ người hài lòng reply thì 70% response rate vẫn bị bias.',
-          'Chỉ ghi "n=400" trong báo cáo mà không ghi "gửi đến 2,000, response rate 20%" — stakeholder mất context quan trọng.',
-        ]} />
-
-        <QuickSummary items={[
-          'Bias là sai lệch hệ thống do cách thu thập — không thể chữa bằng sample size lớn hơn.',
-          'Bốn loại phổ biến: Non-response, Survivorship, Selection, Recency. Biết tên là biết cách phòng tránh.',
-          'Khi response rate <30%: bắt buộc điều tra "ai không reply" trước khi kết luận bất cứ điều gì.',
-        ]} />
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          SECTION 5 — Random Sampling
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
-        <SectionTitle id="random-sampling">5. Random Sampling</SectionTitle>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Câu trả lời ngắn: <strong className="text-on-surface">loại bỏ human judgment ra khỏi quá trình chọn người</strong>.
-          Mọi lần bạn quyết định "chọn người này vì tiện", bạn đang đưa bias vào.
-          Cách duy nhất để công bằng: để ngẫu nhiên quyết định.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Đây là <strong className="text-on-surface">Simple Random Sampling (SRS)</strong>:
-          mỗi người trong Sampling Frame có xác suất bằng nhau được chọn — không điều kiện,
-          không lọc, không ưu tiên.
-        </p>
-
-        <Code>{`import pandas as pd
-import numpy as np
-np.random.seed(42)           # cố định để reproducible
-
-# df_shopnow: 1.2M active customers (Sampling Frame)
-sample = df_shopnow.sample(n=2000, random_state=42)
-
-# Kiểm tra cơ cấu
-for col in ['customer_group', 'city']:
-    pop_pct = df_shopnow[col].value_counts(normalize=True).mul(100)
-    s_pct   = sample[col].value_counts(normalize=True).mul(100)
-    diff    = (pop_pct - s_pct).abs().max()
-    print(f"{'✓' if diff < 3 else '⚠'} {col:<18} max sai lệch: {diff:.1f}%")`}
-        </Code>
-        <Output>{`✓ customer_group     max sai lệch: 0.8%
-✓ city               max sai lệch: 1.9%`}
-        </Output>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          SRS cho cơ cấu rất sát population. Nhưng có một điểm yếu quan trọng: với nhóm nhỏ
-          như VIP (5%), số lượng trong sample dao động mạnh mỗi lần lấy — có thể ra 73 hoặc 127 người.
-          Nếu CEO cần phân tích riêng VIP, kết quả không ổn định. Section 6 giải quyết điều đó.
-        </p>
-
-        <TradeoffBlock
-          options={[
-            {
-              label: 'Convenience Sampling',
-              tag: 'Không nên',
-              tagVariant: 'warn',
-              pros: ['Nhanh, dễ thực hiện', 'Không cần setup phức tạp'],
-              cons: ['Selection bias có hệ thống', 'Kết quả không reproducible', 'Không thể defend khi bị hỏi'],
-            },
-            {
-              label: 'Simple Random Sampling',
-              tag: 'Chuẩn mực',
-              tagVariant: 'ok',
-              pros: ['Không có selection bias', 'Reproducible với random_state', 'Dễ giải thích cho stakeholder'],
-              cons: ['Nhóm thiểu số có thể underrepresented', 'Cần Sampling Frame sạch'],
-            },
-            {
-              label: 'Systematic Sampling',
-              tag: 'Đặc biệt',
-              tagVariant: 'neutral',
-              pros: ['Dễ implement trên large dataset', 'Phân phối đều theo thứ tự'],
-              cons: ['Nguy hiểm nếu data có pattern theo chu kỳ', 'Không dùng cho data có thứ tự ý nghĩa'],
-            },
-          ]}
-          caption="Trong hầu hết tình huống thực tế: Simple Random Sampling là lựa chọn đúng"
-        />
-
-        <DADecision
-          use="Mọi survey mà bạn không cần phân tích chi tiết theo nhóm thiểu số. Câu hỏi tổng thể ('satisfaction ShopNow là bao nhiêu?') → SRS là đủ và đơn giản nhất."
-          noUse="Khi CEO hỏi riêng về một nhóm nhỏ (VIP, một thành phố cụ thể). SRS có thể cho quá ít người trong nhóm đó để kết luận chắc chắn. → Dùng Stratified Sampling."
-          risk="Quên set random_state → mỗi lần chạy ra kết quả khác → không thể reproduce báo cáo → mất uy tín khi bị audit."
-          decision="Với ShopNow survey: random_state=42, n=2,000. Sau đó kiểm tra: VIP trong sample có nằm trong 3–7% không? Nếu có → OK. Nếu không → xem lại Section 6."
-        />
-
-        <QuickSummary items={[
-          'Random Sampling: mỗi người trong Sampling Frame có xác suất bằng nhau được chọn — cách duy nhất loại bỏ selection bias.',
-          'Luôn set random_state. Luôn kiểm tra cơ cấu sau khi lấy mẫu.',
-          'SRS tốt cho câu hỏi tổng thể. Cần phân tích nhóm nhỏ → Stratified.',
-        ]} />
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          SECTION 6 — Stratified Sampling
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
-        <SectionTitle id="stratified-sampling">6. Stratified Sampling</SectionTitle>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Thứ Tư 11:00. CEO gọi bạn vào phòng họp. Ông xem lại slide EDA từ hôm trước
-          — biểu đồ cho thấy 5% VIP tạo phần lớn revenue — rồi hỏi thẳng:
-        </p>
-
-        <SlackThread
-          channel="direct-message"
-          messages={[
-            { from: 'CEO Nam', text: 'Nhóm VIP đó — họ có hài lòng với giao hàng không? Nếu mất họ, chúng ta mất rất nhiều. Tôi cần biết riêng về nhóm này, không phải tổng thể.', time: '11:04' },
-            { from: 'Bạn', text: 'Tôi sẽ phân tích riêng nhóm VIP trong kết quả survey.', time: '11:06' },
-            { from: 'CEO Nam', text: 'Tốt. Và kết quả phải đủ tin cậy để tôi có thể ra quyết định budget dựa trên đó.', time: '11:07' },
-          ]}
-        />
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          2,000 người. VIP chỉ có 73. CEO muốn ra quyết định budget dựa trên 73 người.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Với n=73, margin of error cho mean của nhóm VIP xấp xỉ ±0.2 điểm — đủ rộng để
-          hai lần chạy SRS cho kết quả trái chiều (4.1 lần này, 4.4 lần sau).
-          Chạy lại SRS có thể ra 85 hoặc 110 VIP — không ổn định.
-          Bạn cần đảm bảo VIP <em>luôn</em> có đủ đại diện, không phụ thuộc vào may mắn.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Đây là lúc <strong className="text-on-surface">Stratified Sampling</strong> xuất hiện:
-          thay vì để ngẫu nhiên quyết định bao nhiêu VIP được chọn, bạn <em>đảm bảo</em>
-          số lượng tối thiểu bằng cách chia population thành các nhóm (strata) và lấy mẫu riêng từng nhóm.
-        </p>
-
-        <FlowRow
-          nodes={[
-            { label: 'Chia strata', sub: 'VIP / Normal', variant: 'primary' },
-            { label: 'Sample riêng', sub: 'Từng nhóm', variant: 'default' },
-            { label: 'Tỷ lệ cố định', sub: '100 VIP + 1,900 Normal', variant: 'default' },
-            { label: 'Gộp lại', sub: 'n = 2,000', variant: 'ok' },
-          ]}
-          caption="Stratified đảm bảo VIP luôn có đúng 100 người — không phụ thuộc vào ngẫu nhiên"
-        />
-
-        <Code>{`# Stratified Sampling — đảm bảo VIP đủ đại diện để phân tích
-strata = {'Normal': 1900, 'VIP': 100}  # 95%:5% như population
-
-stratified = pd.concat([
-    df_shopnow[df_shopnow['customer_group'] == grp].sample(n, random_state=42)
-    for grp, n in strata.items()
-])
-
-col = 'delivery_satisfaction_score'
-print(stratified.groupby('customer_group')[col].agg(n='count', mean='mean').round(3))`}
-        </Code>
-        <Output>{`                  n    mean
-customer_group
-Normal         1900   3.647
-VIP             100   4.312`}
-        </Output>
-
-        <Note>
-          4.312 là point estimate — chưa đủ để ra quyết định. Cần CI mới biết con số này ổn định
-          không. Section 7 sẽ tính Bootstrap CI cho kết quả này trước Board Meeting.
-        </Note>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Chênh lệch 0.66 điểm giữa VIP và Normal. Với SRS và 73 VIP, khoảng tin cậy của con số này
-          rộng đến mức không kết luận được gì chắc chắn. Với Stratified và 100 VIP:
-          kết quả đủ ổn định để CEO ra quyết định.
-        </p>
-
-        <TradeoffBlock
-          options={[
-            {
-              label: 'Simple Random Sampling',
-              pros: ['Đơn giản', 'Không cần biết strata trước', 'Kết quả tổng hợp không cần điều chỉnh weight'],
-              cons: ['VIP có thể chỉ ra 60–140 người', 'Phân tích nhóm nhỏ không ổn định', 'Không kiểm soát được phân phối nhóm'],
-            },
-            {
-              label: 'Stratified Sampling',
-              tag: 'Phù hợp hơn ở đây',
-              tagVariant: 'ok',
-              pros: ['VIP luôn đúng 100 người', 'Phân tích nhóm chính xác hơn', 'Variance thấp hơn cho metric tổng hợp'],
-              cons: ['Phức tạp hơn SRS', 'Cần biết strata trước khi lấy mẫu', 'Phải điều chỉnh weight nếu oversample'],
-            },
-          ]}
-          caption="Khi cần phân tích nhóm thiểu số quan trọng: Stratified là lựa chọn đúng"
-        />
-
-        <DADecision
-          use="Khi cần phân tích so sánh giữa nhóm có tỷ lệ chênh lệch lớn và việc phân tích đó ảnh hưởng đến quyết định. EDA đã cho bạn biết nhóm nào quan trọng — Stratified đảm bảo chúng đủ đại diện."
-          noUse="Khi chỉ cần kết quả tổng thể và không cần breakdown theo nhóm. Stratified phức tạp hơn cần thiết."
-          risk="Oversample VIP (500 thay vì 100) nhưng không điều chỉnh weight khi tính overall mean → kết quả tổng bị kéo về phía VIP quá mức."
-          decision="ShopNow: strata theo customer_group (VIP: 100, Normal: 1,900). Đủ để trả lời câu hỏi CEO về VIP. Nếu CEO hỏi thêm về từng thành phố: thêm strata theo city."
-        />
-
-        <Mistakes items={[
-          'Quên điều chỉnh weight khi tính overall mean với oversample — kết quả tổng bị lệch về nhóm oversampled.',
-          'Stratify theo quá nhiều biến (VIP × city × channel = 30 strata, n=2,000) → mỗi strata chỉ ~67 người — không đủ.',
-          'Không ghi sampling design — người review sau không biết tại sao VIP chiếm 5% thay vì tỷ lệ tự nhiên của họ.',
-        ]} />
-
-        <QuickSummary items={[
-          'Stratified Sampling: chia strata → sample riêng → gộp lại. Đảm bảo nhóm thiểu số quan trọng luôn đủ đại diện.',
-          'EDA phát hiện nhóm quan trọng; Stratified đảm bảo nhóm đó có tiếng nói tương xứng trong survey.',
-          'Khi oversample một nhóm: nhớ điều chỉnh weight khi tính kết quả tổng hợp.',
-        ]} />
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          SECTION 7 — Bootstrap
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
-        <SectionTitle id="bootstrap">7. Bootstrap</SectionTitle>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Thứ Năm 16:00. Bạn đang chuẩn bị slide cho Board Meeting sáng thứ Sáu.
-          CFO ghé vào hỏi trước một câu mà bạn chưa nghĩ đến:
-        </p>
-
-        <SlackThread
-          channel="board-prep"
-          messages={[
-            { from: 'CFO Hải', text: 'Slide 4 ghi "satisfaction 3.71/5". Nếu chúng ta khảo sát 2,000 người khác vào tuần tới, con số này có thay đổi nhiều không?', time: '16:12' },
-            { from: 'Bạn', text: 'Tôi... chưa kiểm tra độ ổn định của kết quả.', time: '16:14' },
-            { from: 'CFO Hải', text: 'Board sẽ dùng con số này để quyết định budget logistics Q3. Cần biết mức độ tin cậy là bao nhiêu trước khi họ vote.', time: '16:15' },
-          ]}
-        />
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Bạn nhìn lại data. Chỉ có 2,000 phản hồi. Không thể khảo sát thêm trong 18 tiếng.
-          Câu hỏi CFO đặt ra là hoàn toàn hợp lý: nếu lấy mẫu lại, kết quả sẽ ra 3.65 hay 3.77?
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Cách giải của <strong className="text-on-surface">Bootstrap</strong>: giả lập việc
-          lấy mẫu lại bằng cách resample từ chính 2,000 phản hồi đang có — lặp lại 1,000 lần,
-          tính mean mỗi lần, xem mean dao động trong khoảng nào.
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Tại sao cách này hợp lệ? Nếu sample của bạn đủ đại diện cho population, thì
-          distribution trong sample gần giống distribution trong population. Resample từ
-          sample là cách tốt nhất để mô phỏng "điều gì sẽ xảy ra nếu lấy mẫu lại" — mà
-          không cần quay lại survey thêm 2,000 người nữa.
-        </p>
-
-        <FlowRow
-          nodes={[
-            { label: 'Sample gốc', sub: '2,000 phản hồi', variant: 'primary' },
-            { label: 'Resample ×1,000', sub: 'with replacement', variant: 'default' },
-            { label: '1,000 means', sub: 'Phân phối thực nghiệm', variant: 'default' },
-            { label: '95% CI', sub: '[3.67, 3.76]', variant: 'ok' },
-          ]}
-          caption="Bootstrap không cần thêm data — nó khai thác tối đa 2,000 phản hồi bạn đã có"
-        />
-
-        <Code>{`scores = stratified['delivery_satisfaction_score'].values
-
-# 1,000 lần resample → phân phối của mean
-boot_means = np.array([
-    np.random.choice(scores, len(scores), replace=True).mean()
-    for _ in range(1000)
-])
-
-lo, hi = np.percentile(boot_means, [2.5, 97.5])
-print(f"Sample mean: {scores.mean():.4f}")
-print(f"95% CI:      [{lo:.4f}, {hi:.4f}]  →  margin ±{(hi-lo)/2:.4f}")`}
-        </Code>
-        <Output>{`Sample mean: 3.7082
-95% CI:      [3.6678, 3.7486]  →  margin ±0.0404`}
-        </Output>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Câu trả lời cho CFO: <em>"Mean là 3.71. CI [3.67, 3.76] cho thấy nếu survey lại 2,000
-          người khác vào tuần tới, kết quả gần như chắc chắn sẽ nằm trong khoảng này — không phải
-          3.5, không phải 4.0. Margin of error ±0.04 trên thang 5 điểm — đủ ổn định để ra quyết
-          định budget logistics."</em>
-        </p>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          CFO gật đầu, ghi chú vào slide.
-        </p>
-
-        <Note>
-          Bootstrap nói về sự <em>ổn định</em> của kết quả — không phải về sự <em>đúng đắn</em>.
-          CI hẹp nghĩa là nếu lấy mẫu lại, kết quả ổn định. Nhưng nếu sample bị bias,
-          CI hẹp vẫn không cứu được kết quả sai. Bias và stability là hai vấn đề riêng biệt.
-        </Note>
-
-        <DADecision
-          use="Trước mọi báo cáo kết quả survey cho stakeholder ra quyết định quan trọng. Đặc biệt khi họ sẽ hỏi 'con số này có chắc không?' — Bootstrap CI là câu trả lời định lượng."
-          noUse="Khi sample đã bị bias nghiêm trọng. CI hẹp từ biased sample vẫn là kết quả sai — đừng dùng Bootstrap để che đậy vấn đề thiết kế."
-          risk="Nhầm Bootstrap CI với 'kết quả đúng'. CI hẹp = ổn định, không phải = chính xác. Phải giải thích rõ cho stakeholder."
-          decision="Mọi slide báo cáo survey: 'X/5 (95% CI: [a, b], n=2,000)'. Ba thông tin này cùng nhau — không thiếu cái nào. Đây là format chuẩn mà senior DA và CFO mong đợi."
-        />
-
-        <Mistakes items={[
-          '"CI hẹp = kết quả đúng" — sai. Sample bị bias vẫn cho CI hẹp nhưng center point sai. Hai vấn đề riêng biệt.',
-          'n_bootstrap=100 — CI không ổn định, thay đổi mỗi lần chạy. Tối thiểu 1,000, lý tưởng 5,000.',
-          'Giải thích CI sai với non-technical audience: "95% confidence" không phải "95% chắc chắn con số là đúng" — cần diễn đạt lại.',
-        ]} />
-
-        <QuickSummary items={[
-          'Bootstrap giải quyết "kết quả có ổn định không?" mà không cần thêm data — resample từ chính sample đang có.',
-          'CI hẹp = ổn định khi lấy mẫu lại. Không nói gì về bias.',
-          'Format báo cáo chuẩn: "3.71/5 (95% CI: [3.67, 3.76], n=2,000)" — luôn đi kèm ba thông tin này.',
-        ]} />
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          SECTION 8 — Common Mistakes
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
-        <SectionTitle id="common-mistakes">8. Common Mistakes</SectionTitle>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Những lỗi này không có trong giáo trình. Mình thấy chúng trong báo cáo thực tế —
-          thường bị phát hiện muộn, khi quyết định đã được đưa ra và không thể thu hồi.
-        </p>
-
-        <div className="space-y-5 my-6">
-          {[
-            {
-              num: '01',
-              title: 'Lấy 2,000 dòng đầu tiên trong database',
-              story: 'Intern mới vào team cần lấy nhanh 2,000 customer để test pipeline. Họ viết LIMIT 2000 không ORDER BY RANDOM(). Database trả về 2,000 người đăng ký đầu tiên — tất cả đều từ năm 2019, đa số ở HCM, phân phối tuổi rất khác population hiện tại.',
-              lesson: 'Luôn dùng .sample() hoặc ORDER BY RANDOM(). "Lấy nhanh" = "lấy sai" nếu không ngẫu nhiên.',
-            },
-            {
-              num: '02',
-              title: '"Sample lớn hơn luôn tốt hơn"',
-              story: 'Marketing team tự gửi survey qua toàn bộ email list — 50,000 người. Response rate 8% = 4,000 phản hồi. DA team dùng kết quả này vì "sample lớn hơn". Nhưng người reply qua email là subscriber lâu năm, có loyalty cao hơn trung bình.',
-              lesson: '4,000 người bị biased tệ hơn 500 người thiết kế đúng. Số lượng không thể thay thế chất lượng thiết kế.',
-            },
-            {
-              num: '03',
-              title: 'Kết luận về VIP từ dữ liệu không đủ đại diện',
-              story: 'SRS cho ra 73 VIP. DA tính mean score của 73 người là 4.1, kết luận "VIP hài lòng hơn Normal 0.7 điểm". Nhưng với n=73, khoảng tin cậy rộng đến mức khoảng chênh lệch thực tế có thể là 0.3 đến 1.1. Quyết định budget dựa trên con số này là gamble.',
-              lesson: 'Trước khi phân tích theo nhóm: kiểm tra n của từng nhóm. Với nhóm thiểu số quan trọng — dùng Stratified.',
-            },
-            {
-              num: '04',
-              title: 'Báo cáo kết quả mà không nêu Sampling Frame',
-              story: '"Khách hàng ShopNow hài lòng 3.71/5 với giao hàng" — CEO dùng câu này trong báo cáo thường niên. Nhưng thực tế đây chỉ là kết quả từ 1.2M active customers tháng 6 — không phải 5M tài khoản. Sự khác biệt quan trọng khi phân tích theo năm.',
-              lesson: 'Luôn ghi Sampling Frame. Một câu nhỏ trong footnote đủ — nhưng bắt buộc.',
-            },
-            {
-              num: '05',
-              title: 'Trình bày mean mà không có CI',
-              story: '"Score VIP: 4.31, Score Normal: 3.65. VIP hài lòng hơn 0.66 điểm." CFO hỏi: "Margin of error là bao nhiêu?" DA không có câu trả lời. Nếu CI của cả hai đều rộng và overlap nhau — con số 0.66 điểm có thể không có ý nghĩa.',
-              lesson: 'Mean không có context là thông tin chưa hoàn chỉnh. Luôn đi kèm n và CI.',
-            },
-          ].map((m) => (
-            <div key={m.num} className="border border-outline-variant/30 rounded-xl overflow-hidden">
-              <div className="bg-surface-container px-5 py-3 border-b border-outline-variant/20 flex gap-3">
-                <span className="font-ui-label text-[0.6875rem] text-secondary/60 shrink-0 mt-0.5">{m.num}/05</span>
-                <p className="font-ui-label text-ui-label text-on-surface">{m.title}</p>
-              </div>
-              <div className="px-5 py-4 space-y-3">
-                <p className="font-body-md text-[0.8rem] text-on-surface-variant leading-relaxed">{m.story}</p>
-                <div className="flex gap-2 pt-1 border-t border-outline-variant/20">
-                  <span className="text-secondary shrink-0 text-sm font-semibold mt-0.5">→</span>
-                  <p className="font-body-md text-[0.8rem] text-on-surface">{m.lesson}</p>
+            <div key={c.criterion} className="border border-outline-variant/30 rounded-xl p-4">
+              <p className="font-ui-label text-ui-label text-secondary mb-2">{c.criterion}</p>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-3">{c.desc}</p>
+              <div className="space-y-1.5">
+                <div className="flex gap-2">
+                  <span className="text-secondary shrink-0 text-sm">+</span>
+                  <span className="font-body-md text-[0.75rem] text-on-surface-variant">{c.good}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-error/70 shrink-0 text-sm">−</span>
+                  <span className="font-body-md text-[0.75rem] text-on-surface-variant">{c.bad}</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
-      </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          SECTION 9 — Case Study
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="mb-16">
-        <SectionTitle id="case-study">9. Case Study: Thứ Sáu — Board Meeting</SectionTitle>
-
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Từ 08:47 thứ Ba đến 09:00 thứ Sáu — đây là chuỗi quyết định bạn đã đưa ra:
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Sample size cần thiết phụ thuộc vào{' '}
+          <strong className="text-on-surface">margin of error bạn chấp nhận được</strong> —
+          không phải vào kích thước population. Công thức gần đúng cho proportions:
         </p>
 
-        <div className="space-y-3 my-6">
+        <Code>{`import math
+
+def sample_size(moe: float, confidence: float = 0.95, p: float = 0.5) -> int:
+    """
+    moe: margin of error (vd 0.05 = ±5%)
+    p:   estimated proportion (0.5 = worst case, MoE lớn nhất)
+    """
+    z = 1.96 if confidence == 0.95 else 2.576  # 95% hoặc 99% CI
+    n = (z / moe) ** 2 * p * (1 - p)
+    return math.ceil(n)
+
+# Ứng dụng vào bài toán CRM
+print("Sample size cần thiết:")
+print(f"  MoE ±5%:   {sample_size(0.05):,} users")
+print(f"  MoE ±3%:   {sample_size(0.03):,} users")
+print(f"  MoE ±2.2%: {sample_size(0.022):,} users   ← n=2,000 đạt mức này")
+print(f"  MoE ±1%:   {sample_size(0.01):,} users")`}
+        </Code>
+        <Output>{`Sample size cần thiết:
+  MoE ±5%:     385 users
+  MoE ±3%:   1,068 users
+  MoE ±2.2%: 1,991 users   ← n=2,000 đạt mức này
+  MoE ±1%:   9,604 users`}
+        </Output>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Với n=2,000 user, kết quả survey sẽ có margin of error khoảng ±2.2% ở 95% confidence.
+          Nghĩa là nếu 64% user nói push không relevant, tỷ lệ thực trong population nằm khoảng
+          61.8%–66.2% — đủ chính xác để CRM Manager ra quyết định.
+        </p>
+
+        <DADecision
+          use="Khi cần ước lượng proportion hoặc mean từ survey user. Khi cost hỏi từng người quá cao."
+          noUse="Khi bạn đã có toàn bộ data trong warehouse — không cần survey, chỉ cần query."
+          risk="Sample size quá nhỏ → MoE quá lớn → kết luận không đáng tin. Tệ hơn là không biết MoE là bao nhiêu."
+          decision="Cho CRM survey này: n=2,000, MoE ±2.2%. Nếu cần phân tích riêng từng segment, cần n lớn hơn hoặc dùng Stratified Sampling."
+        />
+
+        <QuickSummary items={[
+          'Mẫu tốt = representative + sufficient size. Mẫu lớn mà không representative vẫn cho kết quả sai.',
+          'Sample size phụ thuộc vào MoE mong muốn, không phải vào kích thước population.',
+          'n=2,000 → MoE ±2.2% ở 95% CI. Đây là ngưỡng phổ biến cho product/CRM survey tại Fintech.',
+        ]} />
+      </section>
+
+      <hr className="border-outline-variant/20 mb-16" />
+
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 4 — Sampling Bias
+      ══════════════════════════════════════════════════════════════ */}
+      <section aria-labelledby="sampling-bias" className="mb-16">
+        <SectionTitle id="sampling-bias">4. Sampling Bias</SectionTitle>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Bias là sai lệch có hệ thống — không phải ngẫu nhiên. Kết quả bị bias không thể
+          "fix" bằng cách lấy thêm sample. Phải phát hiện và loại bỏ trước khi lấy mẫu.
+        </p>
+
+        <div className="space-y-4 my-6">
           {[
-            { time: 'Thứ Ba', decision: 'Xác định scope', detail: 'CEO muốn biết satisfaction. Không thể survey 1.2M người → sampling.' },
-            { time: 'Thứ Ba 10:00', decision: 'Xác định Population và Sampling Frame', detail: '5.1M tài khoản (Population) → 1.2M có đơn tháng 6 (Sampling Frame). Ghi rõ giới hạn: không đại diện cho 3.9M inactive.' },
-            { time: 'Thứ Ba 14:00', decision: 'Thiết kế sample', detail: 'Stratified: 1,900 Normal + 100 VIP = 2,000. Đảm bảo VIP đủ đại diện theo yêu cầu CEO.' },
-            { time: 'Thứ Tư', decision: 'Gửi survey và thu thập', detail: 'SMS đến 2,000 người. Response rate 20% → 400 phản hồi. Ghi chú non-response bias.' },
-            { time: 'Thứ Năm', decision: 'Phân tích và Bootstrap', detail: 'Tính mean theo nhóm. Bootstrap 1,000 lần → CI. Kết quả ổn định đủ để báo cáo.' },
-            { time: 'Thứ Sáu 09:00', decision: 'Board meeting', detail: 'Trình bày với đầy đủ context: sampling frame, response rate, CI, limitation.' },
-          ].map((step, i) => (
-            <div key={i} className="flex gap-4">
-              <div className="flex flex-col items-center shrink-0">
-                <div className="w-2 h-2 rounded-full bg-secondary mt-1.5" />
-                {i < 5 && <div className="w-px flex-1 bg-outline-variant/30 mt-1" />}
-              </div>
-              <div className="pb-3">
-                <p className="font-ui-label text-[0.6875rem] text-secondary mb-0.5">{step.time}</p>
-                <p className="font-ui-label text-ui-label text-on-surface">{step.decision}</p>
-                <p className="font-body-md text-[0.8rem] text-on-surface-variant mt-0.5 leading-snug">{step.detail}</p>
+            {
+              type: 'Selection Bias',
+              desc: 'Sample không được chọn ngẫu nhiên — nhóm nhất định có nhiều khả năng được chọn hơn.',
+              example: 'Survey gửi qua app → chỉ user còn đang dùng app trả lời → bỏ sót user đã churn hoặc ít dùng.',
+              snowtech: 'Để hiểu TẠI SAO user giảm dùng push, bạn cần hỏi cả user inactive — nhưng gửi qua app thì không reach được họ.',
+            },
+            {
+              type: 'Survivorship Bias',
+              desc: 'Chỉ quan sát được "người sống sót" — những trường hợp thất bại đã biến mất khỏi data.',
+              example: 'Phân tích push CTR chỉ trên user còn click — bỏ qua tất cả user đã tắt notification hoặc uninstall.',
+              snowtech: 'User tắt push là những người quan trọng nhất để hiểu — nhưng họ không còn trong sampling frame nữa.',
+            },
+            {
+              type: 'Response Bias',
+              desc: 'Người trả lời survey có xu hướng thiên lệch — chỉ người có cảm xúc mạnh (rất thích hoặc rất ghét) mới trả lời.',
+              example: 'Survey về push notification → response rate 20% → 80% người "bình thường" không có ý kiến bị bỏ sót.',
+              snowtech: 'Kết quả survey push satisfaction có thể bị kéo về hai cực (rất positive và rất negative) hơn thực tế.',
+            },
+            {
+              type: 'Coverage Bias',
+              desc: 'Sampling Frame không bao phủ đủ Population — một phần đối tượng không có cơ hội được chọn.',
+              example: 'Sampling Frame = 8.4M user nhận push. Nhưng 21.6M user không nhận push cũng thuộc population.',
+              snowtech: '8.4M user nhận push có thể có tỷ lệ engagement khác với 21.6M không nhận — và kết quả survey sẽ không đại diện cho toàn bộ 30M.',
+            },
+          ].map((bias, i) => (
+            <div key={i} className="border border-outline-variant/30 rounded-xl p-5">
+              <p className="font-ui-label text-ui-label text-on-error-container mb-2">{bias.type}</p>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-3">{bias.desc}</p>
+              <div className="bg-surface-container rounded-lg px-4 py-3 space-y-2">
+                <p className="font-body-md text-[0.75rem] text-on-surface-variant">
+                  <span className="font-medium text-on-surface">Ví dụ: </span>{bias.example}
+                </p>
+                <p className="font-body-md text-[0.75rem] text-secondary/80 italic">
+                  <span className="font-medium not-italic text-secondary">SnowTech: </span>{bias.snowtech}
+                </p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="border border-outline-variant/30 bg-surface-container rounded-xl p-5 my-6 space-y-4">
-          <p className="font-ui-label text-[0.625rem] text-on-surface-variant/50 uppercase tracking-widest">
-            Template — Board Meeting Slide
+        <WarningBlock title="⚠ Bias không thể fix bằng sample size lớn hơn">
+          <p>
+            Năm 1936, Literary Digest gửi 10 triệu phiếu khảo sát bầu cử tổng thống Mỹ
+            và nhận được 2.4 triệu phản hồi — rồi dự đoán sai hoàn toàn.
           </p>
-          <div>
-            <p className="font-ui-label text-ui-label text-on-surface mb-1">Kết quả chính</p>
-            <p className="font-body-md text-body-md text-on-surface-variant">
-              Satisfaction giao hàng tháng 6/2024: <strong className="text-on-surface">3.71/5</strong>
-              {' '}(95% CI: [3.67, 3.75], n=2,000). VIP: 4.31 — cao hơn Normal (3.65) 0.66 điểm.
-              HP và CT có điểm thấp nhất (3.28–3.31).
-            </p>
-          </div>
-          <div>
-            <p className="font-ui-label text-ui-label text-on-surface mb-1">Khuyến nghị</p>
-            <p className="font-body-md text-body-md text-on-surface-variant">
-              Ưu tiên cải thiện logistics HP và CT. Cần A/B test trước khi phân bổ ngân sách lớn.
-            </p>
-          </div>
-          <div className="border-t border-secondary/20 pt-3">
-            <p className="font-ui-label text-ui-label text-on-surface mb-1">Giới hạn — bắt buộc ghi</p>
-            <p className="font-body-md text-body-md text-on-surface-variant">
-              Phân tích dựa trên 1.2M khách có đơn tháng 6 — không đại diện cho 3.9M tài khoản không active.
-              Response rate 20%; kết quả có thể bị ảnh hưởng bởi non-response bias.
-            </p>
+          <p>
+            Vấn đề không phải vì sample quá nhỏ. Vì sampling frame chỉ gồm người có xe hơi
+            và điện thoại (nhóm giàu hơn) — bias ngay từ đầu.
+            Thêm 10 triệu phiếu nữa cũng không cứu được kết quả sai.
+          </p>
+          <p>
+            Tại SnowTech: survey 2,000 user active không cho bạn biết gì về 21.6M user chưa nhận push.
+            Đó là bias về coverage — không fix được bằng cách tăng n.
+          </p>
+        </WarningBlock>
+
+        <Mistakes items={[
+          'Survey chỉ user active app — bỏ sót toàn bộ user đã churn hoặc inactive, nhưng họ có thể là người cần hiểu nhất.',
+          'Phân tích push CTR trung bình mà không nhận ra rằng những ai không click đã chặn notification — survivorship bias.',
+          'Nghĩ rằng "lấy thêm mẫu sẽ fix được bias" — sai. Bias là sai lệch có hệ thống, không phải random error.',
+        ]} />
+
+        <QuickSummary items={[
+          'Bias = sai lệch có hệ thống. Không fix được bằng n lớn hơn. Phải phát hiện và loại bỏ từ thiết kế.',
+          '4 loại bias chính: Selection, Survivorship, Response, Coverage.',
+          'Với push survey tại SnowTech: phải thiết kế riêng để reach user inactive — không thể chỉ dùng in-app survey.',
+        ]} />
+      </section>
+
+      <hr className="border-outline-variant/20 mb-16" />
+
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 5 — Random Sampling
+      ══════════════════════════════════════════════════════════════ */}
+      <section aria-labelledby="random-sampling" className="mb-16">
+        <SectionTitle id="random-sampling">5. Simple Random Sampling</SectionTitle>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Cách đơn giản nhất: mỗi user trong Sampling Frame có cơ hội được chọn bằng nhau.
+          Không ưu tiên, không phân nhóm — hoàn toàn ngẫu nhiên.
+        </p>
+
+        <Code>{`# Simple Random Sampling: 2,000 user từ 8.4M Sampling Frame
+srs_sample = sampling_frame.sample(n=2000, random_state=42)
+
+print(f"Sample size: {len(srs_sample):,}")
+print()
+print("Phân phối user_segment trong SRS:")
+print(srs_sample['user_segment'].value_counts())`}
+        </Code>
+        <Output>{`Sample size: 2,000
+
+user_segment
+Casual     1,204   (60.2%)   ← gần đúng 60% trong frame
+Regular      706   (35.3%)
+Power         90   (4.5%)    ← chỉ ~90 Power Users!
+Name: count, dtype: int64`}
+        </Output>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Vấn đề lộ ra ngay: SRS cho ~90 Power Users trong sample — quá ít để phân tích riêng.
+          Power Users là nhóm đóng góp 60% GMV, và CRM Manager cần hiểu riêng hành vi của họ
+          với push notification. 90 người không đủ để rút ra kết luận đáng tin.
+        </p>
+
+        <TradeoffBlock
+          options={[
+            {
+              label: 'Simple Random Sampling',
+              tag: 'Dùng được',
+              tagVariant: 'ok',
+              pros: [
+                'Dễ implement: df.sample(n=2000)',
+                'Không cần biết cấu trúc population trước',
+                'Mỗi người có cơ hội bằng nhau — unbiased',
+              ],
+              cons: [
+                'Nhóm nhỏ (Power Users 5%) có thể under-represented',
+                'n=90 Power Users → kết quả không đáng tin khi phân tích riêng',
+                'Không đảm bảo tỷ lệ đại diện của minority groups',
+              ],
+            },
+            {
+              label: 'Stratified Sampling',
+              tag: 'Tốt hơn cho bài này',
+              tagVariant: 'ok',
+              pros: [
+                'Đảm bảo mỗi segment được đại diện đủ',
+                'Power Users: 200 thay vì 90 → phân tích riêng được',
+                'Variance thấp hơn SRS khi strata tương đồng nội bộ',
+              ],
+              cons: [
+                'Cần biết segment trước khi sample',
+                'Phải điều chỉnh weight khi tổng hợp kết quả toàn population',
+                'Phức tạp hơn SRS một chút',
+              ],
+            },
+          ]}
+        />
+
+        <DADecision
+          use="Khi tất cả subgroup đều đủ lớn trong population (>10%) và không cần phân tích riêng từng nhóm."
+          noUse="Khi có minority group quan trọng (Power Users 5%) cần phân tích riêng — sẽ bị under-represented."
+          risk="Under-representation của Power Users → quyết định CRM không phản ánh đúng hành vi nhóm chiến lược nhất."
+          decision="Với push survey này: SRS không đủ cho Power Users. Chuyển sang Stratified Sampling — xem Section 6."
+        />
+
+        <QuickSummary items={[
+          'SRS: mỗi người có cơ hội bằng nhau. Unbiased, dễ implement.',
+          'Vấn đề: minority group (Power Users 5%) có thể dưới đại diện — n=90 trong 2,000 sample.',
+          'Nếu không cần phân tích riêng từng subgroup → SRS đủ tốt. Nếu cần → dùng Stratified.',
+        ]} />
+      </section>
+
+      <hr className="border-outline-variant/20 mb-16" />
+
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 6 — Stratified Sampling
+      ══════════════════════════════════════════════════════════════ */}
+      <section aria-labelledby="stratified-sampling" className="mb-16">
+        <SectionTitle id="stratified-sampling">6. Stratified Sampling</SectionTitle>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Stratified Sampling chia population thành các <em>strata</em> (nhóm con) rồi
+          sample ngẫu nhiên từ mỗi nhóm theo tỷ lệ được thiết kế sẵn.
+          Đây là phương pháp đúng khi bạn cần so sánh các nhóm quan trọng.
+        </p>
+
+        <SlackThread
+          channel="analytics-crm"
+          messages={[
+            {
+              from: 'CRM Manager Linh',
+              time: '10:05 SA',
+              text: 'Mình cần hiểu riêng: Power Users có cảm thấy push relevant không? Họ là nhóm quan trọng nhất.',
+            },
+            {
+              from: 'DA Minh',
+              time: '10:09 SA',
+              text: 'SRS sẽ cho ~90 Power Users — ít quá để kết luận. Mình đề xuất Stratified: 200 Power Users + 1,800 Regular/Casual. Đủ để so sánh.',
+            },
+            {
+              from: 'CRM Manager Linh',
+              time: '10:11 SA',
+              text: 'OK, làm vậy đi. Nhưng khi tổng hợp toàn bộ thì sao?',
+            },
+            {
+              from: 'DA Minh',
+              time: '10:13 SA',
+              text: 'Khi report overall sẽ weight theo tỷ lệ thực của từng segment. Power Users 5% thực tế sẽ được weight 5%, không phải 10%.',
+            },
+          ]}
+        />
+
+        <Code>{`# Stratified Sampling: đảm bảo đủ Power Users để phân tích riêng
+strata_config = {
+    'Power':   200,    # over-sample từ 5% → 10% trong sample
+    'Regular': 700,    # proportional
+    'Casual':  1100,   # proportional
+}
+# Tổng: 2,000 users
+
+stratified_parts = []
+for segment, n in strata_config.items():
+    stratum = sampling_frame[sampling_frame['user_segment'] == segment]
+    stratified_parts.append(stratum.sample(n=n, random_state=42))
+
+stratified_sample = pd.concat(stratified_parts).reset_index(drop=True)
+
+print(f"Sample size: {len(stratified_sample):,}")
+print()
+print("Phân phối trong Stratified Sample:")
+print(stratified_sample['user_segment'].value_counts())`}
+        </Code>
+        <Output>{`Sample size: 2,000
+
+user_segment
+Casual     1,100   (55.0%)
+Regular      700   (35.0%)
+Power        200   (10.0%)   ← tăng từ 90 lên 200 — đủ để phân tích riêng
+
+Name: count, dtype: int64`}
+        </Output>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Bây giờ có 200 Power Users — đủ để rút ra kết luận riêng về nhóm này.
+          Sau khi có kết quả survey, tổng hợp toàn bộ bằng cách weight đúng tỷ lệ thực:
+        </p>
+
+        <Code>{`# Giả lập kết quả survey: tỷ lệ "push relevant"
+survey_results = {
+    'Power':   {'relevant': 128, 'not_relevant': 72,  'n': 200},  # 64% relevant
+    'Regular': {'relevant': 455, 'not_relevant': 245, 'n': 700},  # 65% relevant
+    'Casual':  {'relevant': 726, 'not_relevant': 374, 'n': 1100}, # 66% relevant
+}
+
+# Weight thực của mỗi segment trong population (không phải trong sample)
+actual_weights = {'Power': 0.05, 'Regular': 0.35, 'Casual': 0.60}
+
+weighted_relevant = 0
+for seg, res in survey_results.items():
+    segment_rate = res['relevant'] / res['n']
+    print(f"{seg:8s}: {segment_rate:.1%} relevant  (n={res['n']}, weight={actual_weights[seg]:.0%})")
+    weighted_relevant += segment_rate * actual_weights[seg]
+
+print()
+print(f"Weighted overall: {weighted_relevant:.1%} find push relevant")
+print(f"  → 95% CI: [{weighted_relevant - 0.022:.1%}, {weighted_relevant + 0.022:.1%}]")`}
+        </Code>
+        <Output>{`Power   : 64.0% relevant  (n=200, weight=5%)
+Regular : 65.0% relevant  (n=700, weight=35%)
+Casual  : 66.0% relevant  (n=1100, weight=60%)
+
+Weighted overall: 65.5% find push relevant
+  → 95% CI: [63.3%, 67.7%]`}
+        </Output>
+
+        <Note>
+          Kết quả thú vị: Power Users (64%) thấy push ít relevant hơn Casual Users (66%) — dù chênh lệch nhỏ.
+          Đây là insight CRM Manager cần: nội dung push hiện tại đang được optimize cho Casual Users,
+          nhưng không đủ personalized cho Power Users có transaction phức tạp hơn.
+          4.312 VND là point estimate — cần CI để báo cáo đầy đủ (Module 3 sẽ đi sâu về điều này).
+        </Note>
+
+        <QuickSummary items={[
+          'Stratified Sampling: chia thành strata → sample ngẫu nhiên từ mỗi strata với n thiết kế sẵn.',
+          'Over-sample minority group (Power Users) để phân tích riêng. Weight lại khi tổng hợp overall.',
+          'Tốt hơn SRS khi: có minority group quan trọng, hoặc cần so sánh subgroup với độ chính xác cao.',
+        ]} />
+      </section>
+
+      <hr className="border-outline-variant/20 mb-16" />
+
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 7 — Bootstrap
+      ══════════════════════════════════════════════════════════════ */}
+      <section aria-labelledby="bootstrap" className="mb-16">
+        <SectionTitle id="bootstrap">7. Bootstrap</SectionTitle>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Bootstrap trả lời một câu hỏi khác: <em>"Nếu tôi survey lại 2,000 user khác,
+          kết quả có thay đổi nhiều không?"</em> — hay nói cách khác, estimate của bạn
+          có ổn định không?
+        </p>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Ý tưởng: tái mẫu <em>có hoàn lại</em> từ sample hiện tại nhiều lần để mô phỏng
+          biến động nếu bạn lấy các sample khác nhau từ cùng population.
+        </p>
+
+        <Code>{`import numpy as np
+
+# Survey data: 65.5% trong 2,000 user thấy push relevant
+n_sample       = 2000
+observed_rate  = 0.655
+responses      = np.array([1] * int(n_sample * observed_rate) +
+                          [0] * (n_sample - int(n_sample * observed_rate)))
+
+# Bootstrap: 10,000 lần re-sample
+np.random.seed(42)
+n_bootstrap    = 10_000
+bootstrap_means = [
+    np.mean(np.random.choice(responses, size=n_sample, replace=True))
+    for _ in range(n_bootstrap)
+]
+
+boot_arr = np.array(bootstrap_means)
+ci_lower = np.percentile(boot_arr, 2.5)
+ci_upper = np.percentile(boot_arr, 97.5)
+
+print(f"Observed rate:    {observed_rate:.1%}")
+print(f"Bootstrap mean:   {boot_arr.mean():.3f}")
+print(f"Bootstrap std:    {boot_arr.std():.4f}")
+print(f"95% Bootstrap CI: [{ci_lower:.3f}, {ci_upper:.3f}]")
+print(f"                  [{ci_lower:.1%}, {ci_upper:.1%}]")`}
+        </Code>
+        <Output>{`Observed rate:    65.5%
+Bootstrap mean:   0.655
+Bootstrap std:    0.0107
+95% Bootstrap CI: [0.634, 0.676]
+                  [63.4%, 67.6%]`}
+        </Output>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Bootstrap std = 0.0107 — nhỏ, cho thấy estimate rất ổn định.
+          Nếu lấy 2,000 user khác từ cùng population, kết quả sẽ nằm trong khoảng [63.4%, 67.6%]
+          trong 95% trường hợp.
+        </p>
+
+        <WarningBlock title="Bootstrap đo stability, không đo accuracy">
+          <p>
+            Bootstrap CI nói: <em>"Nếu lấy lại mẫu từ SAMPLE này, kết quả sẽ nằm trong khoảng này."</em>
+          </p>
+          <p>
+            Bootstrap KHÔNG nói: <em>"Kết quả thực của 30M user nằm trong khoảng này."</em>
+          </p>
+          <p>
+            Để kết luận về population, cần Confidence Interval dựa trên Standard Error —
+            đó là nội dung của <strong>Module 3: Statistical Inference</strong>.
+          </p>
+        </WarningBlock>
+
+        <div className="border border-outline-variant/30 bg-surface-container rounded-xl p-5 my-6">
+          <p className="font-ui-label text-[0.625rem] text-secondary uppercase tracking-widest mb-3">
+            Khi nào dùng Bootstrap tại SnowTech
+          </p>
+          <div className="space-y-2">
+            {[
+              { use: 'Estimate có distribution phức tạp', example: 'Median wallet balance — không có công thức SE đơn giản.' },
+              { use: 'Kiểm tra xem estimate có ổn định không', example: 'Bootstrap std nhỏ → có thể tin vào survey results.' },
+              { use: 'So sánh hai group khi n nhỏ', example: 'Push CTR của Power Users (n=200) vs Casual (n=1,100).' },
+            ].map((item, i) => (
+              <div key={i} className="flex gap-3">
+                <span className="text-secondary shrink-0 mt-0.5">→</span>
+                <p className="font-body-md text-[0.8rem] text-on-surface-variant">
+                  <span className="text-on-surface font-medium">{item.use}: </span>{item.example}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <Note>
-          Junior hay sợ viết Limitations vì nghĩ sẽ bị hỏi "tại sao không fix?" Thực ra ngược
-          lại. Mình thêm slide "What this data cannot tell us" vào cuối mọi báo cáo — và đó
-          thường là slide CFO hỏi nhiều câu nhất, theo nghĩa tích cực. Người biết giới hạn của
-          mình đáng tin hơn người trình bày mọi thứ như thể hoàn hảo.
-        </Note>
+        <QuickSummary items={[
+          'Bootstrap: re-sample có hoàn lại từ sample hiện tại → đo variability của estimate.',
+          'Bootstrap CI đo stability (sẽ ra kết quả tương tự nếu sample lại?), không đo accuracy (estimate có đúng không?).',
+          'Dùng khi distribution của statistic không biết, hoặc khi muốn confirm estimate ổn định.',
+        ]} />
       </section>
 
-      {/* ── Sampling Checklist ── */}
-      <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-        Trước khi kết thúc — đây là checklist bạn nên chạy qua cho mọi project sampling.
-        Kết quả của cả tuần làm việc vừa rồi gói lại trong 7 câu hỏi.
-      </p>
-      <SamplingChecklist />
+      <hr className="border-outline-variant/20 mb-16" />
+
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 8 — Common Mistakes
+      ══════════════════════════════════════════════════════════════ */}
+      <section aria-labelledby="common-mistakes" className="mb-16">
+        <SectionTitle id="common-mistakes">8. Common Mistakes</SectionTitle>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Sampling mistakes không phải lỗi code — chúng là lỗi tư duy.
+          Đây là những gì DA thường làm sai khi thiết kế survey tại Fintech:
+        </p>
+
+        <div className="space-y-4 my-6">
+          {[
+            {
+              mistake: 'Survey in-app cho user active only',
+              why: 'Bạn đang hỏi người đang dùng app tại sao họ ít dùng app hơn — câu hỏi sai đối tượng.',
+              fix: 'Thiết kế channel reach được cả user inactive: SMS, email, hoặc retargeting ad.',
+            },
+            {
+              mistake: '"n lớn hơn = kết quả tốt hơn"',
+              why: 'Survey 100,000 user bị bias vẫn cho kết quả sai. Survey 2,000 user đúng phương pháp cho kết quả tốt hơn.',
+              fix: 'Fix bias trước, tăng n sau. Tăng n không fix được bias đã tồn tại trong thiết kế.',
+            },
+            {
+              mistake: 'Không report Margin of Error',
+              why: '"64% user không thấy push relevant" mà không có CI là thiếu context. Stakeholder không biết độ tin cậy của con số này.',
+              fix: 'Luôn report: "64% ± 2.2% (95% CI)". Một con số không có MoE là không hoàn chỉnh.',
+            },
+            {
+              mistake: 'Dùng SRS khi có minority group quan trọng',
+              why: 'SRS cho ~90 Power Users trong 2,000 sample — không đủ để phân tích riêng nhóm đóng góp 60% GMV.',
+              fix: 'Dùng Stratified Sampling: over-sample Power Users lên 200 → phân tích riêng được, weight lại khi tổng hợp.',
+            },
+          ].map((m, i) => (
+            <div key={i} className="border border-error-container/40 rounded-xl overflow-hidden">
+              <div className="bg-error-container/20 px-5 py-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-on-error-container text-sm font-semibold">✕</span>
+                  <p className="font-ui-label text-ui-label text-on-error-container">{m.mistake}</p>
+                </div>
+              </div>
+              <div className="px-5 py-3 space-y-2">
+                <p className="font-body-md text-[0.8rem] text-on-surface-variant">
+                  <span className="font-medium text-on-surface">Vì sao sai: </span>{m.why}
+                </p>
+                <p className="font-body-md text-[0.8rem] text-on-surface-variant">
+                  <span className="font-medium text-secondary">Fix: </span>{m.fix}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <SamplingChecklist />
+      </section>
+
+      <hr className="border-outline-variant/20 mb-16" />
+
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 9 — Case Study
+      ══════════════════════════════════════════════════════════════ */}
+      <section aria-labelledby="case-study" className="mb-16">
+        <SectionTitle id="case-study">9. Case Study: Push CTR giảm — thiết kế survey đúng</SectionTitle>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Quay lại bài toán ban đầu. Push CTR của SnowTech giảm từ 8% xuống 5.2%.
+          CRM Manager Linh cần biết WHY. Đây là thiết kế sampling hoàn chỉnh:
+        </p>
+
+        <div className="space-y-3 my-6">
+          {[
+            {
+              step: '1. Định nghĩa Population & Question',
+              content: 'Population: 12M Monthly Active Users đang nhận push notification. Business Question: "Tỷ lệ user thấy push không relevant là bao nhiêu, và lý do là gì?"',
+            },
+            {
+              step: '2. Xác định Sampling Frame',
+              content: 'Sampling Frame: 8.4M user đã nhận ít nhất 1 push trong tháng 9 (từ mart.fct_campaign_events). Exclusion: user chưa KYC (không nhận push), user dưới 18 tuổi.',
+            },
+            {
+              step: '3. Chọn phương pháp & tính n',
+              content: 'Stratified Sampling theo user_segment. Target MoE ±2.2% overall → n=2,000. Allocation: Power=200, Regular=700, Casual=1,100.',
+            },
+            {
+              step: '4. Kiểm tra Bias',
+              content: 'Bias risk: channel survey là SMS → reach được cả inactive user. Response bias: survey ngắn (3 câu), có incentive nhỏ (5K điểm thưởng). Chấp nhận được.',
+            },
+            {
+              step: '5. Run & Analyze',
+              content: 'Kết quả: 65.5% [63.3%, 67.7%] thấy push relevant — tức 34.5% không relevant. Power Users 64% vs Casual Users 66% — Power Users ít thấy relevant hơn.',
+            },
+          ].map((s, i) => (
+            <div key={i} className="flex gap-5 border border-outline-variant/30 rounded-xl p-5">
+              <span className="font-code text-[0.875rem] text-secondary/50 font-semibold shrink-0 mt-0.5">{String(i+1).padStart(2,'0')}</span>
+              <div>
+                <p className="font-ui-label text-ui-label text-on-surface mb-2">{s.step.replace(/^\d+\. /, '')}</p>
+                <p className="font-body-md text-[0.8rem] text-on-surface-variant">{s.content}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="border border-outline-variant/30 bg-surface-container rounded-xl p-5 my-6">
+          <p className="font-ui-label text-[0.625rem] text-secondary uppercase tracking-widest mb-3">
+            Recommendation cho CRM Manager Linh
+          </p>
+          <p className="font-body-md text-body-md text-on-surface-variant mb-3">
+            34.5% user — khoảng <strong className="text-on-surface">2.9M MAU</strong> — thấy push không relevant.
+            Đây không phải vấn đề frequency (số lần gửi) mà là relevance (nội dung không đúng với hành vi
+            thực tế của từng segment).
+          </p>
+          <p className="font-body-md text-body-md text-on-surface-variant mb-3">
+            Power Users đặc biệt kém: họ có giao dịch phức tạp hơn (Retail, Health) nhưng nhận
+            push giống Casual Users (F&B voucher, general promotion). Cần personalization theo
+            transaction history, không phải theo segment label đơn giản.
+          </p>
+          <div className="border-t border-outline-variant/20 pt-3">
+            <p className="font-ui-label text-[0.6875rem] text-secondary mb-1">Next Step</p>
+            <p className="font-body-md text-[0.8rem] text-on-surface-variant">
+              A/B Test: nhóm A nhận push personalized theo top category của user trong 30 ngày qua.
+              Nhóm B nhận push generic hiện tại. Hypothesis: CTR của nhóm A cao hơn ít nhất 1.5%.
+              Đó là <a href="/modules/inference" className="text-secondary hover:underline">Module 3: Statistical Inference</a> — làm sao để biết kết quả A/B Test có ý nghĩa không.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* ── Sign-off ── */}
       <div className="border-t border-outline-variant/20 pt-10">
         <p className="font-body-md text-body-md text-on-surface-variant">
           Tiếp theo:{' '}
-          <a href="/modules/statistical-inference" className="text-secondary hover:underline">
-            Module 3 — Statistical Inference: Kết quả từ sample 2,000 người — khi nào có thể
-            tin, khi nào chỉ là ngẫu nhiên? →
+          <a href="/modules/inference" className="text-secondary hover:underline">
+            Module 3 — Statistical Inference: 65.5% là point estimate.
+            Làm sao biết nó đáng tin? →
           </a>
         </p>
       </div>

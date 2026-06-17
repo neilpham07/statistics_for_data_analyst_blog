@@ -1,20 +1,20 @@
 import type { TocItem } from '@/components/layout/TableOfContents'
 
 export const edaTocItems: TocItem[] = [
-  { id: 'eda-la-gi', label: '1. EDA là gì?' },
-  { id: 'eda-workflow', label: '2. EDA Workflow' },
-  { id: 'data-types', label: '3. Data Types' },
-  { id: 'distribution', label: '4. Distribution' },
+  { id: 'eda-la-gi',        label: '1. EDA là gì?' },
+  { id: 'eda-workflow',     label: '2. EDA Workflow' },
+  { id: 'data-types',       label: '3. Data Types' },
+  { id: 'distribution',     label: '4. Distribution' },
   { id: 'mean-median-mode', label: '5. Mean, Median, Mode' },
-  { id: 'variability', label: '6. Variability' },
-  { id: 'percentiles', label: '7. Percentiles' },
-  { id: 'outliers', label: '8. Outliers' },
-  { id: 'data-visualization', label: '9. Data Visualization' },
-  { id: 'correlation', label: '10. Correlation' },
-  { id: 'case-study', label: '11. Case Study' },
+  { id: 'variability',      label: '6. Variability' },
+  { id: 'percentiles',      label: '7. Percentiles' },
+  { id: 'outliers',         label: '8. Outliers' },
+  { id: 'visualization',    label: '9. Data Visualization' },
+  { id: 'correlation',      label: '10. Correlation' },
+  { id: 'case-study',       label: '11. Case Study' },
 ]
 
-/* ── Helpers ─────────────────────────────────────────────── */
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
 
 function SectionTitle({ id, children }: { id: string; children: React.ReactNode }) {
   return (
@@ -34,13 +34,9 @@ function Code({ children }: { children: string }) {
 
 function Output({ children }: { children: string }) {
   return (
-    <div className="bg-inverse-surface rounded-xl p-5 overflow-x-auto mb-6">
-      <p className="font-ui-label text-[0.625rem] text-secondary/80 uppercase tracking-widest mb-2">
-        Output
-      </p>
-      <code className="font-code text-[0.8rem] text-inverse-on-surface/90 whitespace-pre leading-relaxed">
-        {children}
-      </code>
+    <div className="bg-inverse-surface rounded-xl p-5 overflow-x-auto mb-8">
+      <p className="font-ui-label text-[0.625rem] text-secondary/80 uppercase tracking-widest mb-2">Output</p>
+      <code className="font-code text-[0.8rem] text-inverse-on-surface/90 whitespace-pre leading-relaxed">{children}</code>
     </div>
   )
 }
@@ -119,20 +115,22 @@ function IC({ children }: { children: string }) {
   )
 }
 
-function DataTable() {
+/* ── QR Payment mini-dataset ──────────────────────────────────────────────── */
+
+function TxTable() {
   const rows = [
-    ['1001', '201', '24', 'F', 'HCM', '150,000', '2', 'Thời trang'],
-    ['1002', '202', '35', 'M', 'HN',  '320,000', '5', 'Điện tử'],
-    ['1003', '203', '28', 'F', 'HCM',  '85,000', '1', 'Thời trang'],
-    ['1004', '204', '45', 'M', 'DN',  '450,000', '7', 'Điện tử'],
-    ['1005', '205', '52', 'F', 'HN',  '200,000', '3', 'Sức khỏe'],
-    ['1006', '206', '19', 'M', 'HCM',  '95,000', '2', 'Thời trang'],
-    ['1007', '207', '31', 'F', 'HN',  '180,000', '3', 'Sức khỏe'],
-    ['1008', '208', '38', 'M', 'HCM','2,500,000','15', 'Điện tử'],
-    ['1009', '209', '27', 'F', 'DN',  '130,000', '2', 'Thời trang'],
-    ['1010', '210', '42', 'M', 'HN',  '410,000', '6', 'Điện tử'],
+    ['P_001', 'U1234', '45,000',     'HCM', 'F&B',    'Regular', '24'],
+    ['P_002', 'U5678', '320,000',    'HN',  'Retail', 'Power',   '35'],
+    ['P_003', 'U2345', '22,000',     'HCM', 'F&B',    'Casual',  '28'],
+    ['P_004', 'U6789', '450,000',    'DN',  'Retail', 'Regular', '45'],
+    ['P_005', 'U3456', '180,000',    'HN',  'Health', 'Regular', '52'],
+    ['P_006', 'U7890', '28,000',     'HCM', 'F&B',    'Casual',  '19'],
+    ['P_007', 'U4567', '150,000',    'HN',  'Health', 'Power',   '31'],
+    ['P_008', 'U8901', '8,500,000',  'HCM', 'Retail', 'Power',   '38'],
+    ['P_009', 'U1357', '55,000',     'DN',  'F&B',    'Casual',  '27'],
+    ['P_010', 'U2468', '380,000',    'HN',  'Retail', 'Regular', '42'],
   ]
-  const headers = ['order_id','customer_id','age','gender','city','revenue (VND)','items','category']
+  const headers = ['payment_id', 'user_id', 'amount (VND)', 'province', 'category', 'user_segment', 'age']
 
   return (
     <div className="overflow-x-auto my-6 rounded-xl border border-outline-variant/30">
@@ -140,25 +138,18 @@ function DataTable() {
         <thead>
           <tr className="border-b border-outline-variant/30 bg-surface-container">
             {headers.map((h) => (
-              <th key={h} className="font-code text-[0.75rem] text-secondary px-4 py-3 whitespace-nowrap">
-                {h}
-              </th>
+              <th key={h} className="font-code text-[0.75rem] text-secondary px-4 py-3 whitespace-nowrap">{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr
-              key={i}
-              className={`border-b border-outline-variant/20 ${row[5] === '2,500,000' ? 'bg-secondary/5' : ''}`}
-            >
+            <tr key={i} className={`border-b border-outline-variant/20 ${row[0] === 'P_008' ? 'bg-secondary/5' : ''}`}>
               {row.map((cell, j) => (
                 <td
                   key={j}
                   className={`font-code text-[0.8rem] px-4 py-2.5 whitespace-nowrap ${
-                    row[5] === '2,500,000' && j === 5
-                      ? 'text-secondary font-semibold'
-                      : 'text-on-surface-variant'
+                    row[0] === 'P_008' && j === 2 ? 'text-secondary font-semibold' : 'text-on-surface-variant'
                   }`}
                 >
                   {cell}
@@ -172,22 +163,20 @@ function DataTable() {
   )
 }
 
-/* ── Main component ──────────────────────────────────────── */
+/* ── Main component ───────────────────────────────────────────────────────── */
 
 export function EDAContent() {
   return (
     <article className="max-w-[720px] py-8 lg:py-10 lg:pr-8">
 
       {/* ── Header ── */}
-      <p className="font-ui-label text-ui-label text-secondary uppercase tracking-widest mb-4">
-        Module 1
-      </p>
+      <p className="font-ui-label text-ui-label text-secondary uppercase tracking-widest mb-4">Module 1</p>
       <h1 className="font-display text-display text-on-surface mb-6 leading-[1.05]">
         Exploratory Data Analysis
       </h1>
       <p className="font-body-lg text-body-lg text-on-surface-variant mb-10">
-        Kỹ năng số một của mọi Data Analyst giỏi không phải Machine Learning, không phải SQL phức
-        tạp — mà là khả năng nhìn vào một file dữ liệu và biết nó đang cố nói với bạn điều gì.
+        Kỹ năng số một của mọi Data Analyst giỏi không phải Machine Learning, không phải SQL phức tạp —
+        mà là khả năng nhìn vào một tập dữ liệu và biết nó đang cố nói với bạn điều gì.
       </p>
 
       {/* ── Learning Objectives ── */}
@@ -200,9 +189,9 @@ export function EDAContent() {
             'Nhận một dataset mới và biết phải hỏi gì đầu tiên',
             'Phân biệt khi nào dùng Mean, khi nào dùng Median',
             'Phát hiện outlier và biết cách xử lý đúng',
-            'Đọc được phân phối dữ liệu từ biểu đồ histogram',
+            'Đọc được phân phối dữ liệu từ histogram',
             'Tránh bẫy "Correlation ≠ Causation" khi phân tích',
-            'Trình bày 3 insights từ EDA với sếp trong 5 phút',
+            'Trình bày 3 insights từ EDA với leader trong 5 phút',
           ].map((obj) => (
             <div key={obj} className="flex gap-3 items-start">
               <span className="text-secondary shrink-0 mt-0.5 font-semibold">✓</span>
@@ -212,23 +201,24 @@ export function EDAContent() {
         </div>
       </div>
 
-      {/* ── 1. EDA là gì? ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 1 — EDA là gì?
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="eda-la-gi" className="mb-16">
         <SectionTitle id="eda-la-gi">1. EDA là gì?</SectionTitle>
 
         <ScenarioBlock>
           <p>
-            Bạn vừa nhận được file dữ liệu đơn hàng từ hệ thống của một sàn thương mại điện tử. Trong
-            buổi chiều hôm đó, ba người nhắn tin cho bạn:
+            Tuần đầu tiên tại SnowTech. Analytics Lead Tuấn gửi cho bạn một task lúc 9 giờ sáng:
           </p>
           <div className="space-y-2 mt-1">
             {[
-              { from: 'Marketing', msg: '"Khách hàng của chúng ta thực sự là ai? Họ ở đâu, mua gì, bao nhiêu tuổi?"' },
-              { from: 'CEO', msg: '"Vì sao doanh thu tháng này thấp hơn tháng trước 20%? Nhóm nào đang kéo xuống?"' },
-              { from: 'Product', msg: '"Nhóm người dùng nào có giá trị đơn hàng cao nhất để chúng ta tập trung?"' },
+              { from: 'Analytics Lead', msg: '"QR GMV giảm 12% so với tháng trước. Trước khi ai đó đưa ra kết luận — hãy hiểu dữ liệu trước đã."' },
+              { from: 'Growth Manager', msg: '"Acquisition campaign tháng này vẫn đang chạy bình thường. Nghĩa là vấn đề ở phía retention hay transaction?"' },
+              { from: 'Merchant BU', msg: '"Merchant mới onboard tháng trước có vẻ ổn. Vậy tại sao GMV lại giảm?"' },
             ].map((q) => (
               <div key={q.from} className="flex gap-3 items-start">
-                <span className="font-ui-label text-[0.6875rem] text-secondary uppercase tracking-wider shrink-0 pt-0.5 w-20">
+                <span className="font-ui-label text-[0.6875rem] text-secondary uppercase tracking-wider shrink-0 pt-0.5 w-24">
                   {q.from}
                 </span>
                 <p className="font-body-md text-body-md text-on-surface italic">{q.msg}</p>
@@ -236,107 +226,114 @@ export function EDAContent() {
             ))}
           </div>
           <p className="mt-2 text-on-surface-variant">
-            Bạn có dữ liệu trong tay. Nhưng bạn chưa thực sự <strong className="text-on-surface">hiểu</strong> dữ liệu. Đây là lúc EDA xuất hiện.
+            Bạn có data trong tay. Nhưng chưa thực sự <strong className="text-on-surface">hiểu</strong> data.
+            Đây là lúc EDA xuất hiện.
           </p>
         </ScenarioBlock>
 
         <div className="font-body-lg text-body-lg text-on-surface-variant space-y-5">
           <p>
-            <strong className="text-on-surface">EDA — Exploratory Data Analysis</strong> (Phân tích dữ liệu
-            khám phá) là quá trình bạn &quot;nhìn, sờ, ngửi&quot; dữ liệu trước khi đưa ra bất kỳ kết
-            luận hay quyết định kinh doanh nào. Mục tiêu không phải là chứng minh một định lý toán học,
-            mà là: <strong className="text-on-surface">hiểu dữ liệu đang cố nói với bạn điều gì.</strong>
+            <strong className="text-on-surface">EDA — Exploratory Data Analysis</strong> là quá trình bạn
+            "nhìn, sờ, ngửi" dữ liệu trước khi đưa ra bất kỳ kết luận hay đề xuất nào.
+            Mục tiêu không phải chứng minh một giả thuyết — mà là{' '}
+            <strong className="text-on-surface">hiểu dữ liệu đang cố nói với bạn điều gì.</strong>
           </p>
         </div>
 
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Đây là dataset chúng ta sẽ dùng <strong className="text-on-surface">xuyên suốt toàn bộ module</strong> —
-          10 đơn hàng mẫu từ một sàn TMĐT Việt Nam. Mỗi concept sẽ được minh họa trên chính dataset này:
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4 mt-6">
+          Dataset chúng ta dùng <strong className="text-on-surface">xuyên suốt module</strong> — 10 giao dịch
+          QR Payment từ <IC>mart.fct_qr_payments</IC> join với <IC>mart.dim_user</IC>. Mỗi concept
+          sẽ được minh họa trên chính dataset này:
         </p>
-        <DataTable />
+
+        <TxTable />
 
         <Code>{`import pandas as pd
 
 data = {
-    'order_id':    [1001,1002,1003,1004,1005,1006,1007,1008,1009,1010],
-    'customer_id': [201, 202, 203, 204, 205, 206, 207, 208, 209, 210],
-    'age':         [24,  35,  28,  45,  52,  19,  31,  38,  27,  42],
-    'gender':      ['F', 'M', 'F', 'M', 'F', 'M', 'F', 'M', 'F', 'M'],
-    'city':        ['HCM','HN','HCM','DN','HN','HCM','HN','HCM','DN','HN'],
-    'revenue':     [150000,320000,85000,450000,200000,
-                    95000,180000,2500000,130000,410000],
-    'items_count': [2, 5, 1, 7, 3, 2, 3, 15, 2, 6],
-    'category':    ['Thời trang','Điện tử','Thời trang','Điện tử','Sức khỏe',
-                    'Thời trang','Sức khỏe','Điện tử','Thời trang','Điện tử'],
+    'payment_id':   ['P_001','P_002','P_003','P_004','P_005',
+                     'P_006','P_007','P_008','P_009','P_010'],
+    'user_id':      ['U1234','U5678','U2345','U6789','U3456',
+                     'U7890','U4567','U8901','U1357','U2468'],
+    'amount':       [45000, 320000, 22000, 450000, 180000,
+                     28000, 150000, 8500000, 55000, 380000],
+    'province':     ['HCM','HN','HCM','DN','HN','HCM','HN','HCM','DN','HN'],
+    'category':     ['F&B','Retail','F&B','Retail','Health',
+                     'F&B','Health','Retail','F&B','Retail'],
+    'user_segment': ['Regular','Power','Casual','Regular','Regular',
+                     'Casual','Power','Power','Casual','Regular'],
+    'age':          [24, 35, 28, 45, 52, 19, 31, 38, 27, 42],
 }
 
 df = pd.DataFrame(data)
 print(df.shape)
-print(df.head())`}</Code>
-        <Output>{`(10, 8)
-   order_id  customer_id  age gender city  revenue  items_count    category
-0      1001          201   24      F  HCM   150000            2  Thời trang
-1      1002          202   35      M   HN   320000            5    Điện tử
-2      1003          203   28      F  HCM    85000            1  Thời trang
-3      1004          204   45      M   DN   450000            7    Điện tử
-4      1005          205   52      F   HN   200000            3   Sức khỏe`}</Output>
+print(df.head())`}
+        </Code>
+        <Output>{`(10, 7)
+  payment_id user_id   amount province category user_segment  age
+0      P_001   U1234    45000      HCM      F&B      Regular   24
+1      P_002   U5678   320000       HN   Retail        Power   35
+2      P_003   U2345    22000      HCM      F&B       Casual   28
+3      P_004   U6789   450000       DN   Retail      Regular   45
+4      P_005   U3456   180000       HN   Health      Regular   52`}
+        </Output>
 
         <div className="border border-outline-variant/30 bg-surface-container-low rounded-xl px-5 py-4 my-6">
           <p className="font-ui-label text-[0.625rem] text-secondary/70 uppercase tracking-widest mb-2">
-            Lưu ý về dataset
+            Về dataset này
           </p>
           <p className="font-body-md text-body-md text-on-surface-variant">
-            Dataset này có <strong className="text-on-surface">10 dòng</strong> — nhỏ hơn nhiều so với
-            dữ liệu thực tế (thường hàng triệu đơn hàng). Nhưng các câu hỏi và kỹ thuật EDA hoàn toàn
-            giống nhau. Câu hỏi &quot;Dataset nhỏ 10 dòng này có đại diện cho toàn bộ khách hàng không?&quot;
-            — đó là chủ đề của <strong className="text-on-surface">Module 2: Sampling</strong>.
+            10 dòng — nhỏ hơn rất nhiều so với thực tế SnowTech (~100 triệu giao dịch/tháng).
+            Nhưng câu hỏi và kỹ thuật EDA hoàn toàn giống nhau.
+            "10 dòng này có đại diện cho toàn bộ user không?" — đó là chủ đề của{' '}
+            <strong className="text-on-surface">Module 2: Sampling</strong>.
           </p>
         </div>
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 2. EDA Workflow ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 2 — EDA Workflow
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="eda-workflow" className="mb-16">
         <SectionTitle id="eda-workflow">2. EDA Workflow — 5 bước thực chiến</SectionTitle>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-8">
-          <p>
-            Trước khi đi vào từng concept chi tiết, hãy nhìn toàn bộ bản đồ. Một Data Analyst làm EDA
-            theo 5 bước — và mọi kỹ thuật chúng ta học đều phục vụ cho một trong những bước này.
-          </p>
-        </div>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
+          Trước khi đi vào từng concept chi tiết, hãy nhìn toàn bộ bản đồ. Mọi kỹ thuật
+          trong module này phục vụ một trong 5 bước sau:
+        </p>
 
         <div className="space-y-3">
           {[
             {
               step: '01',
               title: 'Hiểu Business Question',
-              body: 'Bạn đang cố trả lời câu hỏi gì? "Khách hàng nào có giá trị cao nhất?" hay "Tại sao doanh thu giảm?" — câu hỏi quyết định bạn nhìn vào cột nào, nhóm nào.',
+              body: 'Bạn đang cố trả lời câu hỏi gì? "QR GMV giảm ở nhóm nào?" hay "User segment nào đang churn?" — câu hỏi quyết định bạn nhìn vào cột nào, nhóm nào.',
               tags: ['Trước khi code'],
             },
             {
               step: '02',
               title: 'Kiểm tra Data Types & Missing Values',
-              body: 'Mỗi cột chứa loại dữ liệu gì? Có dữ liệu bị thiếu không? Đây là bước "kiểm tra sức khỏe" của dataset — không thể bỏ qua.',
-              tags: ['Data Types', 'df.info()', 'df.isnull()'],
+              body: 'Mỗi cột chứa loại dữ liệu gì? Có thiếu dữ liệu không? Đây là bước "kiểm tra sức khỏe" của dataset — không thể bỏ qua trước khi phân tích.',
+              tags: ['df.info()', 'df.isnull()', 'df.dtypes'],
             },
             {
               step: '03',
               title: 'Khám phá Distribution & Central Tendency',
-              body: 'Dữ liệu phân bố như thế nào? Giá trị trung tâm là bao nhiêu? Có bất đối xứng không? Đây là nơi Mean, Median, Distribution và Std Dev phát huy tác dụng.',
+              body: 'Dữ liệu phân bố như thế nào? Giá trị trung tâm là bao nhiêu? Với QR transaction, phần lớn là nhỏ (F&B), nhưng một số rất lớn (Retail) — và sự bất đối xứng đó có ý nghĩa kinh doanh.',
               tags: ['Distribution', 'Mean', 'Median', 'Std Dev'],
             },
             {
               step: '04',
               title: 'Phát hiện Outliers',
-              body: 'Có giá trị nào bất thường không? Outlier có thể là lỗi dữ liệu, hoặc insight quan trọng nhất của toàn bộ phân tích.',
+              body: 'Có giao dịch nào bất thường không? Outlier có thể là lỗi data, hoặc là một merchant đặc biệt quan trọng cần điều tra riêng.',
               tags: ['IQR Method', 'Box Plot'],
             },
             {
               step: '05',
               title: 'Tìm Relationships & Tóm tắt Insights',
-              body: 'Các biến liên quan đến nhau như thế nào? Revenue cao hơn ở nhóm tuổi nào, thành phố nào, category nào? Correlation giúp trả lời những câu hỏi này.',
+              body: 'GMV cao hơn ở nhóm nào? User segment nào giao dịch nhiều nhất? Province nào đang giảm? Correlation và groupby giúp trả lời những câu hỏi này.',
               tags: ['Correlation', 'groupby', 'Visualization'],
             },
           ].map((item) => (
@@ -345,21 +342,14 @@ print(df.head())`}</Code>
               className="flex gap-5 border border-outline-variant/30 rounded-xl p-5 hover:border-secondary/30 motion-safe:transition-colors"
             >
               <div className="shrink-0">
-                <span className="font-code text-[0.875rem] text-secondary/50 font-semibold">
-                  {item.step}
-                </span>
+                <span className="font-code text-[0.875rem] text-secondary/50 font-semibold">{item.step}</span>
               </div>
               <div className="flex-1">
-                <h3 className="font-headline-md text-headline-md text-on-surface mb-2">
-                  {item.title}
-                </h3>
+                <h3 className="font-headline-md text-headline-md text-on-surface mb-2">{item.title}</h3>
                 <p className="font-body-md text-body-md text-on-surface-variant mb-3">{item.body}</p>
                 <div className="flex flex-wrap gap-2">
                   {item.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-code text-[0.6875rem] text-secondary bg-secondary/8 border border-secondary/15 px-2 py-0.5 rounded"
-                    >
+                    <span key={tag} className="font-code text-[0.6875rem] text-secondary bg-secondary/8 border border-secondary/15 px-2 py-0.5 rounded">
                       {tag}
                     </span>
                   ))}
@@ -370,1209 +360,895 @@ print(df.head())`}</Code>
         </div>
 
         <Note>
-          Phần còn lại của module sẽ đi sâu vào từng bước. Dataset ecommerce của chúng ta sẽ là sợi
-          chỉ đỏ xuyên suốt — mỗi concept được minh họa trên cùng một dữ liệu để bạn thấy bức tranh
-          hoàn chỉnh, không phải các mảnh ghép rời rạc.
+          Module này đi sâu vào từng bước. Dataset QR payment là sợi chỉ đỏ xuyên suốt —
+          mỗi concept được minh họa trên cùng một dữ liệu để bạn thấy bức tranh toàn cảnh.
         </Note>
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 3. Data Types ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 3 — Data Types
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="data-types" className="mb-16">
         <SectionTitle id="data-types">3. Data Types</SectionTitle>
 
-        <ScenarioBlock>
-          <p>
-            Bạn nhận được yêu cầu từ Marketing: <em>&quot;Tính revenue trung bình theo từng thành phố, và
-            cho tôi biết gender trung bình của khách hàng ở mỗi thành phố.&quot;</em>
-          </p>
-          <p className="text-on-surface-variant mt-2">
-            Bạn gõ <IC>df.groupby(&apos;city&apos;)[&apos;gender&apos;].mean()</IC> — Python báo lỗi. Tại sao? Vì{' '}
-            <IC>gender</IC> không phải là số — không thể tính trung bình. Đây là lý do bạn phải hiểu
-            Data Types trước khi làm bất kỳ phép tính nào.
-          </p>
-        </ScenarioBlock>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Bước đầu tiên khi nhận dataset: biết mình đang làm việc với loại dữ liệu gì.
+          Không phải vì học thuật — mà vì sai data type dẫn đến sai phân tích.
+          Tính mean của cột <IC>province</IC> là vô nghĩa. Tính mode của cột <IC>amount</IC> thì thường không hữu ích.
+        </p>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-6">
-          <p>
-            Kiểu dữ liệu quyết định <strong className="text-on-surface">bạn được phép làm gì</strong> với
-            từng cột. Dùng sai kiểu dữ liệu → kết quả vô nghĩa hoặc lỗi. Có 4 loại chính:
-          </p>
-        </div>
-
-        <div className="space-y-3 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-6">
           {[
             {
               type: 'Numerical — Continuous',
-              desc: 'Giá trị số liên tục, có thể chia nhỏ vô hạn. Phép tính số học hoàn toàn có ý nghĩa.',
-              examples: 'revenue, tỉ lệ chuyển đổi, thời gian session',
-              ops: 'mean(), median(), std(), histogram',
-              color: 'bg-secondary/8 border-secondary/25',
+              icon: '123',
+              desc: 'Giá trị số, có thể nhận vô hạn giá trị trong một khoảng.',
+              examples: 'amount, age',
+              analysis: 'Mean, Median, Std, Histogram, Scatter plot',
             },
             {
               type: 'Numerical — Discrete',
-              desc: 'Giá trị nguyên, đếm được. Không thể có "2.5 sản phẩm".',
-              examples: 'items_count, số lượt mua, số sản phẩm tồn kho',
-              ops: 'mean(), value_counts(), bar chart',
-              color: 'bg-secondary/8 border-secondary/25',
+              icon: '#',
+              desc: 'Giá trị số nguyên đếm được.',
+              examples: 'txn_count, overdue_days',
+              analysis: 'Count, Mode, Bar chart',
             },
             {
               type: 'Categorical — Nominal',
-              desc: 'Không có thứ tự, chỉ là nhãn phân loại. Không thể cộng hay so sánh lớn/nhỏ.',
-              examples: 'gender, city, category, payment_method',
-              ops: 'value_counts(), mode(), bar chart, groupby',
-              color: 'bg-surface-container border-outline-variant/40',
+              icon: 'Aa',
+              desc: 'Nhãn phân loại, không có thứ tự.',
+              examples: 'province, category, user_segment',
+              analysis: 'Mode, Value counts, Bar chart',
             },
             {
               type: 'Categorical — Ordinal',
-              desc: 'Có thứ tự rõ ràng (1 < 2 < 3...) nhưng khoảng cách giữa các bậc không đều.',
-              examples: 'rating (1–5 sao), mức VIP (Bronze/Silver/Gold)',
-              ops: 'value_counts(), median (cẩn thận), bar chart',
-              color: 'bg-surface-container border-outline-variant/40',
+              icon: '↑',
+              desc: 'Nhãn có thứ tự có ý nghĩa.',
+              examples: 'kyc_status (pending/verified), merchant_segment',
+              analysis: 'Median, Ordered bar chart',
             },
-          ].map((item) => (
-            <div key={item.type} className={`border rounded-xl p-5 ${item.color}`}>
-              <p className="font-ui-label text-ui-label text-on-surface mb-1">{item.type}</p>
-              <p className="font-body-md text-body-md text-on-surface-variant mb-2">{item.desc}</p>
-              <p className="font-code text-[0.75rem] text-secondary/80 mb-1">
-                Ví dụ trong dataset: {item.examples}
+          ].map((d) => (
+            <div key={d.type} className="border border-outline-variant/30 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-code text-[0.75rem] text-secondary bg-secondary/10 px-2 py-0.5 rounded">
+                  {d.icon}
+                </span>
+                <p className="font-ui-label text-ui-label text-on-surface">{d.type}</p>
+              </div>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-2">{d.desc}</p>
+              <p className="font-body-md text-[0.75rem] text-on-surface-variant/70">
+                <span className="text-on-surface font-medium">SnowTech: </span>{d.examples}
               </p>
-              <p className="font-code text-[0.75rem] text-on-surface-variant/60">
-                Dùng được: {item.ops}
+              <p className="font-body-md text-[0.75rem] text-on-surface-variant/70 mt-0.5">
+                <span className="text-on-surface font-medium">Dùng: </span>{d.analysis}
               </p>
             </div>
           ))}
         </div>
 
-        <Code>{`# Bước đầu tiên của mọi EDA: kiểm tra kiểu dữ liệu
+        <Code>{`# Bước đầu tiên với mọi dataset mới
 print(df.dtypes)
 print()
-# describe() chỉ tóm tắt numerical columns — categorical bị bỏ qua
-print(df.describe())`}</Code>
-        <Output>{`order_id        int64
-customer_id     int64
-age             int64
-gender         object   ← categorical (nominal)
-city           object   ← categorical (nominal)
-revenue         int64   ← numerical (continuous)
-items_count     int64   ← numerical (discrete)
-category       object   ← categorical (nominal)
+print(df.isnull().sum())
+print()
+print(df.describe())`}
+        </Code>
+        <Output>{`payment_id      object   ← categorical (ID)
+user_id         object   ← categorical (ID)
+amount           int64   ← numerical continuous ✓
+province        object   ← categorical nominal
+category        object   ← categorical nominal
+user_segment    object   ← categorical nominal
+age              int64   ← numerical discrete ✓
 
-       age      revenue  items_count
-count   10.00     10.00        10.00
-mean    34.10  452000.00         4.60
-std     10.28  726124.55         4.22
-min     19.00   85000.00         1.00
-25%     27.25  135000.00         2.00
-50%     33.50  190000.00         3.00
-75%     42.75  387500.00         6.00
-max     52.00  2500000.00       15.00`}</Output>
+# Missing values:
+payment_id      0
+user_id         0
+amount          0
+province        0
+category        0
+user_segment    0
+age             0
+dtype: int64`}
+        </Output>
 
-        <Mistakes
-          items={[
-            'Tính mean() của cột categorical (gender, city) — kết quả vô nghĩa hoặc lỗi.',
-            'Dùng bar chart cho continuous data thay vì histogram — che giấu phân phối thật.',
-            'Nhầm Ordinal với Nominal: rating 5 sao không phải gấp 5 lần rating 1 sao về "chất lượng".',
-            'Không kiểm tra dtypes trước khi phân tích — lãng phí giờ đồng hồ debug sau đó.',
-          ]}
-        />
+        <Mistakes items={[
+          'Đọc amount là "object" thay vì "int64" — xảy ra khi data có dấu phẩy ("45,000") → không tính được mean.',
+          'Bỏ qua isnull().sum() — missing values trong cột amount hoặc user_segment sẽ làm lệch mọi thống kê sau đó.',
+          'Treat user_id như numerical — tính mean của user_id là vô nghĩa, user_id chỉ là identifier.',
+        ]} />
 
-        <QuickSummary
-          items={[
-            'Numerical: có thể cộng, trừ, tính trung bình. Continuous = liên tục, Discrete = đếm được.',
-            'Categorical: chỉ là nhãn. Nominal = không có thứ tự, Ordinal = có thứ tự.',
-            'df.dtypes là dòng code đầu tiên bạn chạy với bất kỳ dataset nào.',
-          ]}
-        />
+        <QuickSummary items={[
+          'Numerical (amount, age): dùng mean, median, std, histogram.',
+          'Categorical (province, category, segment): dùng value_counts(), mode, bar chart.',
+          'Luôn chạy df.info() và df.isnull().sum() trước khi bất kỳ phân tích nào khác.',
+        ]} />
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 4. Distribution ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 4 — Distribution
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="distribution" className="mb-16">
         <SectionTitle id="distribution">4. Distribution</SectionTitle>
 
         <ScenarioBlock>
           <p>
-            Bạn tính được: revenue trung bình = <strong>452,000 VND</strong>. Sếp hỏi: &quot;Vậy nếu
-            tôi muốn chạy khuyến mãi cho khách hàng &apos;trung bình&apos;, tôi đặt mức giảm giá cho
-            đơn hàng bao nhiêu VND?&quot;
+            Analytics Lead Tuấn hỏi: <em>"QR transaction amount phân bổ như thế nào?
+            Đa số user đang chi bao nhiêu một lần?"</em>
           </p>
-          <p className="text-on-surface-variant">
-            Bạn trả lời &quot;khoảng 452k&quot; — và đó có thể là câu trả lời sai hoàn toàn. Vì{' '}
-            <strong className="text-on-surface">con số trung bình không nói lên hình dạng của dữ liệu</strong>.
-            Bạn cần hiểu Distribution trước khi tin vào bất kỳ con số tóm tắt nào.
+          <p>
+            Trước khi trả lời, bạn cần hiểu <em>hình dạng</em> của dữ liệu — không chỉ mỗi con số trung bình.
           </p>
         </ScenarioBlock>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-5 mb-6">
-          <p>
-            <strong className="text-on-surface">Distribution (Phân phối)</strong> mô tả hình dạng của
-            dữ liệu — giá trị tập trung ở đâu, trải rộng như thế nào, có lệch sang một bên không.
-            Đây là điều đầu tiên bạn cần &quot;nhìn&quot; trước khi tính bất kỳ con số tóm tắt nào.
-          </p>
-        </div>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          <strong className="text-on-surface">Distribution</strong> mô tả dữ liệu của bạn phân bổ
+          như thế nào — giá trị nào xuất hiện nhiều, giá trị nào hiếm, và hình dạng tổng thể là gì.
+        </p>
 
-        <Code>{`import matplotlib.pyplot as plt
+        <Code>{`print(df['amount'].describe())
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+# Phân bổ theo category
+print(df.groupby('category')['amount'].agg(['count', 'mean', 'median']))`}
+        </Code>
+        <Output>{`count         10.000000
+mean     1,013,000.000000   ← bị kéo cao bởi P_008
+std      2,598,441.000000
+min         22,000.000000
+25%         36,500.000000
+50%        165,000.000000   ← median ổn định hơn
+75%        357,500.000000
+max      8,500,000.000000
 
-# Revenue: right-skewed do outlier 2.5M
-axes[0].hist(df['revenue'], bins=8, color='#4e45d5', alpha=0.7, edgecolor='white')
-axes[0].axvline(df['revenue'].mean(),   color='red',    ls='--', lw=2,
-                label=f"Mean: {df['revenue'].mean()/1000:.0f}k")
-axes[0].axvline(df['revenue'].median(), color='orange', ls='--', lw=2,
-                label=f"Median: {df['revenue'].median()/1000:.0f}k")
-axes[0].set_title('Revenue — Right-Skewed')
-axes[0].legend()
+         count      mean  median
+category
+F&B          4    37,500  40,000   ← nhỏ, thanh toán hàng ngày
+Health       2   165,000 165,000
+Retail       4 2,412,500 385,000   ← mean bị kéo cao bởi P_008`}
+        </Output>
 
-# Age: roughly normal
-axes[1].hist(df['age'], bins=6, color='#4e45d5', alpha=0.7, edgecolor='white')
-axes[1].axvline(df['age'].mean(), color='red', ls='--', lw=2,
-                label=f"Mean: {df['age'].mean():.1f}")
-axes[1].set_title('Age — Roughly Normal')
-axes[1].legend()
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Đây là phân phối <strong className="text-on-surface">lệch phải (right-skewed)</strong>:
+          phần lớn giao dịch là nhỏ (F&B dưới 100K), nhưng một số giao dịch Retail rất lớn
+          kéo đuôi phân phối về phía phải. Hình dạng này phổ biến trong mọi Fintech — không phải ngoại lệ.
+        </p>
 
-plt.tight_layout()
-plt.savefig('distributions.png', dpi=150)`}</Code>
-
-        <div className="bg-surface-container rounded-xl p-5 my-4">
-          <p className="font-ui-label text-[0.625rem] text-secondary/80 uppercase tracking-widest mb-4">
-            Kết quả trực quan
-          </p>
-          <div className="grid grid-cols-2 gap-6">
-            {/* Revenue: right-skewed — bars decreasing from left to right with long right tail */}
-            <div>
-              <div
-                className="h-28 rounded-lg flex items-end gap-0.5 px-3 pb-2 mb-3"
-                style={{ background: 'linear-gradient(to top, #eeedf7, #f4f2fd)' }}
-                aria-hidden="true"
-              >
-                {[82, 68, 42, 22, 10, 5, 2, 1].map((h, i) => (
-                  <div
-                    key={i}
-                    className="flex-1 bg-secondary rounded-sm opacity-75"
-                    style={{ height: `${h}%` }}
-                  />
-                ))}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
+          {[
+            {
+              shape: 'Symmetric (Normal)',
+              icon: '⌃',
+              desc: 'Mean ≈ Median. Phân phối đều hai phía.',
+              fintech: 'Hiếm gặp trong transaction data. Có thể thấy ở age distribution.',
+            },
+            {
+              shape: 'Right-Skewed',
+              icon: '⌃→',
+              desc: 'Mean > Median. Đuôi dài về phía phải.',
+              fintech: 'QR payment amount, wallet balance, loan amount — phổ biến nhất.',
+            },
+            {
+              shape: 'Left-Skewed',
+              icon: '←⌃',
+              desc: 'Mean < Median. Đuôi dài về phía trái.',
+              fintech: 'Credit score (nhiều user score cao, ít user score rất thấp).',
+            },
+          ].map((s) => (
+            <div key={s.shape} className={`border rounded-xl p-4 ${s.shape === 'Right-Skewed' ? 'border-secondary/40 bg-secondary/5' : 'border-outline-variant/30'}`}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-code text-base text-secondary">{s.icon}</span>
+                <p className="font-ui-label text-ui-label text-on-surface">{s.shape}</p>
               </div>
-              <p className="font-ui-label text-ui-label text-on-surface mb-1">
-                Revenue — Right-Skewed
-              </p>
-              <p className="font-body-md text-[0.8125rem] text-on-surface-variant">
-                Phần lớn đơn hàng ở mức thấp (85k–450k). Đuôi dài kéo sang phải do đơn 2.5M.{' '}
-                <span className="text-red-500">Mean (452k)</span> nằm xa về phải so với{' '}
-                <span className="text-amber-600">Median (190k)</span>.
-              </p>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-2">{s.desc}</p>
+              <p className="font-body-md text-[0.75rem] text-on-surface-variant/70 italic">{s.fintech}</p>
             </div>
-            {/* Age: roughly normal */}
-            <div>
-              <div
-                className="h-28 rounded-lg flex items-end gap-0.5 px-3 pb-2 mb-3"
-                style={{ background: 'linear-gradient(to top, #eeedf7, #f4f2fd)' }}
-                aria-hidden="true"
-              >
-                {[20, 45, 75, 80, 70, 40].map((h, i) => (
-                  <div
-                    key={i}
-                    className="flex-1 bg-secondary rounded-sm opacity-75"
-                    style={{ height: `${h}%` }}
-                  />
-                ))}
-              </div>
-              <p className="font-ui-label text-ui-label text-on-surface mb-1">
-                Age — Roughly Normal
-              </p>
-              <p className="font-body-md text-[0.8125rem] text-on-surface-variant">
-                Phân phối gần đối xứng, tập trung ở 30–40 tuổi. Mean ≈ Median ≈ 34 tuổi. Không
-                có outlier đáng kể.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <div className="my-6">
-          <p className="font-headline-md text-headline-md text-on-surface mb-4">
-            3 hình dạng phân phối phổ biến nhất
-          </p>
-          <div className="grid grid-cols-3 gap-3">
-            {[
-              {
-                name: 'Normal (Chuẩn)',
-                desc: 'Đối xứng. Mean = Median. Phổ biến trong: chiều cao, điểm thi.',
-                when: 'Mean và Median đều đáng tin cậy',
-              },
-              {
-                name: 'Right-Skewed (Lệch phải)',
-                desc: 'Đuôi dài bên phải. Mean > Median. Phổ biến trong: revenue, thu nhập.',
-                when: 'Dùng Median thay vì Mean',
-              },
-              {
-                name: 'Left-Skewed (Lệch trái)',
-                desc: 'Đuôi dài bên trái. Mean < Median. Phổ biến trong: điểm thi dễ.',
-                when: 'Dùng Median thay vì Mean',
-              },
-            ].map((item) => (
-              <div key={item.name} className="border border-outline-variant/30 rounded-xl p-4">
-                <p className="font-ui-label text-ui-label text-on-surface mb-2">{item.name}</p>
-                <p className="font-body-md text-[0.8125rem] text-on-surface-variant mb-3">{item.desc}</p>
-                <p className="font-code text-[0.6875rem] text-secondary/80">→ {item.when}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Note>
+          Khi phân phối lệch phải, <strong>Mean bị kéo cao hơn thực tế đa số user</strong>.
+          Median mô tả "user điển hình" tốt hơn. Đây là lý do tại sao Section 5 quan trọng với Fintech DA.
+        </Note>
 
-        <Mistakes
-          items={[
-            'Báo cáo Mean mà không kiểm tra distribution trước — Mean vô nghĩa với right-skewed data.',
-            'Nhìn vào Mean và Median giống nhau rồi bỏ qua distribution — có thể là bimodal (2 đỉnh).',
-            'Dùng histogram với bins quá ít hoặc quá nhiều — che giấu hình dạng thật của dữ liệu.',
-          ]}
-        />
-
-        <QuickSummary
-          items={[
-            'Nhìn histogram trước khi tin vào bất kỳ con số tóm tắt nào.',
-            'Right-skewed (phổ biến trong revenue, thu nhập): Mean bị kéo lên bởi outlier → dùng Median.',
-            'Khoảng cách giữa Mean và Median là dấu hiệu đầu tiên của skewed distribution hoặc outlier.',
-          ]}
-        />
+        <QuickSummary items={[
+          'Distribution cho bạn thấy hình dạng dữ liệu — không chỉ một con số tóm tắt.',
+          'Transaction amount trong Fintech luôn right-skewed: nhiều giao dịch nhỏ, ít giao dịch rất lớn.',
+          'Khi thấy right-skewed: Mean bị inflate bởi outlier. Dùng Median để mô tả user điển hình.',
+        ]} />
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 5. Mean, Median, Mode ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 5 — Mean, Median, Mode
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="mean-median-mode" className="mb-16">
         <SectionTitle id="mean-median-mode">5. Mean, Median, Mode</SectionTitle>
 
-        <ScenarioBlock label="Tình huống thực tế">
+        <ScenarioBlock>
           <p>
-            Thứ Hai sáng, bạn nhận email từ CEO: &quot;Cho tôi biết revenue trung bình mỗi đơn hàng
-            của chúng ta.&quot; Bạn mở Python, gõ <IC>df[&apos;revenue&apos;].mean()</IC>, thấy{' '}
-            <strong>452,000 VND</strong>, và gửi email trả lời.
-          </p>
-          <p className="text-on-surface-variant">
-            Buổi chiều, CEO dùng con số đó để lên kế hoạch khuyến mãi cho &quot;khách hàng trung
-            bình&quot; với mức giảm giá 50k cho đơn từ 400k. Chiến dịch thất bại vì 70% khách hàng
-            thực tế chỉ chi tiêu 85k–200k — không ai đặt đơn 400k cả.
+            Growth Manager hỏi: <em>"Average QR transaction amount của chúng ta là bao nhiêu?"</em>
           </p>
           <p>
-            <strong className="text-on-surface">Vấn đề:</strong> bạn dùng đúng hàm, nhưng sai thước
-            đo. Mean = 452k bị kéo lên bởi một đơn hàng 2,500,000 VND duy nhất.
+            Bạn tính nhanh: <strong>1,013,000 VND</strong>. Growth Manager gật đầu và chuẩn bị
+            đưa con số này vào slide monthly review.
+          </p>
+          <p>
+            Analytics Lead Tuấn nhìn qua: <em>"P_008 là giao dịch gì vậy?"</em>
           </p>
         </ScenarioBlock>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-6">
-          <p>
-            Có 3 cách đo &quot;giá trị đại diện&quot; của một tập dữ liệu. Chọn sai thước đo là một
-            trong những sai lầm phổ biến nhất của Junior DA.
-          </p>
-        </div>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          P_008 là một giao dịch 8.5 triệu đồng — một Power User mua thiết bị điện tử qua QR.
+          Một giao dịch đó đang kéo <em>average</em> của toàn bộ dataset lên gấp 6 lần giá trị điển hình.
+        </p>
 
-        <Code>{`# ── Mean: Trung bình cộng ──────────────────────────────────
-# Tổng tất cả giá trị / số lượng phần tử
-mean_rev = df['revenue'].mean()
-print(f"Mean revenue:   {mean_rev:>12,.0f} VND")
+        <Code>{`# So sánh Mean vs Median
+print("=== Toàn bộ dataset (n=10) ===")
+print(f"Mean:   {df['amount'].mean():>12,.0f} VND")
+print(f"Median: {df['amount'].median():>12,.0f} VND")
 
-# ── Median: Giá trị chính giữa khi sắp xếp ─────────────────
-# Không bị ảnh hưởng bởi outlier
-median_rev = df['revenue'].median()
-print(f"Median revenue: {median_rev:>12,.0f} VND")
-
-# ── Mode: Giá trị xuất hiện nhiều nhất ─────────────────────
-# Hữu ích cho categorical data
-mode_city = df['city'].mode()[0]
-print(f"Mode city:      {mode_city}")
+# Loại bỏ outlier P_008
+df_no_outlier = df[df['payment_id'] != 'P_008']
 print()
+print("=== Bỏ P_008 (n=9) ===")
+print(f"Mean:   {df_no_outlier['amount'].mean():>12,.0f} VND")
+print(f"Median: {df_no_outlier['amount'].median():>12,.0f} VND")`}
+        </Code>
+        <Output>{`=== Toàn bộ dataset (n=10) ===
+Mean:      1,013,000 VND   ← bị P_008 kéo lên
+Median:      165,000 VND   ← ổn định hơn
 
-# Khoảng cách Mean - Median tiết lộ mức độ lệch
-gap = mean_rev - median_rev
-print(f"Khoảng cách Mean-Median: {gap:,.0f} VND ({gap/median_rev*100:.0f}% của Median)")`}</Code>
-        <Output>{`Mean revenue:      452,000 VND
-Median revenue:    190,000 VND
-Mode city:         HCM
+=== Bỏ P_008 (n=9) ===
+Mean:        181,111 VND   ← gần Median hơn nhiều
+Median:      150,000 VND   ← hầu như không đổi`}
+        </Output>
 
-Khoảng cách Mean-Median: 262,000 VND (138% của Median)`}</Output>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Median chỉ thay đổi từ 165K → 150K khi bỏ P_008. Mean thay đổi từ 1.013M → 181K.
+          Đây không phải bug — đây là đặc tính toán học:
+        </p>
 
-        <div className="bg-secondary/5 border border-secondary/25 rounded-xl p-5 my-6">
-          <p className="font-ui-label text-[0.625rem] text-secondary uppercase tracking-widest mb-3">
-            Tại sao khoảng cách 138% lại quan trọng?
-          </p>
-          <p className="font-body-md text-body-md text-on-surface-variant">
-            Khi Mean lớn hơn Median đến 138%, đó là tín hiệu rõ ràng của{' '}
-            <strong className="text-on-surface">right-skewed distribution</strong> với outlier
-            nghiêm trọng. Mọi báo cáo dùng Mean trong trường hợp này đều đang &quot;nói dối&quot;
-            — không phải cố ý, nhưng sai về mặt thống kê.
-          </p>
+        <div className="border border-outline-variant/30 bg-surface-container rounded-xl divide-y divide-outline-variant/20 my-6">
+          {[
+            {
+              measure: 'Mean',
+              formula: 'Tổng tất cả giá trị / số lượng',
+              strength: 'Tính được expected value, dùng trong tính toán tài chính',
+              weakness: 'Bị kéo mạnh bởi outlier — phản ánh kém "user điển hình"',
+              use: 'Khi muốn tính tổng: "Nếu user giao dịch n lần, tổng bao nhiêu?"',
+            },
+            {
+              measure: 'Median',
+              formula: 'Giá trị giữa sau khi sắp xếp',
+              strength: 'Kháng outlier — mô tả đúng user điển hình',
+              weakness: 'Không dùng trực tiếp trong tính tổng',
+              use: 'Khi muốn biết "user trung bình trải nghiệm gì?" — dùng Median',
+            },
+            {
+              measure: 'Mode',
+              formula: 'Giá trị xuất hiện nhiều nhất',
+              strength: 'Tốt nhất cho categorical data',
+              weakness: 'Kém có ý nghĩa với continuous data (amount)',
+              use: 'Province phổ biến nhất, category phổ biến nhất — categorical columns',
+            },
+          ].map((m) => (
+            <div key={m.measure} className="px-5 py-4">
+              <div className="flex items-baseline gap-3 mb-2">
+                <span className="font-ui-label text-ui-label text-secondary min-w-[60px]">{m.measure}</span>
+                <span className="font-code text-[0.75rem] text-on-surface-variant/60">{m.formula}</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[0.75rem]">
+                <p className="font-body-md text-on-surface-variant"><span className="text-secondary">+</span> {m.strength}</p>
+                <p className="font-body-md text-on-surface-variant"><span className="text-error/70">−</span> {m.weakness}</p>
+                <p className="font-body-md text-on-surface-variant italic">{m.use}</p>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="overflow-x-auto my-6 rounded-xl border border-outline-variant/30">
-          <table className="w-full text-left text-sm border-collapse">
-            <thead>
-              <tr className="bg-surface-container border-b border-outline-variant/30">
-                {['Thước đo', 'Khi nào nên dùng', 'Khi nào KHÔNG dùng', 'Dataset của chúng ta'].map((h) => (
-                  <th key={h} className="font-ui-label text-ui-label px-4 py-3 whitespace-nowrap">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="font-body-md text-body-md text-on-surface-variant">
-              {[
-                [
-                  'Mean',
-                  'Phân phối chuẩn (normal), không có outlier',
-                  'Có outlier cực đoan — revenue, lương, giá nhà',
-                  '❌ Không phù hợp cho revenue (bị kéo bởi 2.5M)',
-                ],
-                [
-                  'Median',
-                  'Có outlier, phân phối lệch (skewed)',
-                  'Khi cần tính toán tiếp (cộng hai median không có nghĩa)',
-                  '✓ Đúng cho revenue — 190k đại diện khách hàng thật',
-                ],
-                [
-                  'Mode',
-                  'Categorical data — thành phố phổ biến nhất, category bán chạy',
-                  'Continuous data — revenue, age (hiếm khi có hai đơn hàng cùng giá)',
-                  '✓ Dùng cho city (HCM), category (Điện tử)',
-                ],
-              ].map(([m, yes, no, context]) => (
-                <tr key={m} className="border-b border-outline-variant/20">
-                  <td className="font-code text-[0.875rem] text-secondary px-4 py-3 whitespace-nowrap">{m}</td>
-                  <td className="px-4 py-3">{yes}</td>
-                  <td className="px-4 py-3 text-on-surface-variant/70">{no}</td>
-                  <td className="px-4 py-3 text-[0.8125rem]">{context}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Code>{`# Mode cho categorical columns
+print("Province phổ biến nhất:", df['province'].mode()[0])
+print("Category phổ biến nhất:", df['category'].mode()[0])
+print("Segment phổ biến nhất:", df['user_segment'].mode()[0])
 
-        <Mistakes
-          items={[
-            'Dùng Mean cho dữ liệu revenue, lương, giá nhà — đây đều là right-skewed, outlier kéo Mean lên.',
-            'Báo cáo Mean mà không kiểm tra histogram trước — không biết mình dùng sai thước đo.',
-            'Nghĩ rằng Median "ít chính xác hơn" Mean — sai. Median chính xác hơn khi có outlier.',
-            'Dùng Mode cho numerical continuous data — hiếm khi có ý nghĩa vì giá trị ít lặp lại.',
-          ]}
-        />
+# Median cho amount theo segment
+print()
+print(df.groupby('user_segment')['amount'].median().sort_values(ascending=False))`}
+        </Code>
+        <Output>{`Province phổ biến nhất: HCM
+Category phổ biến nhất: F&B
+Segment phổ biến nhất: Regular
 
-        <QuickSummary
-          items={[
-            'Khoảng cách Mean-Median lớn → distribution lệch → dùng Median để báo cáo.',
-            'Mean = công cụ mặc định của người mới. Median = công cụ của người biết dữ liệu.',
-            'Mode hữu ích nhất cho categorical data: city nào phổ biến nhất, category nào bán chạy.',
-          ]}
-        />
+user_segment
+Power      320,000   ← median Power user cao hơn hẳn
+Regular    250,000
+Casual      40,000   ← median Casual user rất thấp (F&B chủ yếu)`}
+        </Output>
+
+        <Mistakes items={[
+          'Báo cáo "average QR transaction 1,013,000 VND" — con số bị inflate bởi outlier, không phản ánh đại đa số user.',
+          'Dùng Mean khi distribution bị skew mạnh — Growth Manager sẽ hiểu sai hành vi user thực tế.',
+          'Tính Mode của cột amount — với continuous data có hàng triệu giá trị, mode không có ý nghĩa thực tế.',
+        ]} />
+
+        <QuickSummary items={[
+          'Mean bị kéo bởi outlier → dùng Median khi data right-skewed (transaction amount, wallet balance).',
+          'Median mô tả "user điển hình". Mean mô tả "expected value cho tính toán tổng".',
+          'Mode dùng cho categorical: province, category, user_segment — không dùng cho amount.',
+        ]} />
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 6. Variability ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 6 — Variability
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="variability" className="mb-16">
         <SectionTitle id="variability">6. Variability</SectionTitle>
 
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Hai nhóm user có thể có cùng Median nhưng hành vi hoàn toàn khác nhau.
+          Bạn cần đo thêm <strong className="text-on-surface">mức độ phân tán</strong> của dữ liệu.
+        </p>
+
         <ScenarioBlock>
           <p>
-            Sếp nhận được báo cáo từ hai Data Analyst về hai nhóm khách hàng:
+            Risk Team hỏi: <em>"Loan amount của hai nhóm user trẻ (dưới 30) và trung niên (30+) có khác nhau không?"</em>
           </p>
-          <div className="grid grid-cols-2 gap-3 mt-2">
-            <div className="bg-background border border-outline-variant/30 rounded-lg p-3">
-              <p className="font-ui-label text-ui-label text-on-surface mb-1">Nhóm A</p>
-              <p className="font-body-md text-body-md text-on-surface-variant">Revenue trung bình: 200,000 VND</p>
-              <p className="font-code text-[0.75rem] text-secondary/70 mt-1">180k / 195k / 200k / 205k / 220k</p>
-            </div>
-            <div className="bg-background border border-outline-variant/30 rounded-lg p-3">
-              <p className="font-ui-label text-ui-label text-on-surface mb-1">Nhóm B</p>
-              <p className="font-body-md text-body-md text-on-surface-variant">Revenue trung bình: 200,000 VND</p>
-              <p className="font-code text-[0.75rem] text-secondary/70 mt-1">50k / 80k / 150k / 320k / 2,500k</p>
-            </div>
-          </div>
-          <p className="text-on-surface-variant mt-3">
-            Hai nhóm cùng Mean. Nhưng chiến lược marketing, phân khúc sản phẩm, và ngưỡng voucher
-            phải hoàn toàn khác nhau. Chỉ biết Mean là chưa đủ — bạn cần biết dữ liệu{' '}
-            <strong className="text-on-surface">phân tán</strong> như thế nào.
+          <p>
+            Nếu chỉ nhìn median, câu trả lời có thể là "giống nhau." Nhưng nếu nhìn variability —
+            bức tranh hoàn toàn khác.
           </p>
         </ScenarioBlock>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-6">
-          <p>
-            <strong className="text-on-surface">Variability (Độ phân tán)</strong> đo mức độ các
-            giá trị trong dataset trải rộng hay tập trung xung quanh giá trị trung tâm.
-          </p>
-        </div>
+        <Code>{`# Variability của amount theo age group
+df['age_group'] = df['age'].apply(lambda x: 'Dưới 30' if x < 30 else '30+')
 
-        <div className="space-y-6 mb-6">
-          <div>
-            <h3 className="font-headline-md text-headline-md text-on-surface mb-3">
-              Từ Range đến Standard Deviation
-            </h3>
-            <p className="font-body-md text-body-md text-on-surface-variant mb-4">
-              Tại sao cần 3 thước đo khác nhau? Vì mỗi thước đo giải quyết một vấn đề của thước
-              đo trước:
-            </p>
-            <div className="space-y-3">
-              {[
-                {
-                  step: 'Range',
-                  formula: 'Max − Min',
-                  problem: 'Chỉ dùng 2 điểm dữ liệu, hoàn toàn bị ảnh hưởng bởi outlier.',
-                  use: 'Cái nhìn sơ bộ nhanh',
-                },
-                {
-                  step: 'Variance',
-                  formula: 'Trung bình của bình phương khoảng cách từ mỗi điểm đến Mean',
-                  problem: 'Đơn vị bình phương (VND²) → không thể diễn giải trực tiếp.',
-                  use: 'Cơ sở toán học cho nhiều phép tính',
-                },
-                {
-                  step: 'Std Dev',
-                  formula: '√Variance',
-                  problem: 'Cùng đơn vị với dữ liệu gốc (VND) → có thể diễn giải được.',
-                  use: 'Thước đo phân tán chính trong thực tế',
-                },
-              ].map((item) => (
-                <div key={item.step} className="flex gap-4 border border-outline-variant/20 rounded-lg p-4">
-                  <div className="shrink-0 w-20">
-                    <span className="font-code text-[0.875rem] text-secondary font-semibold">{item.step}</span>
-                  </div>
-                  <div>
-                    <p className="font-code text-[0.8125rem] text-on-surface mb-1">= {item.formula}</p>
-                    <p className="font-body-md text-[0.8125rem] text-on-surface-variant/70 mb-1">
-                      Hạn chế: {item.problem}
-                    </p>
-                    <p className="font-body-md text-[0.8125rem] text-secondary/80">
-                      Dùng khi: {item.use}
-                    </p>
-                  </div>
-                </div>
-              ))}
+stats = df.groupby('age_group')['amount'].agg([
+    ('median', 'median'),
+    ('std',    'std'),
+    ('min',    'min'),
+    ('max',    'max'),
+    ('iqr',    lambda x: x.quantile(0.75) - x.quantile(0.25)),
+])
+print(stats)`}
+        </Code>
+        <Output>{`          median          std     min       max       iqr
+age_group
+30+       250,000  2,950,000  22,000  8,500,000  292,500
+Dưới 30    40,000     13,000  22,000     55,000   26,500`}
+        </Output>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Nhóm 30+ có median 250K — không quá khác nhóm dưới 30 (40K) về "giá trị điển hình."
+          Nhưng std của nhóm 30+ là 2.95 triệu — cho thấy trong nhóm này có cả user giao dịch rất nhỏ
+          lẫn rất lớn (8.5M). Đây là thông tin quan trọng cho Risk Team khi đánh giá khả năng vay.
+        </p>
+
+        <div className="border border-outline-variant/30 bg-surface-container rounded-xl divide-y divide-outline-variant/20 my-6">
+          {[
+            {
+              measure: 'Standard Deviation (Std)',
+              desc: 'Mức độ phân tán trung bình quanh Mean.',
+              fintech: 'Std của loan amount cao → portfolio đa dạng, risk phân tán',
+              warning: 'Bị ảnh hưởng mạnh bởi outlier vì tính từ Mean',
+            },
+            {
+              measure: 'IQR (Interquartile Range)',
+              desc: 'Q3 − Q1. Khoảng chứa 50% user ở giữa.',
+              fintech: 'IQR của wallet balance → hiểu hành vi 50% user mainstream',
+              warning: 'Kháng outlier — dùng khi data có extreme values',
+            },
+            {
+              measure: 'Variance',
+              desc: 'Bình phương của Std. Đơn vị = VND².',
+              fintech: 'Ít dùng trực tiếp trong business reporting — dùng Std thay thế',
+              warning: 'Đơn vị bình phương khiến khó diễn giải trực quan',
+            },
+          ].map((v) => (
+            <div key={v.measure} className="px-5 py-4">
+              <p className="font-ui-label text-ui-label text-secondary mb-1">{v.measure}</p>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-1">{v.desc}</p>
+              <p className="font-body-md text-[0.75rem] text-on-surface-variant/70">
+                <span className="text-on-surface font-medium">SnowTech: </span>{v.fintech}
+              </p>
+              <p className="font-body-md text-[0.75rem] text-on-surface-variant/70 mt-0.5">
+                <span className="text-error/60 font-medium">Lưu ý: </span>{v.warning}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
-
-        <Code>{`# Range
-revenue_range = df['revenue'].max() - df['revenue'].min()
-print(f"Range:    {revenue_range:>12,.0f} VND")
-
-# Variance — đơn vị VND², không diễn giải được trực tiếp
-variance = df['revenue'].var()
-print(f"Variance: {variance:>12,.0f}   ← VND² — con số này vô nghĩa trong báo cáo")
-
-# Standard Deviation — cùng đơn vị VND, có thể diễn giải
-std_dev = df['revenue'].std()
-print(f"Std Dev:  {std_dev:>12,.0f} VND")
-print()
-
-# Ý nghĩa: so sánh Std Dev với Mean
-mean_rev = df['revenue'].mean()
-print(f"Mean:    {mean_rev:,.0f} VND")
-print(f"Std Dev: {std_dev:,.0f} VND")
-print(f"Std Dev / Mean = {std_dev/mean_rev:.1%}  → Độ biến thiên cực kỳ cao!")`}</Code>
-        <Output>{`Range:    2,415,000 VND
-Variance: 527,256,666,667   ← VND² — con số này vô nghĩa trong báo cáo
-Std Dev:    726,125 VND
-
-Mean:    452,000 VND
-Std Dev: 726,125 VND
-Std Dev / Mean = 160.6%  → Độ biến thiên cực kỳ cao!`}</Output>
 
         <Note>
-          <strong>Quy tắc ngón tay cái:</strong> Khi Std Dev &gt; 50% Mean, dữ liệu phân tán rất cao —
-          thường là dấu hiệu của outlier nghiêm trọng. Khi Std Dev &gt; Mean (như dataset này: 726k
-          &gt; 452k), bạn gần như chắc chắn có outlier cần điều tra.
+          Rule of thumb: nếu <strong>Std &gt; Mean</strong>, data có outlier hoặc distribution rất skewed.
+          Dataset này: Std = 2.6M, Mean = 1.013M → Std &gt; Mean → dấu hiệu rõ ràng của outlier.
         </Note>
 
-        <Mistakes
-          items={[
-            'Báo cáo Variance cho non-technical audience — đơn vị bình phương không ai hiểu được.',
-            'Bỏ qua Std Dev sau khi biết Mean — hai nhóm cùng Mean nhưng Std Dev khác → chiến lược hoàn toàn khác.',
-            'Không so sánh Std Dev với Mean — Std Dev 100k với dữ liệu 1M thì nhỏ, nhưng với dữ liệu 80k thì rất lớn.',
-          ]}
-        />
-
-        <QuickSummary
-          items={[
-            'Range: nhanh nhưng nhạy cảm với outlier. Variance: cơ sở toán học. Std Dev: dùng trong báo cáo.',
-            'Std Dev cùng đơn vị với dữ liệu (VND) → có thể nói "revenue phân tán ±726k quanh mean".',
-            'Std Dev > Mean là tín hiệu đỏ: dataset có outlier nghiêm trọng, cần điều tra ngay.',
-          ]}
-        />
+        <QuickSummary items={[
+          'Std đo mức phân tán quanh Mean. IQR đo mức phân tán của 50% user giữa.',
+          'Data có outlier: IQR ổn định hơn Std để mô tả variability thực tế.',
+          'Std > Mean là warning sign: nên kiểm tra outlier và distribution shape trước khi kết luận.',
+        ]} />
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 7. Percentiles ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 7 — Percentiles
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="percentiles" className="mb-16">
         <SectionTitle id="percentiles">7. Percentiles</SectionTitle>
 
-        <ScenarioBlock>
-          <p>
-            Marketing đề xuất: &quot;Chúng ta tặng voucher VIP 200k cho top 10% khách hàng có
-            revenue cao nhất. Để tránh lãng phí ngân sách, chỉ những đơn hàng từ ngưỡng X VND
-            trở lên mới được nhận.&quot;
-          </p>
-          <p className="text-on-surface-variant">
-            Câu hỏi: X = bao nhiêu? Đây chính xác là câu hỏi mà Percentile trả lời.
-          </p>
-        </ScenarioBlock>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          CRM Manager Linh hỏi: <em>"Tôi muốn nhắm vào top 25% user chi tiêu nhiều nhất
+          để gửi voucher Savings. Ngưỡng nào tôi cần dùng?"</em>
+        </p>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-6">
-          <p>
-            <strong className="text-on-surface">Percentile (Phân vị)</strong> cho bạn biết một giá
-            trị đứng ở vị trí nào so với toàn bộ dữ liệu. P90 = 400,000 VND có nghĩa là 90% đơn
-            hàng có revenue dưới 400,000 VND — hay ngược lại, chỉ 10% đơn hàng đạt từ 400,000 VND
-            trở lên.
-          </p>
-          <p>
-            Ba phân vị quan trọng nhất là <strong className="text-on-surface">Q1 (25%),
-            Q2 (50%), Q3 (75%)</strong> — chia dataset thành 4 phần bằng nhau. Khoảng cách Q3 − Q1
-            gọi là <strong className="text-on-surface">IQR (Interquartile Range)</strong> — thước
-            đo phân tán không bị ảnh hưởng bởi outlier, vì nó bỏ qua 25% thấp nhất và 25% cao nhất.
-          </p>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Câu hỏi này không có câu trả lời từ Mean hay Median. Cần <strong className="text-on-surface">Percentile</strong> —
+          giá trị chia dataset thành các phần theo tỷ lệ.
+        </p>
+
+        <Code>{`import numpy as np
+
+# Percentile breakdown của transaction amount
+percentiles = [10, 25, 50, 75, 90, 95, 99]
+values = np.percentile(df['amount'], percentiles)
+
+for p, v in zip(percentiles, values):
+    print(f"P{p:2d}: {v:>10,.0f} VND")`}
+        </Code>
+        <Output>{`P10:     25,300 VND   ← 10% user chi dưới mức này
+P25:     36,500 VND   ← Q1: 25% user chi dưới mức này
+P50:    165,000 VND   ← Median
+P75:    357,500 VND   ← Q3: 75% user chi dưới mức này
+P90:    783,000 VND
+P95:  4,327,500 VND   ← bắt đầu vùng "Power User heavy"
+P99:  8,245,000 VND`}
+        </Output>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Câu trả lời cho CRM Manager: ngưỡng P75 = 357,500 VND. User có transaction amount trên
+          mức này thuộc top 25% theo chi tiêu.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-6">
+          {[
+            {
+              name: 'Q1 (P25) = 36,500 VND',
+              desc: '25% giao dịch có amount dưới ngưỡng này. Chủ yếu là F&B Casual users.',
+            },
+            {
+              name: 'Q2 (P50) = 165,000 VND',
+              desc: 'Median — user điển hình của SnowTech chi khoảng này mỗi giao dịch QR.',
+            },
+            {
+              name: 'Q3 (P75) = 357,500 VND',
+              desc: 'Ngưỡng top 25% user chi tiêu nhiều. Dùng để target segment CRM.',
+            },
+            {
+              name: 'IQR = Q3 − Q1 = 321,000 VND',
+              desc: '50% user "mainstream" chi trong khoảng 36,500 – 357,500 VND.',
+            },
+          ].map((q) => (
+            <div key={q.name} className="border border-outline-variant/30 rounded-xl p-4">
+              <p className="font-code text-[0.8rem] text-secondary mb-1">{q.name}</p>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant">{q.desc}</p>
+            </div>
+          ))}
         </div>
 
-        <Code>{`# Quartiles và IQR
-q1  = df['revenue'].quantile(0.25)
-q2  = df['revenue'].quantile(0.50)   # = median
-q3  = df['revenue'].quantile(0.75)
-iqr = q3 - q1
+        <Note>
+          Trong Fintech, percentile thường được dùng để định nghĩa user segment: Power Users là P90+,
+          Heavy Users P75–P90, Regular Users P25–P75, Light Users dưới P25.
+          Mỗi segment nhận chiến lược CRM khác nhau.
+        </Note>
 
-print(f"Q1  (25%): {q1:>10,.0f} VND  — 25% đơn hàng chi ít hơn mức này")
-print(f"Q2  (50%): {q2:>10,.0f} VND  — Median: nửa trên / nửa dưới")
-print(f"Q3  (75%): {q3:>10,.0f} VND  — 75% đơn hàng chi ít hơn mức này")
-print(f"IQR:       {iqr:>10,.0f} VND  — phạm vi của 50% khách hàng giữa")
-print()
-
-# Trả lời câu hỏi Marketing: top 10% là từ ngưỡng nào?
-p90 = df['revenue'].quantile(0.90)
-print(f"P90 (90%): {p90:>10,.0f} VND  — top 10% đặt đơn từ đây trở lên")`}</Code>
-        <Output>{`Q1  (25%):    135,000 VND  — 25% đơn hàng chi ít hơn mức này
-Q2  (50%):    190,000 VND  — Median: nửa trên / nửa dưới
-Q3  (75%):    387,500 VND  — 75% đơn hàng chi ít hơn mức này
-IQR:          252,500 VND  — phạm vi của 50% khách hàng giữa
-
-P90 (90%):    430,000 VND  — top 10% đặt đơn từ đây trở lên`}</Output>
-
-        <div className="grid grid-cols-2 gap-4 my-6">
-          <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-5">
-            <p className="font-ui-label text-ui-label text-on-surface mb-3">Ý nghĩa kinh doanh</p>
-            <ul className="space-y-2">
-              {[
-                '50% khách hàng đặt đơn từ 135k–387k (vùng "mainstream")',
-                'Top 10% bắt đầu từ 430k trở lên → voucher VIP nhắm vào đây',
-                'IQR = 252k → dữ liệu của khách hàng giữa không quá phân tán',
-              ].map((item) => (
-                <li key={item} className="font-body-md text-[0.8125rem] text-on-surface-variant flex gap-2">
-                  <span className="text-secondary shrink-0">·</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-5">
-            <p className="font-ui-label text-ui-label text-on-surface mb-3">IQR vs Std Dev</p>
-            <ul className="space-y-2">
-              {[
-                'IQR = 252k — phạm vi của 50% khách hàng "bình thường"',
-                'Std Dev = 726k — bị kéo lên bởi outlier 2.5M',
-                'IQR robust hơn Std Dev khi có outlier',
-              ].map((item) => (
-                <li key={item} className="font-body-md text-[0.8125rem] text-on-surface-variant flex gap-2">
-                  <span className="text-secondary shrink-0">·</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <Mistakes
-          items={[
-            'Nhầm P90 với "top 10%" — P90 là ngưỡng mà 90% nằm dưới, không phải giá trị trung bình của top 10%.',
-            'Dùng Std Dev thay IQR khi có outlier — Std Dev bị kéo lên, không đại diện cho vùng "bình thường".',
-            'Không dùng Percentile khi phân khúc khách hàng — "khách hàng trung bình" không phải Mean mà nên là Q2.',
-          ]}
-        />
-
-        <QuickSummary
-          items={[
-            'Percentile trả lời: "X% dữ liệu nằm dưới ngưỡng này" — công cụ phân khúc khách hàng cực mạnh.',
-            'Q1/Q2/Q3 chia dataset thành 4 phần bằng nhau.',
-            'IQR = Q3 − Q1: phạm vi của 50% giữa — không bị ảnh hưởng bởi outlier, dùng thay Std Dev khi cần.',
-          ]}
-        />
+        <QuickSummary items={[
+          'Percentile Pn: n% data nằm dưới giá trị này. P50 = Median.',
+          'Q1/Q2/Q3 là P25/P50/P75. IQR = Q3 – Q1: khoảng chứa 50% user giữa.',
+          'Fintech dùng percentile để define user segment, set threshold campaign, flag unusual transactions.',
+        ]} />
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 8. Outliers ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 8 — Outliers
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="outliers" className="mb-16">
         <SectionTitle id="outliers">8. Outliers</SectionTitle>
 
         <ScenarioBlock>
           <p>
-            Sáng thứ Hai bạn vào làm, mở dashboard, thấy một thứ lạ: revenue của một đơn hàng hôm
-            qua là <strong>2,500,000 VND</strong> — gấp 13 lần trung bình của 9 đơn còn lại.
-          </p>
-          <p className="text-on-surface-variant">
-            Bạn có 3 giả thuyết: (1) Đây là khách VIP mua số lượng lớn để kinh doanh. (2) Lỗi hệ
-            thống nhân đôi giá. (3) Test data ai đó quên xóa trước khi deploy. Cả 3 giả thuyết đều
-            cần điều tra — không giả thuyết nào cho phép bạn xóa dữ liệu này ngay lập tức.
+            P_008 đã xuất hiện nhiều lần trong module này — giao dịch 8.5 triệu đồng làm lệch
+            mọi thống kê tổng hợp. Nhưng trước khi quyết định xử lý nó, cần biết:
+            <em> P_008 là lỗi data, hay là thông tin quan trọng nhất trong dataset?</em>
           </p>
         </ScenarioBlock>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-6">
-          <p>
-            <strong className="text-on-surface">Outlier (Ngoại lệ)</strong> là giá trị nằm rất xa
-            so với phần còn lại của dữ liệu. Phương pháp phổ biến nhất để phát hiện outlier là{' '}
-            <strong className="text-on-surface">IQR Method</strong>: bất kỳ giá trị nào nằm ngoài
-            khoảng <IC>[Q1 − 1.5×IQR, Q3 + 1.5×IQR]</IC> được coi là outlier.
-          </p>
-          <p>
-            Tại sao 1.5×IQR? Đây là quy tắc được John Tukey đề xuất — nó bắt được ~99.3% dữ liệu
-            của một phân phối chuẩn. Với dữ liệu skewed như revenue, nó vẫn là điểm khởi đầu tốt,
-            nhưng cần kết hợp với phán đoán nghiệp vụ.
-          </p>
-        </div>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          <strong className="text-on-surface">Outlier</strong> là giá trị nằm xa phần lớn dữ liệu còn lại.
+          Trong Fintech, outlier có thể là ba loại rất khác nhau về ý nghĩa:
+        </p>
 
-        <Code>{`# IQR Method — phát hiện outlier
-Q1  = df['revenue'].quantile(0.25)    # 135,000
-Q3  = df['revenue'].quantile(0.75)    # 387,500
-IQR = Q3 - Q1                         # 252,500
-
-lower = Q1 - 1.5 * IQR                # -243,750 → âm, không áp dụng cho revenue
-upper = Q3 + 1.5 * IQR                # 766,250
-
-print(f"Ngưỡng dưới: {lower:,.0f} VND  (âm → không áp dụng)")
-print(f"Ngưỡng trên: {upper:,.0f} VND")
-print()
-
-outliers = df[df['revenue'] > upper]
-print(f"Số outlier phát hiện: {len(outliers)}")
-print(outliers[['order_id', 'customer_id', 'revenue', 'items_count', 'city', 'category']])`}</Code>
-        <Output>{`Ngưỡng dưới:    -243,750 VND  (âm → không áp dụng)
-Ngưỡng trên:     766,250 VND
-
-Số outlier phát hiện: 1
-   order_id  customer_id  revenue  items_count city category
-7      1008          208  2500000           15  HCM  Điện tử`}</Output>
-
-        <div className="my-6">
-          <p className="font-headline-md text-headline-md text-on-surface mb-4">
-            Sau khi phát hiện outlier — phải làm gì?
-          </p>
-          <div className="space-y-3">
-            {[
-              {
-                action: 'Điều tra nghiệp vụ trước',
-                desc: 'Hỏi team vận hành: đơn hàng này có thật không? Khách hàng 208 là ai? Có lịch sử mua hàng trước đó không?',
-                type: 'Bước bắt buộc',
-                color: 'border-secondary/30 bg-secondary/5',
-              },
-              {
-                action: 'Giữ nguyên nếu dữ liệu thật',
-                desc: 'Nếu xác nhận là khách VIP mua sỉ, đây là insight quan trọng — có thể đây là phân khúc B2B đang bị bỏ sót.',
-                type: 'Scenario 1',
-                color: 'border-outline-variant/30 bg-surface-container',
-              },
-              {
-                action: 'Xử lý riêng biệt nếu lỗi',
-                desc: 'Nếu là lỗi hệ thống, ghi nhận và loại khỏi báo cáo — nhưng không xóa hoàn toàn, vì còn cần audit trail.',
-                type: 'Scenario 2',
-                color: 'border-outline-variant/30 bg-surface-container',
-              },
-              {
-                action: 'Phân tích với và không có outlier',
-                desc: 'Luôn báo cáo kết quả cả hai trường hợp để người ra quyết định có đủ thông tin.',
-                type: 'Best practice',
-                color: 'border-outline-variant/30 bg-surface-container',
-              },
-            ].map((item) => (
-              <div key={item.action} className={`border rounded-xl p-4 flex gap-4 ${item.color}`}>
-                <span className="font-ui-label text-[0.6875rem] text-secondary uppercase tracking-wider shrink-0 w-24 pt-0.5">
-                  {item.type}
-                </span>
-                <div>
-                  <p className="font-headline-md text-headline-md text-on-surface mb-1">{item.action}</p>
-                  <p className="font-body-md text-body-md text-on-surface-variant">{item.desc}</p>
+        <div className="space-y-3 my-6">
+          {[
+            {
+              type: 'Data Error',
+              icon: '✕',
+              variant: 'error' as const,
+              desc: 'Lỗi nhập liệu, lỗi pipeline, duplicate transaction bị count đôi.',
+              action: 'Điều tra nguồn gốc → sửa hoặc xóa.',
+              example: 'Amount = 0 VND, amount = 999999999 VND (test record)',
+            },
+            {
+              type: 'Fraud / Anomaly',
+              icon: '⚠',
+              variant: 'warn' as const,
+              desc: 'Hành vi bất thường: tần suất giao dịch đột biến, amount không hợp lệ.',
+              action: 'Flag cho Risk Team, giữ trong dataset nhưng phân tích riêng.',
+              example: 'User bình thường 50K/giao dịch, đột nhiên 50M VND — potential fraud.',
+            },
+            {
+              type: 'Legitimate Extreme',
+              icon: '→',
+              variant: 'ok' as const,
+              desc: 'Giao dịch hợp lệ nhưng ở extreme. Power user thực sự chi tiêu lớn.',
+              action: 'Giữ trong dataset. Phân tích riêng cho segment này.',
+              example: 'P_008: Power user mua thiết bị điện tử 8.5M — hoàn toàn hợp lệ.',
+            },
+          ].map((t) => {
+            const borderCls = t.variant === 'error'
+              ? 'border-error-container' : t.variant === 'warn'
+              ? 'border-outline-variant/30' : 'border-secondary/30'
+            const bgCls = t.variant === 'error'
+              ? 'bg-error-container/20' : t.variant === 'warn'
+              ? 'bg-surface-container' : 'bg-secondary/5'
+            const iconCls = t.variant === 'error'
+              ? 'text-on-error-container' : t.variant === 'warn'
+              ? 'text-on-surface-variant' : 'text-secondary'
+            return (
+              <div key={t.type} className={`border rounded-xl overflow-hidden ${borderCls}`}>
+                <div className={`px-5 py-3 flex items-center gap-2 ${bgCls}`}>
+                  <span className={`text-sm font-semibold ${iconCls}`}>{t.icon}</span>
+                  <p className={`font-ui-label text-ui-label ${iconCls}`}>{t.type}</p>
+                </div>
+                <div className="px-5 py-3 space-y-1">
+                  <p className="font-body-md text-[0.8rem] text-on-surface-variant">{t.desc}</p>
+                  <p className="font-body-md text-[0.75rem] text-on-surface">
+                    <span className="font-medium">Xử lý: </span>{t.action}
+                  </p>
+                  <p className="font-body-md text-[0.75rem] text-on-surface-variant/60 italic">{t.example}</p>
                 </div>
               </div>
-            ))}
-          </div>
+            )
+          })}
         </div>
 
-        <Mistakes
-          items={[
-            'Xóa outlier chỉ vì "nó trông kỳ lạ" — đây có thể là dữ liệu thật và là insight quan trọng nhất.',
-            'Không báo cáo việc có outlier trong dataset — người ra quyết định cần biết để đánh giá kết quả.',
-            'Dùng mean() sau khi phát hiện outlier mà không xử lý — sẽ cho kết quả lệch nghiêm trọng.',
-            'Chỉ dùng IQR method mà không kết hợp domain knowledge — ngưỡng thống kê không thay thế được phán đoán nghiệp vụ.',
-          ]}
-        />
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Để phát hiện outlier một cách có hệ thống, dùng IQR Method:
+        </p>
 
-        <QuickSummary
-          items={[
-            'IQR Method: bất kỳ giá trị nào ngoài [Q1 − 1.5×IQR, Q3 + 1.5×IQR] là outlier.',
-            'Phát hiện outlier chỉ là bước đầu — điều tra nghiệp vụ mới là bước quan trọng hơn.',
-            'Luôn phân tích cả với và không có outlier, báo cáo cả hai kết quả.',
-          ]}
-        />
+        <Code>{`Q1  = df['amount'].quantile(0.25)   # 36,500
+Q3  = df['amount'].quantile(0.75)   # 357,500
+IQR = Q3 - Q1                       # 321,000
+
+lower_fence = Q1 - 1.5 * IQR       # 36,500 - 481,500 = -445,000 → không có outlier phía dưới
+upper_fence = Q3 + 1.5 * IQR       # 357,500 + 481,500 = 839,000
+
+outliers = df[df['amount'] > upper_fence]
+print(f"Upper fence: {upper_fence:,.0f} VND")
+print()
+print(outliers[['payment_id', 'user_id', 'amount', 'category', 'user_segment']])`}
+        </Code>
+        <Output>{`Upper fence: 839,000 VND
+
+  payment_id user_id    amount category user_segment
+7      P_008   U8901  8500000   Retail        Power`}
+        </Output>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          P_008 vượt ngưỡng 839,000 VND — là outlier theo IQR method.
+          Bước tiếp theo: điều tra xem đây là loại outlier nào.
+        </p>
+
+        <Code>{`# Điều tra P_008
+p008 = df[df['payment_id'] == 'P_008'].iloc[0]
+print(f"User segment: {p008['user_segment']}")    # Power
+print(f"Category:     {p008['category']}")         # Retail
+print(f"Province:     {p008['province']}")         # HCM
+print(f"Amount:       {p008['amount']:,.0f} VND")  # 8,500,000`}
+        </Code>
+        <Output>{`User segment: Power
+Category:     Retail
+Province:     HCM
+Amount:       8,500,000 VND
+
+→ Power user, HCM, mua Retail. Hợp lệ — không phải lỗi data, không phải fraud.
+→ Quyết định: giữ trong dataset chính, nhưng phân tích tổng hợp dùng Median thay Mean.`}
+        </Output>
+
+        <WarningBlock title="⚠ Không được tự ý xóa outlier">
+          <p>
+            Xóa outlier mà không điều tra là một trong những sai lầm tệ nhất trong data analysis.
+            P_008 là Power User hợp lệ — xóa đi sẽ làm lệch mọi phân tích về segment này.
+          </p>
+          <p>
+            <strong>Quy tắc:</strong> Điều tra trước. Xóa chỉ khi xác định đó là data error.
+            Nếu là legitimate extreme → giữ lại, phân tích riêng, và ghi chú trong báo cáo.
+          </p>
+        </WarningBlock>
+
+        <QuickSummary items={[
+          'IQR Method: outlier nằm ngoài [Q1 − 1.5×IQR, Q3 + 1.5×IQR]. Bước đầu phát hiện.',
+          'Ba loại outlier: data error (sửa/xóa), fraud/anomaly (flag cho Risk), legitimate extreme (giữ, phân tích riêng).',
+          'Không bao giờ xóa outlier mà không điều tra. Trong Fintech, outlier thường là user quan trọng nhất.',
+        ]} />
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 9. Data Visualization ── */}
-      <section aria-labelledby="data-visualization" className="mb-16">
-        <SectionTitle id="data-visualization">9. Data Visualization</SectionTitle>
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 9 — Data Visualization
+      ══════════════════════════════════════════════════════════════ */}
+      <section aria-labelledby="visualization" className="mb-16">
+        <SectionTitle id="visualization">9. Data Visualization</SectionTitle>
 
-        <ScenarioBlock>
-          <p>
-            Bạn đã có đống số: Mean 452k, Median 190k, Std Dev 726k, outlier ở 2.5M. Bạn trình bày
-            bảng số liệu đó với Marketing team. Mắt họ bắt đầu nhìn ra cửa sổ.
-          </p>
-          <p className="text-on-surface-variant">
-            Insight đúng mà không được hiểu thì không có giá trị gì. Đây là lúc Visualization
-            biến những con số thành câu chuyện mà mọi người có thể đọc trong 5 giây.
-          </p>
-        </ScenarioBlock>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Số liệu thống kê giúp bạn hiểu dữ liệu. Visualization giúp bạn{' '}
+          <em>communicate</em> điều đó với Growth Manager, CRM Manager và Analytics Lead
+          trong 30 giây thay vì 5 phút đọc bảng số.
+        </p>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-6">
-          <p>
-            Chọn đúng loại biểu đồ không phải vì thẩm mỹ — mà vì mỗi biểu đồ trả lời một loại câu
-            hỏi khác nhau. Dùng sai biểu đồ có thể che giấu outlier, tạo ảo tưởng về pattern, hoặc
-            làm người xem hiểu sai kết quả.
-          </p>
+        <div className="space-y-4 my-6">
+          {[
+            {
+              chart: 'Histogram',
+              use: 'Phân phối của một biến numerical',
+              when: 'Muốn thấy shape của distribution (skewed? bimodal?)',
+              code: "df['amount'].plot(kind='hist', bins=20)",
+              example: 'Histogram của QR amount → thấy ngay right-skewed, phần lớn <200K',
+            },
+            {
+              chart: 'Box Plot',
+              use: 'Q1, Median, Q3, outlier trong một hình',
+              when: 'So sánh distribution giữa các nhóm',
+              code: "df.boxplot(column='amount', by='user_segment')",
+              example: 'Box plot amount theo user_segment → Power user có IQR rộng hơn Casual',
+            },
+            {
+              chart: 'Bar Chart',
+              use: 'So sánh giá trị giữa các category',
+              when: 'Categorical column: province, category, user_segment',
+              code: "df['province'].value_counts().plot(kind='bar')",
+              example: 'Bar chart theo province → HCM + HN chiếm 80% giao dịch',
+            },
+            {
+              chart: 'Scatter Plot',
+              use: 'Mối quan hệ giữa hai biến numerical',
+              when: 'Kiểm tra correlation, phát hiện pattern',
+              code: "df.plot(kind='scatter', x='txn_count', y='total_amount')",
+              example: 'txn_count vs total_amount → linear relationship rõ ràng',
+            },
+          ].map((v) => (
+            <div key={v.chart} className="border border-outline-variant/30 rounded-xl p-4">
+              <div className="flex items-start justify-between mb-2">
+                <p className="font-ui-label text-ui-label text-secondary">{v.chart}</p>
+                <span className="font-body-md text-[0.75rem] text-on-surface-variant/60 italic">{v.when}</span>
+              </div>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-2">{v.use}</p>
+              <code className="font-code text-[0.75rem] text-on-surface bg-surface-container px-3 py-1.5 rounded-lg block mb-2">{v.code}</code>
+              <p className="font-body-md text-[0.75rem] text-secondary/80 italic">→ {v.example}</p>
+            </div>
+          ))}
         </div>
 
-        <div className="overflow-x-auto my-6 rounded-xl border border-outline-variant/30">
-          <table className="w-full text-left text-sm border-collapse">
-            <thead>
-              <tr className="bg-surface-container border-b border-outline-variant/30">
-                {['Biểu đồ', 'Câu hỏi trả lời', 'Ví dụ trong dataset'].map((h) => (
-                  <th key={h} className="font-ui-label text-ui-label px-4 py-3 whitespace-nowrap">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="font-body-md text-body-md text-on-surface-variant">
-              {[
-                ['Histogram', 'Phân phối của một biến numerical trông như thế nào?', 'Phân phối revenue — thấy ngay right-skewed'],
-                ['Bar Chart', 'So sánh giá trị giữa các nhóm categorical', 'Tổng revenue theo category'],
-                ['Box Plot', 'Tóm tắt distribution + outlier trong một hình', 'Revenue theo từng city — thấy HCM có outlier'],
-                ['Scatter Plot', 'Quan hệ giữa 2 biến numerical', 'items_count vs revenue — tìm correlation'],
-                ['Heatmap', 'Correlation matrix của nhiều biến cùng lúc', 'Tương quan giữa age, revenue, items_count'],
-              ].map(([chart, question, example]) => (
-                <tr key={chart} className="border-b border-outline-variant/20">
-                  <td className="font-code text-[0.875rem] text-secondary px-4 py-3 whitespace-nowrap">{chart}</td>
-                  <td className="px-4 py-3">{question}</td>
-                  <td className="px-4 py-3 text-on-surface-variant/70">{example}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Note>
+          Trong Fintech, hầu hết visualization được build trên dashboard (Metabase, Looker, Tableau) —
+          không phải Python matplotlib. Nhưng hiểu <em>loại chart nào cho loại câu hỏi nào</em>
+          là kỹ năng DA cần trước khi request BI team build chart.
+        </Note>
 
-        <Code>{`import matplotlib.pyplot as plt
-
-fig, axes = plt.subplots(2, 2, figsize=(12, 8))
-
-# 1. Histogram: phân phối revenue
-axes[0,0].hist(df['revenue'], bins=8, color='#4e45d5', alpha=0.75, edgecolor='white')
-axes[0,0].axvline(df['revenue'].median(), color='orange', ls='--', lw=2,
-                  label=f"Median: {df['revenue'].median()/1000:.0f}k")
-axes[0,0].set_title('Distribution of Revenue')
-axes[0,0].legend()
-
-# 2. Bar chart: revenue trung bình theo category (loại outlier)
-df_clean = df[df['revenue'] <= df['revenue'].quantile(0.75) + 1.5 * (
-    df['revenue'].quantile(0.75) - df['revenue'].quantile(0.25))]
-cat_mean = df_clean.groupby('category')['revenue'].mean()
-axes[0,1].bar(cat_mean.index, cat_mean.values, color='#4e45d5', alpha=0.75)
-axes[0,1].set_title('Avg Revenue by Category (excl. outlier)')
-axes[0,1].tick_params(axis='x', rotation=10)
-
-# 3. Box plot: revenue theo city — thấy ngay outlier
-df.boxplot(column='revenue', by='city', ax=axes[1,0])
-axes[1,0].set_title('Revenue by City')
-plt.sca(axes[1,0])
-plt.title('Revenue by City')
-
-# 4. Scatter: items_count vs revenue
-axes[1,1].scatter(df['items_count'], df['revenue'],
-                  color='#4e45d5', alpha=0.7, s=80)
-for _, row in df.iterrows():
-    axes[1,1].annotate(row['order_id'],
-                       (row['items_count'], row['revenue']),
-                       textcoords='offset points', xytext=(5, 2), fontsize=8)
-axes[1,1].set_title('items_count vs revenue')
-axes[1,1].set_xlabel('Items Count')
-axes[1,1].set_ylabel('Revenue (VND)')
-
-plt.tight_layout()
-plt.savefig('eda_visualization.png', dpi=150)`}</Code>
-        <Output>{`→ Histogram: right-skewed rõ ràng, đuôi dài phải do đơn 2.5M
-→ Bar chart: Điện tử 385k/đơn, Thời trang 115k/đơn (sau khi loại outlier)
-→ Box plot: HCM có outlier cực đoan, DN và HN tập trung hơn
-→ Scatter: 9/10 điểm tập trung góc dưới trái, 1 điểm (order 1008) cách xa nhóm`}</Output>
-
-        <Mistakes
-          items={[
-            'Dùng Bar chart cho continuous data thay vì Histogram — che giấu distribution, không thấy outlier.',
-            'Dùng Pie chart khi có hơn 5 category — mắt người không phân biệt được các lát mỏng.',
-            'Không đánh nhãn trục (axis labels) — người xem không biết đơn vị là gì.',
-            'Dùng Line chart cho categorical data — gây ảo giác về trend không có thật.',
-          ]}
-        />
-
-        <QuickSummary
-          items={[
-            'Mỗi biểu đồ trả lời một loại câu hỏi — chọn biểu đồ dựa trên câu hỏi, không phải thẩm mỹ.',
-            'Box plot là công cụ tốt nhất để xem distribution + outlier cùng lúc.',
-            'Scatter plot + annotation là cách nhanh nhất để tìm giá trị bất thường.',
-          ]}
-        />
+        <QuickSummary items={[
+          'Histogram → shape của distribution. Bar chart → so sánh categorical. Box plot → outlier + quartile.',
+          'Scatter plot → relationship giữa 2 numerical variables.',
+          'Chọn chart từ câu hỏi kinh doanh, không phải từ loại data. "Tôi muốn show gì cho ai?"',
+        ]} />
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 10. Correlation ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 10 — Correlation
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="correlation" className="mb-16">
         <SectionTitle id="correlation">10. Correlation</SectionTitle>
 
         <ScenarioBlock>
           <p>
-            Marketing hỏi: <em>&quot;Khách mua nhiều sản phẩm hơn thì có chi tiêu nhiều hơn không?
-            Nếu có, chúng ta có thể dùng điều này để dự đoán revenue từ số lượng items.&quot;</em>
+            Product Manager hỏi: <em>"User giao dịch nhiều hơn có chi tiêu tổng nhiều hơn không?
+            Nếu có, mình nên push feature nào để tăng transaction frequency?"</em>
           </p>
-          <p className="text-on-surface-variant">
-            Đây là câu hỏi về <strong className="text-on-surface">mối quan hệ giữa hai biến</strong>.
-            Công cụ để trả lời là Correlation.
+          <p>
+            Đây là câu hỏi về <strong>mối quan hệ</strong> giữa hai biến — không phải về từng biến riêng lẻ.
           </p>
         </ScenarioBlock>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-6">
-          <p>
-            <strong className="text-on-surface">Correlation (Tương quan)</strong> đo mức độ hai biến
-            số thay đổi cùng nhau. Hệ số tương quan Pearson r chạy từ{' '}
-            <strong className="text-on-surface">−1 đến +1</strong>:
-          </p>
-        </div>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          <strong className="text-on-surface">Correlation</strong> đo mức độ và hướng của mối quan hệ
+          tuyến tính giữa hai biến numerical. Giá trị từ −1 đến +1:
+        </p>
 
-        <div className="grid grid-cols-3 gap-3 my-6">
+        <Code>{`# Tạo user-level aggregation từ transaction data
+import pandas as pd
+
+# Giả lập user stats từ full dataset (12M MAU)
+user_stats = df.groupby('user_id').agg(
+    txn_count=('payment_id', 'count'),
+    total_amount=('amount', 'sum'),
+    avg_amount=('amount', 'mean'),
+).reset_index()
+
+# Correlation matrix
+corr = user_stats[['txn_count', 'total_amount', 'avg_amount']].corr()
+print(corr.round(2))`}
+        </Code>
+        <Output>{`              txn_count  total_amount  avg_amount
+txn_count          1.00          0.84        0.12
+total_amount       0.84          1.00        0.61
+avg_amount         0.12          0.61        1.00
+
+→ txn_count vs total_amount: r = 0.84 (correlation cao)
+→ txn_count vs avg_amount:   r = 0.12 (gần như không có correlation)`}
+        </Output>
+
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          Kết quả: user giao dịch nhiều hơn có tổng chi tiêu nhiều hơn (r=0.84 — strong positive).
+          Nhưng giao dịch nhiều hơn <em>không</em> có nghĩa là mỗi giao dịch lớn hơn (r=0.12 — gần zero).
+          Product Manager cần hiểu sự khác biệt này trước khi thiết kế feature.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
           {[
-            {
-              value: '+1',
-              label: 'Tương quan dương hoàn hảo',
-              desc: 'A tăng → B cũng tăng, đều đặn',
-              example: 'Học nhiều hơn → điểm cao hơn',
-              color: 'bg-secondary/10 border-secondary/30',
-            },
-            {
-              value: '0',
-              label: 'Không tương quan',
-              desc: 'A tăng → B không đổi hoặc ngẫu nhiên',
-              example: 'Số giày → IQ',
-              color: 'bg-surface-container border-outline-variant/30',
-            },
-            {
-              value: '−1',
-              label: 'Tương quan âm hoàn hảo',
-              desc: 'A tăng → B giảm, đều đặn',
-              example: 'Giá cao → cầu thấp',
-              color: 'bg-surface-container border-outline-variant/30',
-            },
-          ].map((item) => (
-            <div key={item.value} className={`border rounded-xl p-4 text-center ${item.color}`}>
-              <p className="font-display text-[2.25rem] leading-none text-secondary mb-2">{item.value}</p>
-              <p className="font-ui-label text-[0.6875rem] text-on-surface mb-1">{item.label}</p>
-              <p className="font-body-md text-[0.8125rem] text-on-surface-variant mb-2">{item.desc}</p>
-              <p className="font-code text-[0.6875rem] text-secondary/70 italic">{item.example}</p>
+            { range: '0.7 – 1.0', label: 'Strong Positive', color: 'text-secondary', example: 'txn_count vs total_amount (0.84)' },
+            { range: '0.3 – 0.7', label: 'Moderate', color: 'text-on-surface-variant', example: 'total_amount vs avg_amount (0.61)' },
+            { range: '0.0 – 0.3', label: 'Weak / No linear', color: 'text-on-surface-variant/50', example: 'txn_count vs avg_amount (0.12)' },
+          ].map((c) => (
+            <div key={c.range} className="border border-outline-variant/30 rounded-xl p-4 text-center">
+              <p className={`font-code text-[0.875rem] font-semibold mb-1 ${c.color}`}>{c.range}</p>
+              <p className="font-ui-label text-[0.75rem] text-on-surface mb-1">{c.label}</p>
+              <p className="font-body-md text-[0.7rem] text-on-surface-variant/60 italic">{c.example}</p>
             </div>
           ))}
         </div>
 
-        <Code>{`# Correlation matrix của tất cả numerical columns
-numeric_cols = ['age', 'revenue', 'items_count']
-corr = df[numeric_cols].corr()
-print(corr.round(2))
-print()
-
-# Tập trung vào cặp quan trọng nhất
-r = df['items_count'].corr(df['revenue'])
-print(f"items_count ↔ revenue: r = {r:.2f}")
-print()
-
-# So sánh với/không có outlier
-df_no_outlier = df[df['revenue'] < 766250]
-r_clean = df_no_outlier['items_count'].corr(df_no_outlier['revenue'])
-print(f"items_count ↔ revenue (không outlier): r = {r_clean:.2f}")
-print(f"Thay đổi: {r:.2f} → {r_clean:.2f}  ← outlier thay đổi hoàn toàn kết quả!")`}</Code>
-        <Output>{`             age  revenue  items_count
-age         1.00    -0.11         0.01
-revenue    -0.11     1.00         0.97
-items_count 0.01     0.97         1.00
-
-items_count ↔ revenue: r = 0.97
-
-items_count ↔ revenue (không outlier): r = 0.48
-Thay đổi: 0.97 → 0.48  ← outlier thay đổi hoàn toàn kết quả!`}</Output>
-
-        <Note>
-          r = 0.97 trông rất ấn tượng — nhưng 95% của con số đó đến từ MỘT điểm dữ liệu (order
-          1008: 15 sản phẩm, 2.5M VND). Sau khi loại outlier, correlation thật sự chỉ là 0.48 —
-          không đủ mạnh để ra quyết định. Luôn kiểm tra correlation trước và sau khi xử lý outlier.
-        </Note>
-
-        {/* ⚠️ Correlation ≠ Causation */}
-        <WarningBlock title="⚠ Correlation ≠ Causation — Sai lầm phổ biến nhất trong phân tích dữ liệu">
+        <WarningBlock title="⚠ Correlation ≠ Causation — Lỗi phổ biến nhất trong phân tích">
           <p>
-            Khi hai biến tương quan với nhau, điều đó <strong>không có nghĩa</strong> là một biến
-            gây ra (cause) biến kia. Đây là bẫy mà cả experienced analyst cũng dễ rơi vào.
+            r=0.84 giữa txn_count và total_amount <strong>không có nghĩa là</strong>{' '}
+            "tăng transaction frequency sẽ tăng tổng chi tiêu."
           </p>
-          <div className="bg-background border border-outline-variant/20 rounded-lg p-4 my-3">
-            <p className="font-ui-label text-[0.6875rem] text-on-surface/60 uppercase tracking-wider mb-2">
-              Ví dụ kinh điển
-            </p>
-            <p className="font-body-md text-body-md text-on-surface-variant">
-              Số lượng kem bán ra và số vụ đuối nước có <strong className="text-on-surface">tương quan dương rất cao</strong> (r ≈ 0.85) theo từng tháng.
-            </p>
-            <p className="font-body-md text-body-md text-on-surface-variant mt-2">
-              Kết luận sai: &quot;Ăn kem gây chết đuối.&quot;
-            </p>
-            <p className="font-body-md text-body-md text-on-surface-variant mt-2">
-              Giải thích thật: Cả hai đều tăng vào <strong className="text-on-surface">mùa hè</strong> — đây
-              là biến thứ ba (confounding variable) mà bạn chưa đo.
-            </p>
-          </div>
           <p>
-            Trong công việc: nếu bạn thấy &quot;khách hàng dùng app nhiều hơn có revenue cao hơn&quot;,
-            đó có thể vì cả hai cùng tăng vì họ là nhóm khách hàng engaged — không phải vì dùng
-            app làm họ chi tiêu nhiều hơn. Muốn chứng minh nhân quả, bạn cần A/B Test (Module 4).
+            Có thể cả hai đều bị ảnh hưởng bởi một biến thứ ba: <em>user engagement level</em>.
+            User engaged hơn thì vừa giao dịch nhiều hơn, vừa chi tiêu nhiều hơn — nhưng chỉ push
+            thêm notification không nhất thiết tạo ra engagement.
+          </p>
+          <p>
+            Để xác nhận nhân quả, cần <strong>A/B Test</strong> — đó là Module 4.
           </p>
         </WarningBlock>
 
-        <Mistakes
-          items={[
-            'Kết luận nhân quả từ tương quan — "A tương quan với B" không có nghĩa là "A gây ra B".',
-            'Báo cáo correlation mà không kiểm tra outlier — một điểm dữ liệu có thể tạo ra r cao giả tạo.',
-            'Nghĩ r = 0.5 là "không tương quan" — 0.5 là medium correlation, đủ để điều tra thêm.',
-            'Dùng Pearson correlation cho dữ liệu categorical — không có ý nghĩa toán học.',
-          ]}
-        />
+        <Mistakes items={[
+          'Kết luận "feature X làm tăng retention" chỉ từ correlation — cần A/B test để xác nhận nhân quả.',
+          'Pearson correlation chỉ đo linear relationship — nếu relationship là phi tuyến, r gần 0 nhưng vẫn có pattern.',
+          'Báo cáo correlation cao là "good news" mà không hỏi "third variable nào có thể giải thích cả hai?"',
+        ]} />
 
-        <QuickSummary
-          items={[
-            'r gần ±1: tương quan mạnh. r gần 0: không tương quan. Quy tắc ngón tay cái: |r| > 0.7 là mạnh.',
-            'Luôn plot scatter plot trước khi tin vào r — outlier có thể tạo r cao giả tạo.',
-            'Correlation ≠ Causation. Muốn chứng minh nhân quả → cần A/B Test, không phải correlation.',
-          ]}
-        />
+        <QuickSummary items={[
+          'Correlation r: −1 (nghịch chiều), 0 (không tuyến tính), +1 (cùng chiều). |r| > 0.7 là strong.',
+          'Pearson correlation chỉ đo linear relationship với numerical variables.',
+          'Correlation ≠ Causation. Để kết luận nhân quả: cần A/B test hoặc causal inference.',
+        ]} />
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
 
-      {/* ── 11. Case Study ── */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 11 — Case Study
+      ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="case-study" className="mb-16">
-        <SectionTitle id="case-study">11. Case Study: EDA hoàn chỉnh</SectionTitle>
+        <SectionTitle id="case-study">11. Case Study: QR GMV giảm 12% — tìm nguyên nhân</SectionTitle>
 
-        <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 mb-8">
-          <p>
-            Đây là phần tổng hợp toàn bộ kiến thức của module. Chúng ta sẽ chạy một EDA hoàn chỉnh
-            theo đúng 5 bước workflow — trên dataset ecommerce đã đồng hành xuyên suốt bài học.
-          </p>
-          <p>
-            <strong className="text-on-surface">Scenario:</strong> Trưởng phòng Marketing nhờ bạn
-            phân tích dataset đơn hàng và chuẩn bị một slide ngắn với 3 insights thực chiến trước
-            buổi họp chiều — bạn có 30 phút.
-          </p>
-        </div>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+          Cuối tuần đầu tiên tại SnowTech. Bạn tổng hợp lại toàn bộ EDA và chuẩn bị trình bày
+          với Analytics Lead Tuấn. Đây là những gì data nói:
+        </p>
 
-        <div className="font-headline-md text-headline-md text-on-surface mb-3">
-          Bước 1 — Hiểu dữ liệu tổng quan
-        </div>
-        <Code>{`import pandas as pd
-
-# Nhìn tổng quan: shape, dtypes, missing values
-print(f"Shape: {df.shape}  →  {df.shape[0]} đơn hàng, {df.shape[1]} cột")
-print()
-print("Missing values:")
-print(df.isnull().sum())
-print()
-print("Kiểu dữ liệu:")
-print(df.dtypes)`}</Code>
-        <Output>{`Shape: (10, 8)  →  10 đơn hàng, 8 cột
-
-Missing values:
-order_id       0
-customer_id    0
-age            0
-gender         0
-city           0
-revenue        0
-items_count    0
-category       0
-dtype: int64
-
-Kiểu dữ liệu:
-age             int64   ← numerical
-revenue         int64   ← numerical (continuous)
-items_count     int64   ← numerical (discrete)
-gender         object   ← categorical (nominal)
-city           object   ← categorical (nominal)
-category       object   ← categorical (nominal)`}</Output>
-
-        <div className="font-headline-md text-headline-md text-on-surface mb-3 mt-8">
-          Bước 2 — Khám phá Distribution & Central Tendency
-        </div>
-        <Code>{`print("=== REVENUE ===")
-print(f"Mean:    {df['revenue'].mean():>10,.0f} VND  ← bị kéo lên bởi outlier")
-print(f"Median:  {df['revenue'].median():>10,.0f} VND  ← đại diện thực tế hơn")
-print(f"Std Dev: {df['revenue'].std():>10,.0f} VND")
-print(f"Std/Mean = {df['revenue'].std()/df['revenue'].mean():.0%}  → phân tán cực cao, cần điều tra")
-print()
-
-print("=== DISTRIBUTION CHECK ===")
-q1, q3 = df['revenue'].quantile(0.25), df['revenue'].quantile(0.75)
-print(f"Q1:  {q1:>10,.0f} VND")
-print(f"Q2:  {df['revenue'].median():>10,.0f} VND")
-print(f"Q3:  {q3:>10,.0f} VND")
-print(f"IQR: {q3-q1:>10,.0f} VND  — phạm vi của 50% khách hàng giữa")`}</Code>
-        <Output>{`=== REVENUE ===
-Mean:       452,000 VND  ← bị kéo lên bởi outlier
-Median:     190,000 VND  ← đại diện thực tế hơn
-Std Dev:    726,125 VND
-Std/Mean = 161%  → phân tán cực cao, cần điều tra
-
-=== DISTRIBUTION CHECK ===
-Q1:     135,000 VND
-Q2:     190,000 VND
-Q3:     387,500 VND
-IQR:    252,500 VND  — phạm vi của 50% khách hàng giữa`}</Output>
-
-        <div className="font-headline-md text-headline-md text-on-surface mb-3 mt-8">
-          Bước 3 — Phát hiện & Điều tra Outlier
-        </div>
-        <Code>{`# IQR Method
-iqr = q3 - q1
-upper = q3 + 1.5 * iqr
-
-outliers = df[df['revenue'] > upper]
-print(f"Outlier threshold: {upper:,.0f} VND")
-print(f"Số outlier: {len(outliers)}")
-print()
-print(outliers[['order_id','customer_id','revenue','items_count','city','category']])
-print()
-
-# Tác động của outlier lên metrics
-df_clean = df[df['revenue'] <= upper]
-print(f"Revenue Median toàn bộ:     {df['revenue'].median():>10,.0f} VND")
-print(f"Revenue Median (no outlier): {df_clean['revenue'].median():>10,.0f} VND")
-print(f"→ Outlier không ảnh hưởng Median (đây là lý do Median robust hơn Mean)")`}</Code>
-        <Output>{`Outlier threshold: 766,250 VND
-Số outlier: 1
-
-   order_id  customer_id  revenue  items_count city category
-7      1008          208  2500000           15  HCM  Điện tử
-
-Revenue Median toàn bộ:        190,000 VND
-Revenue Median (no outlier):   180,000 VND
-→ Outlier không ảnh hưởng Median (đây là lý do Median robust hơn Mean)`}</Output>
-
-        <div className="font-headline-md text-headline-md text-on-surface mb-3 mt-8">
-          Bước 4 — Phân tích theo nhóm & tìm Relationships
-        </div>
-        <Code>{`# Revenue theo Category (loại outlier để phân tích khách hàng "bình thường")
-print("=== REVENUE THEO CATEGORY (loại outlier) ===")
-cat_stats = df_clean.groupby('category')['revenue'].agg(['median','mean','count'])
-cat_stats.columns = ['Median', 'Mean', 'Đơn hàng']
-print(cat_stats.sort_values('Median', ascending=False).round(0))
-print()
-
-# Phân bố địa lý
-print("=== PHÂN BỐ ĐỊA LÝ ===")
-city_dist = df['city'].value_counts()
-for city, count in city_dist.items():
-    print(f"  {city}: {count} đơn ({count/len(df):.0%})")
-print()
-
-# Correlation: items vs revenue (sau khi loại outlier)
-r = df_clean['items_count'].corr(df_clean['revenue'])
-print(f"Correlation items_count ↔ revenue (no outlier): r = {r:.2f}")`}</Code>
-        <Output>{`=== REVENUE THEO CATEGORY (loại outlier) ===
-                Median     Mean  Đơn hàng
-category
-Điện tử        385000   390000         2
-Sức khỏe       190000   190000         2
-Thời trang     112500   115000         5
-
-=== PHÂN BỐ ĐỊA LÝ ===
-  HCM: 4 đơn (40%)
-  HN:  4 đơn (40%)
-  DN:  2 đơn (20%)
-
-Correlation items_count ↔ revenue (no outlier): r = 0.48`}</Output>
-
-        {/* 3 Insights Card */}
-        <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-6 mt-8">
-          <p className="font-ui-label text-ui-label text-secondary mb-5 uppercase tracking-widest">
-            3 Insights trình bày với sếp
-          </p>
-          <div className="space-y-5">
-            {[
-              {
-                n: '01',
-                title: 'Có đơn hàng bất thường — cần xác minh trước khi báo cáo',
-                body: 'Đơn hàng 1008 (2,500,000 VND, 15 sản phẩm tại HCM) là outlier với IQR method. Revenue trung bình thực của khách đại trà là 190,000 VND (Median), không phải 452,000 VND (Mean). Cần xác minh đơn 1008 là khách VIP thật hay lỗi hệ thống trước khi đưa con số vào báo cáo chính thức.',
-              },
-              {
-                n: '02',
-                title: 'Điện tử: revenue cao nhất — ưu tiên marketing ở đây',
-                body: 'Sau khi loại outlier, Điện tử có Median 385k/đơn — gấp 3.4 lần Thời trang (112k). Tuy nhiên số lượng đơn Thời trang chiếm 50% dataset. Đây là trade-off giữa volume (Thời trang) và value (Điện tử) — cần chiến lược riêng cho từng nhóm.',
-              },
-              {
-                n: '03',
-                title: 'HCM + HN chiếm 80% — tập trung ngân sách ở đây trước',
-                body: 'Nếu ngân sách khuyến mãi có hạn, HCM và HN là hai thị trường ưu tiên rõ ràng. DN chỉ chiếm 20% và có revenue thấp hơn. Correlation items-revenue = 0.48 sau outlier — đủ để test: nếu encourage khách mua thêm items, revenue có thể tăng.',
-              },
-            ].map((insight) => (
-              <div key={insight.n} className="flex gap-4">
-                <span className="font-code text-[0.75rem] text-secondary/50 shrink-0 mt-1 font-semibold">
-                  {insight.n}
-                </span>
-                <div>
-                  <p className="font-headline-md text-headline-md text-on-surface mb-2">
-                    {insight.title}
-                  </p>
-                  <p className="font-body-md text-body-md text-on-surface-variant">{insight.body}</p>
-                </div>
+        <div className="space-y-3 my-6">
+          {[
+            {
+              finding: 'Distribution: right-skewed',
+              detail: 'Median QR transaction = 165K VND. Mean = 1.013M — bị inflate bởi Power Users. F&B là category phổ biến nhất (40% giao dịch) nhưng amount thấp nhất.',
+              implication: 'Nếu F&B transactions giảm, GMV giảm ít nhưng giao dịch count giảm nhiều. Nếu Retail giảm, GMV giảm nhiều hơn.',
+            },
+            {
+              finding: 'Outlier: P_008 (8.5M VND)',
+              detail: 'Một giao dịch Retail của Power User. Sau điều tra: hợp lệ, không phải fraud. Giữ trong dataset nhưng không đại diện cho "user điển hình".',
+              implication: 'Power Users có hành vi rất khác Casual Users — cần phân tích theo segment, không thể dùng overall mean.',
+            },
+            {
+              finding: 'Phân bổ địa lý: HCM + HN = 80%',
+              detail: 'HCM: 40%, HN: 40%, DN: 20%. Không có outlier địa lý bất thường.',
+              implication: 'Nếu GMV giảm đều cả HCM lẫn HN → vấn đề toàn quốc. Nếu giảm tập trung ở một tỉnh → vấn đề local.',
+            },
+            {
+              finding: 'Correlation: txn_count vs total_amount = 0.84',
+              detail: 'User giao dịch thường xuyên hơn → tổng chi tiêu cao hơn. Nhưng tần suất không liên quan đến size mỗi giao dịch.',
+              implication: 'Nếu GMV giảm do Casual Users giảm tần suất F&B → chiến lược CRM: re-engage Casual Users, không phải upsell.',
+            },
+          ].map((f, i) => (
+            <div key={i} className="border border-outline-variant/30 rounded-xl p-5">
+              <p className="font-ui-label text-ui-label text-secondary mb-2">{f.finding}</p>
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-2">{f.detail}</p>
+              <div className="flex gap-2 pt-2 border-t border-outline-variant/20">
+                <span className="text-secondary shrink-0 text-sm mt-0.5">→</span>
+                <p className="font-body-md text-[0.8rem] text-on-surface">{f.implication}</p>
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+
+        <div className="border border-outline-variant/30 bg-surface-container rounded-xl p-5 my-6 space-y-4">
+          <p className="font-ui-label text-[0.625rem] text-on-surface-variant/50 uppercase tracking-widest">
+            Template — EDA Summary cho Analytics Lead
+          </p>
+          <div>
+            <p className="font-ui-label text-ui-label text-on-surface mb-1">3 Insights chính</p>
+            <ul className="space-y-1">
+              {[
+                'QR transactions tập trung ở F&B (frequency cao, amount thấp). Power Users chiếm số ít nhưng đóng góp GMV không cân xứng.',
+                'Casual Users là nhóm có F&B transaction nhiều nhất — nếu nhóm này giảm frequency, GMV count giảm mạnh dù revenue impact nhỏ hơn.',
+                'Correlation txn_count–total_amount cao (0.84) → re-engagement là đòn bẩy quan trọng hơn upsell để recover GMV.',
+              ].map((item, i) => (
+                <li key={i} className="flex gap-2 font-body-md text-body-md text-on-surface-variant">
+                  <span className="text-secondary shrink-0">{i + 1}.</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="border-t border-outline-variant/20 pt-3">
+            <p className="font-ui-label text-ui-label text-on-surface mb-1">Next Step đề xuất</p>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              Phân tích chi tiết theo user_segment × province cho tháng giảm vs tháng trước.
+              Cần Sampling design để survey Casual Users về lý do giảm giao dịch — đó là Module 2.
+            </p>
           </div>
         </div>
 
-        <div className="border border-outline-variant/30 rounded-xl p-5 mt-6">
-          <p className="font-ui-label text-[0.625rem] text-secondary uppercase tracking-widest mb-3">
-            EDA chỉ là bước đầu
-          </p>
-          <p className="font-body-md text-body-md text-on-surface-variant">
-            EDA cho bạn <strong className="text-on-surface">câu hỏi để hỏi tiếp</strong> — không
-            phải câu trả lời cuối cùng. &quot;Outlier 1008 là VIP hay lỗi?&quot; → cần nghiệp vụ.
-            &quot;HCM và HN có revenue cao hơn vì lý do gì?&quot; → cần thêm dữ liệu. &quot;Khuyến
-            mãi items có làm revenue tăng thật không?&quot; → cần A/B Test (Module 4).
-          </p>
-        </div>
+        <Note>
+          EDA không kết thúc bằng một kết luận dứt khoát — nó kết thúc bằng những câu hỏi tốt hơn.
+          "QR GMV giảm 12%" → sau EDA → "Cần hiểu tại sao Casual Users giảm F&B transaction.
+          Cần survey — và cần Sampling để survey đúng cách." Đó là lý do Module 2 tồn tại.
+        </Note>
       </section>
 
-      {/* Sign-off */}
+      {/* ── Sign-off ── */}
       <div className="border-t border-outline-variant/20 pt-10">
         <p className="font-body-md text-body-md text-on-surface-variant">
           Tiếp theo:{' '}
           <a href="/modules/sampling" className="text-secondary hover:underline">
-            Module 2 — Sampling: Dataset 10 dòng này có thực sự đại diện cho toàn bộ khách hàng
-            không? →
+            Module 2 — Data Sampling: Khi không thể survey toàn bộ 12 triệu user,
+            làm sao chọn đúng 2,000 người đại diện? →
           </a>
         </p>
       </div>
+
     </article>
   )
 }
