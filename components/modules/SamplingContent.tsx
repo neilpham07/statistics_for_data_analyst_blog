@@ -1,15 +1,15 @@
 import type { TocItem } from '@/components/layout/TableOfContents'
 
 export const samplingTocItems: TocItem[] = [
-  { id: 'tai-sao-sampling',      label: '1. Tại sao Sampling tồn tại?' },
-  { id: 'population-vs-sample',  label: '2. Population vs Sample' },
-  { id: 'mau-tot-la-gi',         label: '3. Một mẫu tốt là gì?' },
-  { id: 'sampling-bias',         label: '4. Sampling Bias' },
-  { id: 'random-sampling',       label: '5. Random Sampling' },
-  { id: 'stratified-sampling',   label: '6. Stratified Sampling' },
-  { id: 'bootstrap',             label: '7. Bootstrap' },
-  { id: 'common-mistakes',       label: '8. Common Mistakes' },
-  { id: 'case-study',            label: '9. Case Study' },
+  { id: 'tai-sao-sampling', label: '1. Tại sao Sampling tồn tại?' },
+  { id: 'population-vs-sample', label: '2. Population vs Sample' },
+  { id: 'mau-tot-la-gi', label: '3. Một mẫu tốt là gì?' },
+  { id: 'sampling-bias', label: '4. Sampling Bias' },
+  { id: 'random-sampling', label: '5. Random Sampling' },
+  { id: 'stratified-sampling', label: '6. Stratified Sampling' },
+  { id: 'bootstrap', label: '7. Bootstrap' },
+  { id: 'common-mistakes', label: '8. Common Mistakes' },
+  { id: 'case-study', label: '9. Case Study' },
 ]
 
 /* ── Slack Thread ─────────────────────────────────────────────────────────── */
@@ -260,9 +260,9 @@ export function SamplingContent() {
         Data Sampling
       </h1>
       <p className="font-body-lg text-body-lg text-on-surface-variant mb-10">
-        SnowTech có 30 triệu user. Bạn không thể — và không cần — hỏi tất cả họ.
-        Sampling là kỹ năng chọn đúng người để hỏi, đúng cách, để câu trả lời
-        đại diện cho cả 30 triệu.
+        CRM Manager Linh cần câu trả lời gấp. Push CTR vừa giảm từ 8% xuống 5.2% — và bà không biết tại sao.
+        Survey toàn bộ 30 triệu user? Không khả thi. Không cần thiết. Cũng không đủ nhanh.
+        Sampling giải quyết bài toán này: hỏi đúng người, đúng cách, rút ra kết luận đúng.
       </p>
 
       {/* ── Learning Objectives ── */}
@@ -299,57 +299,64 @@ export function SamplingContent() {
             {
               from: 'CRM Manager Linh',
               time: '9:14 SA',
-              text: 'Push CTR của chúng mình giảm từ 8% xuống 5.2% trong 3 tháng qua. Mình cần hiểu WHY. Có thể survey user không?',
+              text: 'Push CTR của mình giảm từ 8% xuống 5.2% trong 3 tháng gần đây. Mình đã kiểm tra content và thời gian gửi nhưng chưa thấy rõ nguyên nhân. Có cách nào hiểu user đang nghĩ gì về push notification không?',
             },
             {
               from: 'DA Minh',
               time: '9:18 SA',
-              text: 'Được. Hỏi hết 30M user hay một mẫu?',
+              text: 'Mình nghĩ nên làm survey. Chỉ cần chọn một nhóm user đủ đại diện là có thể ước lượng được quan điểm của toàn bộ tập user',
             },
             {
               from: 'CRM Manager Linh',
               time: '9:19 SA',
-              text: 'Hỏi đủ để ra quyết định là được. Mình cần biết user nghĩ gì về push notification của mình.',
-            },
-            {
-              from: 'DA Minh',
-              time: '9:21 SA',
-              text: 'OK, mình đề xuất survey 2,000 user. Giải thích sau.',
+              text: 'Vậy chọn bao nhiêu người là đủ?',
             },
           ]}
         />
 
+
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          CRM Manager Linh cần câu trả lời. Nhưng hỏi 30 triệu user là:
+          CRM Manager Linh cần câu trả lời. Nhưng khảo sát toàn bộ 30 triệu user là:
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
           {[
-            { label: 'Không thể về logistics', desc: 'Survey gửi đến 30M người → response rate 0.1% = 30,000 người cần review. Không ai làm được trong 1 tuần.' },
-            { label: 'Không cần thiết về thống kê', desc: 'Với 2,000 user được chọn đúng, margin of error chỉ ~2.2% — đủ chính xác để ra quyết định.' },
-            { label: 'Tốn kém không tương xứng', desc: 'Cost per survey × 30M >> Cost per survey × 2,000. Insight không tỷ lệ thuận với số người hỏi.' },
+            {
+              label: 'Không khả thi',
+              desc: 'Gửi survey cho hàng chục triệu user tốn rất nhiều thời gian, chi phí và công sức tổng hợp kết quả.',
+            },
+            {
+              label: 'Không cần thiết',
+              desc: 'Bạn không cần hỏi tất cả mọi người để hiểu hành vi của toàn bộ tập user.',
+            },
+            {
+              label: 'Khó ra quyết định nhanh',
+              desc: 'Business cần câu trả lời trong vài ngày, không phải vài tháng.',
+            },
           ].map((r) => (
-            <div key={r.label} className="border border-outline-variant/30 rounded-xl p-4">
-              <p className="font-ui-label text-ui-label text-on-surface mb-2">{r.label}</p>
-              <p className="font-body-md text-[0.8rem] text-on-surface-variant">{r.desc}</p>
+            <div
+              key={r.label}
+              className="border border-outline-variant/30 rounded-xl p-4"
+            >
+              <p className="font-ui-label text-ui-label text-on-surface mb-2">
+                {r.label}
+              </p>
+
+              <p className="font-body-md text-[0.8rem] text-on-surface-variant">
+                {r.desc}
+              </p>
             </div>
           ))}
         </div>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Đây là lý do Sampling tồn tại:{' '}
-          <strong className="text-on-surface">
-            bạn có thể rút ra kết luận đủ chính xác về cả 30 triệu user,
-            chỉ bằng cách hỏi đúng 2,000 người.
-          </strong>{' '}
-          Nhưng chỉ khi bạn chọn 2,000 người đó đúng cách.
+          Đây chính là lý do <strong className="text-on-surface">Sampling</strong> tồn tại.
+          Kết quả từ 2,000 người được chọn đúng cách có thể phản ánh chính xác quan điểm
+          của toàn bộ 30 triệu user — với sai số đo lường được.
         </p>
-
-        <Note>
-          Sampling không phải "hỏi ít người vì lười." Sampling là kỹ thuật có nguyên tắc
-          để lấy thông tin đại diện. Làm sai → kết quả lệch → quyết định sai. Làm đúng →
-          2,000 người nói lên tiếng nói của 30 triệu.
-        </Note>
+        <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
+          <strong className="text-on-surface">Sampling không phải là hỏi ít hơn. Sampling là hỏi thông minh hơn.</strong>
+        </p>
       </section>
 
       <hr className="border-outline-variant/20 mb-16" />
@@ -361,8 +368,9 @@ export function SamplingContent() {
         <SectionTitle id="population-vs-sample">2. Population vs Sample</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Trước khi chọn sample, phải định nghĩa rõ ba khái niệm — vì mỗi khái niệm có thể
-          cho kết quả rất khác nhau nếu định nghĩa sai.
+          Linh muốn hỏi user "tại sao không click push?" — nhưng hỏi ai? 30 triệu user?
+          Chỉ những người đã nhận push? Hay chỉ những người active tháng vừa rồi?
+          Trả lời sai câu này, kết quả survey sẽ lệch ngay từ đầu.
         </p>
 
         <div className="border border-outline-variant/30 rounded-xl overflow-hidden my-6 divide-y divide-outline-variant/20">
@@ -549,8 +557,10 @@ print(f"  MoE ±1%:   {sample_size(0.01):,} users")`}
         <SectionTitle id="sampling-bias">4. Sampling Bias</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Bias là sai lệch có hệ thống — không phải ngẫu nhiên. Kết quả bị bias không thể
-          "fix" bằng cách lấy thêm sample. Phải phát hiện và loại bỏ trước khi lấy mẫu.
+          Linh đã có sample 2,000 người — nhưng DA Minh dừng lại hỏi: "Chị gửi survey qua
+          app hay qua SMS?" Câu hỏi này quan trọng hơn sample size.
+          Nếu chỉ gửi qua app, những user đã churn sẽ không bao giờ trả lời — và đó chính xác là
+          nhóm Linh cần nghe nhất.
         </p>
 
         <div className="space-y-4 my-6">
@@ -633,8 +643,9 @@ print(f"  MoE ±1%:   {sample_size(0.01):,} users")`}
         <SectionTitle id="random-sampling">5. Simple Random Sampling</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Cách đơn giản nhất: mỗi user trong Sampling Frame có cơ hội được chọn bằng nhau.
-          Không ưu tiên, không phân nhóm — hoàn toàn ngẫu nhiên.
+          Sau khi tránh được bias, Minh chọn phương pháp sample đơn giản nhất: random 2,000 người
+          từ 8.4M Sampling Frame. Mỗi user có cơ hội được chọn bằng nhau — không ưu tiên nhóm nào.
+          Kết quả chạy ra, có điều gì đó bất ổn với Power Users.
         </p>
 
         <Code>{`# Simple Random Sampling: 2,000 user từ 8.4M Sampling Frame
@@ -718,9 +729,9 @@ Name: count, dtype: int64`}
         <SectionTitle id="stratified-sampling">6. Stratified Sampling</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Stratified Sampling chia population thành các <em>strata</em> (nhóm con) rồi
-          sample ngẫu nhiên từ mỗi nhóm theo tỷ lệ được thiết kế sẵn.
-          Đây là phương pháp đúng khi bạn cần so sánh các nhóm quan trọng.
+          90 Power Users không đủ để Linh ra quyết định CRM cho nhóm đóng góp 60% TPV.
+          Minh cần đảm bảo mỗi segment được đại diện đủ — không phải theo tỷ lệ tự nhiên,
+          mà theo mức tối thiểu cần để phân tích.
         </p>
 
         <SlackThread
@@ -816,7 +827,7 @@ Weighted overall: 65.5% find push relevant
           Kết quả thú vị: Power Users (64%) thấy push ít relevant hơn Casual Users (66%) — dù chênh lệch nhỏ.
           Đây là insight CRM Manager cần: nội dung push hiện tại đang được optimize cho Casual Users,
           nhưng không đủ personalized cho Power Users có transaction phức tạp hơn.
-          4.312 VND là point estimate — cần CI để báo cáo đầy đủ (Module 3 sẽ đi sâu về điều này).
+          65.5% là point estimate — cần Confidence Interval để báo cáo đầy đủ (Module 3 sẽ đi sâu về điều này).
         </Note>
 
         <QuickSummary items={[
@@ -836,7 +847,7 @@ Weighted overall: 65.5% find push relevant
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
           Bootstrap trả lời một câu hỏi khác: <em>"Nếu tôi survey lại 2,000 user khác,
-          kết quả có thay đổi nhiều không?"</em> — hay nói cách khác, estimate của bạn
+            kết quả có thay đổi nhiều không?"</em> — hay nói cách khác, estimate của bạn
           có ổn định không?
         </p>
 
@@ -1019,7 +1030,7 @@ Bootstrap std:    0.0107
             },
           ].map((s, i) => (
             <div key={i} className="flex gap-5 border border-outline-variant/30 rounded-xl p-5">
-              <span className="font-code text-[0.875rem] text-secondary/50 font-semibold shrink-0 mt-0.5">{String(i+1).padStart(2,'0')}</span>
+              <span className="font-code text-[0.875rem] text-secondary/50 font-semibold shrink-0 mt-0.5">{String(i + 1).padStart(2, '0')}</span>
               <div>
                 <p className="font-ui-label text-ui-label text-on-surface mb-2">{s.step.replace(/^\d+\. /, '')}</p>
                 <p className="font-body-md text-[0.8rem] text-on-surface-variant">{s.content}</p>

@@ -1,17 +1,17 @@
 import type { TocItem } from '@/components/layout/TableOfContents'
 
 export const edaTocItems: TocItem[] = [
-  { id: 'eda-la-gi',        label: '1. EDA là gì?' },
-  { id: 'eda-workflow',     label: '2. EDA Workflow' },
-  { id: 'data-types',       label: '3. Data Types' },
-  { id: 'distribution',     label: '4. Distribution' },
+  { id: 'eda-la-gi', label: '1. EDA là gì?' },
+  { id: 'eda-workflow', label: '2. EDA Workflow' },
+  { id: 'data-types', label: '3. Data Types' },
+  { id: 'distribution', label: '4. Distribution' },
   { id: 'mean-median-mode', label: '5. Mean, Median, Mode' },
-  { id: 'variability',      label: '6. Variability' },
-  { id: 'percentiles',      label: '7. Percentiles' },
-  { id: 'outliers',         label: '8. Outliers' },
-  { id: 'visualization',    label: '9. Data Visualization' },
-  { id: 'correlation',      label: '10. Correlation' },
-  { id: 'case-study',       label: '11. Case Study' },
+  { id: 'variability', label: '6. Variability' },
+  { id: 'percentiles', label: '7. Percentiles' },
+  { id: 'outliers', label: '8. Outliers' },
+  { id: 'visualization', label: '9. Data Visualization' },
+  { id: 'correlation', label: '10. Correlation' },
+  { id: 'case-study', label: '11. Case Study' },
 ]
 
 /* ── Helpers ──────────────────────────────────────────────────────────────── */
@@ -119,16 +119,16 @@ function IC({ children }: { children: string }) {
 
 function TxTable() {
   const rows = [
-    ['P_001', 'U1234', '45,000',     'HCM', 'F&B',    'Regular', '24'],
-    ['P_002', 'U5678', '320,000',    'HN',  'Retail', 'Power',   '35'],
-    ['P_003', 'U2345', '22,000',     'HCM', 'F&B',    'Casual',  '28'],
-    ['P_004', 'U6789', '450,000',    'DN',  'Retail', 'Regular', '45'],
-    ['P_005', 'U3456', '180,000',    'HN',  'Health', 'Regular', '52'],
-    ['P_006', 'U7890', '28,000',     'HCM', 'F&B',    'Casual',  '19'],
-    ['P_007', 'U4567', '150,000',    'HN',  'Health', 'Power',   '31'],
-    ['P_008', 'U8901', '8,500,000',  'HCM', 'Retail', 'Power',   '38'],
-    ['P_009', 'U1357', '55,000',     'DN',  'F&B',    'Casual',  '27'],
-    ['P_010', 'U2468', '380,000',    'HN',  'Retail', 'Regular', '42'],
+    ['P_001', 'U1234', '45,000', 'HCM', 'F&B', 'Regular', '24'],
+    ['P_002', 'U5678', '320,000', 'HN', 'Retail', 'Power', '35'],
+    ['P_003', 'U2345', '22,000', 'HCM', 'F&B', 'Casual', '28'],
+    ['P_004', 'U6789', '450,000', 'DN', 'Retail', 'Regular', '45'],
+    ['P_005', 'U3456', '180,000', 'HN', 'Health', 'Regular', '52'],
+    ['P_006', 'U7890', '28,000', 'HCM', 'F&B', 'Casual', '19'],
+    ['P_007', 'U4567', '150,000', 'HN', 'Health', 'Power', '31'],
+    ['P_008', 'U8901', '8,500,000', 'HCM', 'Retail', 'Power', '38'],
+    ['P_009', 'U1357', '55,000', 'DN', 'F&B', 'Casual', '27'],
+    ['P_010', 'U2468', '380,000', 'HN', 'Retail', 'Regular', '42'],
   ]
   const headers = ['payment_id', 'user_id', 'amount (VND)', 'province', 'category', 'user_segment', 'age']
 
@@ -148,9 +148,8 @@ function TxTable() {
               {row.map((cell, j) => (
                 <td
                   key={j}
-                  className={`font-code text-[0.8rem] px-4 py-2.5 whitespace-nowrap ${
-                    row[0] === 'P_008' && j === 2 ? 'text-secondary font-semibold' : 'text-on-surface-variant'
-                  }`}
+                  className={`font-code text-[0.8rem] px-4 py-2.5 whitespace-nowrap ${row[0] === 'P_008' && j === 2 ? 'text-secondary font-semibold' : 'text-on-surface-variant'
+                    }`}
                 >
                   {cell}
                 </td>
@@ -213,9 +212,9 @@ export function EDAContent() {
           </p>
           <div className="space-y-2 mt-1">
             {[
-              { from: 'Analytics Lead', msg: '"QR TPV giảm 12% so với tháng trước. Trước khi ai đó đưa ra kết luận — hãy hiểu dữ liệu trước đã."' },
+              { from: 'Analytics Lead', msg: '"Transaction amount giảm 12% so với tháng trước. Trước khi ai đó đưa ra kết luận — hãy hiểu dữ liệu trước đã."' },
               { from: 'Growth Manager', msg: '"Acquisition campaign tháng này vẫn đang chạy bình thường. Nghĩa là vấn đề ở phía retention hay transaction?"' },
-              { from: 'Merchant BU', msg: '"Merchant mới onboard tháng trước có vẻ ổn. Vậy tại sao TPV lại giảm?"' },
+              { from: 'Merchant BU', msg: '"Merchant mới onboard tháng trước có vẻ ổn. Vậy tại sao Transaction amount lại giảm?"' },
             ].map((q) => (
               <div key={q.from} className="flex gap-3 items-start">
                 <span className="font-ui-label text-[0.6875rem] text-secondary uppercase tracking-wider shrink-0 pt-0.5 w-24">
@@ -309,7 +308,7 @@ print(df.head())`}
             {
               step: '01',
               title: 'Hiểu Business Question',
-              body: 'Bạn đang cố trả lời câu hỏi gì? "QR TPV giảm ở nhóm nào?" hay "User segment nào đang churn?" — câu hỏi quyết định bạn nhìn vào cột nào, nhóm nào.',
+              body: 'Bạn đang cố trả lời câu hỏi gì? "Transaction amount giảm ở nhóm nào?" hay "User segment nào đang churn?" — câu hỏi quyết định bạn nhìn vào cột nào, nhóm nào.',
               tags: ['Trước khi code'],
             },
             {
@@ -333,7 +332,7 @@ print(df.head())`}
             {
               step: '05',
               title: 'Tìm Relationships & Tóm tắt Insights',
-              body: 'TPV cao hơn ở nhóm nào? User segment nào giao dịch nhiều nhất? Province nào đang giảm? Correlation và groupby giúp trả lời những câu hỏi này.',
+              body: 'Transaction amount cao hơn ở nhóm nào? User segment nào giao dịch nhiều nhất? Province nào đang giảm? Correlation và groupby giúp trả lời những câu hỏi này.',
               tags: ['Correlation', 'groupby', 'Visualization'],
             },
           ].map((item) => (
@@ -477,8 +476,8 @@ dtype: int64`}
 
         <ScenarioBlock>
           <p>
-            Analytics Lead Tuấn hỏi: <em>"QR transaction amount phân bổ như thế nào?
-            Đa số user đang chi bao nhiêu một lần?"</em>
+            Analytics Lead Tuấn hỏi: <em>"Transaction amount phân bổ như thế nào?
+              Đa số user đang chi bao nhiêu tiền cho một lần thanh toán?"</em>
           </p>
           <p>
             Trước khi trả lời, bạn cần hiểu <em>hình dạng</em> của dữ liệu — không chỉ mỗi con số trung bình.
@@ -571,7 +570,7 @@ Retail       4 2,412,500 415,000   ← mean bị kéo cao bởi P_008`}
 
         <ScenarioBlock>
           <p>
-            Growth Manager hỏi: <em>"Average QR transaction amount của chúng ta là bao nhiêu?"</em>
+            Growth Manager hỏi: <em>"Average Transaction amount là bao nhiêu?"</em>
           </p>
           <p>
             Bạn tính nhanh: <strong>1,013,000 VND</strong>. Growth Manager gật đầu và chuẩn bị
@@ -583,7 +582,7 @@ Retail       4 2,412,500 415,000   ← mean bị kéo cao bởi P_008`}
         </ScenarioBlock>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          P_008 là một giao dịch 8.5 triệu đồng — một Power User mua thiết bị điện tử qua QR.
+          P_008 là một giao dịch 8.5 triệu đồng — một Power User mua thiết bị điện tử.
           Một giao dịch đó đang kéo <em>average</em> của toàn bộ dataset lên gấp 6 lần giá trị điển hình.
         </p>
 
@@ -594,7 +593,6 @@ print(f"Median: {df['amount'].median():>12,.0f} VND")
 
 # Loại bỏ outlier P_008
 df_no_outlier = df[df['payment_id'] != 'P_008']
-print()
 print("=== Bỏ P_008 (n=9) ===")
 print(f"Mean:   {df_no_outlier['amount'].mean():>12,.0f} VND")
 print(f"Median: {df_no_outlier['amount'].median():>12,.0f} VND")`}
@@ -609,8 +607,8 @@ Median:      150,000 VND   ← hầu như không đổi`}
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Median chỉ thay đổi từ 165K → 150K khi bỏ P_008. Mean thay đổi từ 1.013M → 181K.
-          Đây không phải bug — đây là đặc tính toán học:
+          Median chỉ thay đổi từ 165K → 150K khi loại bỏ giao dịch P_008.
+          Trong khi đó Mean thay đổi từ 1.013M → 181K khi loại bỏ giao dịch P_008.
         </p>
 
         <div className="border border-outline-variant/30 bg-surface-container rounded-xl divide-y divide-outline-variant/20 my-6">
@@ -671,7 +669,7 @@ Casual      28,000   ← median Casual user rất thấp (F&B chủ yếu)`}
         </Output>
 
         <Mistakes items={[
-          'Báo cáo "average QR transaction 1,013,000 VND" — con số bị inflate bởi outlier, không phản ánh đại đa số user.',
+          'Báo cáo "Average transaction amount 1,013,000 VND" — con số bị inflate bởi outlier, không phản ánh đại đa số user.',
           'Dùng Mean khi distribution bị skew mạnh — Growth Manager sẽ hiểu sai hành vi user thực tế.',
           'Tính Mode của cột amount — với continuous data có hàng triệu giá trị, mode không có ý nghĩa thực tế.',
         ]} />
@@ -692,76 +690,120 @@ Casual      28,000   ← median Casual user rất thấp (F&B chủ yếu)`}
         <SectionTitle id="variability">6. Variability</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          Hai nhóm user có thể có cùng Median nhưng hành vi hoàn toàn khác nhau.
-          Bạn cần đo thêm <strong className="text-on-surface">mức độ phân tán</strong> của dữ liệu.
+          <strong>Variability</strong> (mức độ phân tán của dữ liệu) trả lời cho câu hỏi:
+
+          <br /><br />
+
+          <em>
+            "Các giá trị trong dữ liệu nằm gần nhau hay nằm cách xa nhau?"
+          </em>
+
+          <br /><br />
+
+          Nói cách khác, Variability cho biết dữ liệu có đồng đều hay không.
+          Nếu các giá trị tập trung quanh một vùng nhỏ, dữ liệu có variability thấp.
+          Ngược lại, nếu các giá trị trải rộng từ rất nhỏ đến rất lớn, dữ liệu có variability cao.
         </p>
 
         <ScenarioBlock>
           <p>
-            Risk Team hỏi: <em>"QR transaction amount của hai nhóm user trẻ (dưới 30) và trung niên (30+) có khác nhau không?"</em>
-          </p>
-          <p>
-            Nhìn vào Median: nhóm 30+ là 350K, nhóm dưới 30 chỉ 36.5K — chênh nhau gần 10 lần.
-            Nhưng Median chỉ là một nửa câu chuyện. Khi nhìn thêm variability, bức tranh rủi ro mới thực sự lộ diện.
+            Risk Team hỏi: <em>"Transaction amount của hai nhóm user trẻ (dưới 30) và trung niên (30+) có khác nhau không?"</em>
           </p>
         </ScenarioBlock>
 
         <Code>{`# Variability của amount theo age group
-df['age_group'] = df['age'].apply(lambda x: 'Dưới 30' if x < 30 else '30+')
+df['age_group'] = df['age'].apply(
+    lambda x: 'Dưới 30' if x < 30 else '30+'
+)
 
-stats = df.groupby('age_group')['amount'].agg([
-    ('median', 'median'),
-    ('std',    'std'),
-    ('min',    'min'),
-    ('max',    'max'),
-    ('iqr',    lambda x: x.quantile(0.75) - x.quantile(0.25)),
-])
+stats = (
+    df.groupby('age_group')['amount']
+      .agg(
+          median='median',
+          std='std',
+          min='min',
+          max='max',
+          iqr=lambda x: x.quantile(0.75) - x.quantile(0.25)
+      )
+      .round(2)
+)
+
 print(stats)`}
         </Code>
-        <Output>{`          median          std     min       max     iqr
+        <Output>{`             median         std     min      max       iqr
 age_group
-30+       350,000  3,351,000 150,000  8,500,000  217,500
-Dưới 30    36,500     15,199  22,000     55,000   21,000`}
+30+        350000.0  3351242.56  150000  8500000  217500.0
+Dưới 30     36500.0    15198.68   22000    55000   21000.0`}
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Nhóm 30+ có median 350K, nhóm dưới 30 chỉ 36.5K — chênh nhau gần 10 lần về "user điển hình."
-          Nhưng điều đáng chú ý hơn: std của nhóm 30+ là 3.35 triệu — cho thấy trong nhóm này có cả user giao dịch rất nhỏ
-          lẫn rất lớn (8.5M). Một nhóm vừa có median cao vừa có variability lớn — đây là thông tin quan trọng cho Risk Team khi đánh giá rủi ro.
+          Nhóm 30+ có median 350K, trong khi nhóm dưới 30 chỉ 36.5K — chênh nhau gần 10 lần. Ngoài ra, độ lệch chuẩn (std) của nhóm 30+ lên tới 3.35 triệu, cao hơn nhiều so với median, cho thấy phân phối giao dịch trong nhóm này khá phân tán và có thể tồn tại các giao dịch giá trị rất lớn (max 8.5M). Đây là tín hiệu cho thấy hành vi giao dịch của nhóm 30+ đa dạng hơn và cần được phân tích sâu hơn khi đánh giá rủi ro.
         </p>
 
-        <div className="border border-outline-variant/30 bg-surface-container rounded-xl divide-y divide-outline-variant/20 my-6">
+        <div className="border border-outline-variant/30 rounded-xl overflow-hidden my-6">
+
           {[
             {
               measure: 'Standard Deviation (Std)',
-              desc: 'Mức độ phân tán trung bình quanh Mean.',
-              fintech: 'Std của loan amount cao → portfolio đa dạng, risk phân tán',
-              warning: 'Bị ảnh hưởng mạnh bởi outlier vì tính từ Mean',
+              desc: 'Đo mức độ phân tán của dữ liệu quanh Mean.',
+              fintech: 'Std Transaction amount cao → Users có mức thanh toán rất đa dạng.',
+              warning: 'Nhạy với outlier vì được tính từ Mean.',
             },
             {
               measure: 'IQR (Interquartile Range)',
-              desc: 'Q3 − Q1. Khoảng chứa 50% user ở giữa.',
-              fintech: 'IQR của wallet balance → hiểu hành vi 50% user mainstream',
-              warning: 'Kháng outlier — dùng khi data có extreme values',
+              desc: 'Đo độ rộng của 50% dữ liệu nằm ở giữa.',
+              fintech: 'IQR wallet balance giúp hiểu hành vi của nhóm user phổ thông.',
+              warning: 'Ít bị ảnh hưởng bởi outlier.',
             },
             {
               measure: 'Variance',
-              desc: 'Bình phương của Std. Đơn vị = VND².',
-              fintech: 'Ít dùng trực tiếp trong business reporting — dùng Std thay thế',
-              warning: 'Đơn vị bình phương khiến khó diễn giải trực quan',
+              desc: 'Là bình phương của Standard Deviation.',
+              fintech: 'Ít dùng trực tiếp trong business, thường dùng Std để thay thế.',
+              warning: 'Đơn vị là bình phương của dữ liệu gốc nên khó diễn giải.',
             },
           ].map((v) => (
-            <div key={v.measure} className="px-5 py-4">
-              <p className="font-ui-label text-ui-label text-secondary mb-1">{v.measure}</p>
-              <p className="font-body-md text-[0.8rem] text-on-surface-variant mb-1">{v.desc}</p>
-              <p className="font-body-md text-[0.75rem] text-on-surface-variant/70">
-                <span className="text-on-surface font-medium">SnowTech: </span>{v.fintech}
-              </p>
-              <p className="font-body-md text-[0.75rem] text-on-surface-variant/70 mt-0.5">
-                <span className="text-error/60 font-medium">Lưu ý: </span>{v.warning}
-              </p>
+            <div
+              key={v.measure}
+              className="grid md:grid-cols-[240px_1fr] gap-6 px-6 py-5 border-b border-outline-variant/20 last:border-b-0"
+            >
+              {/* Left */}
+              <div>
+                <p className="font-semibold text-on-surface">
+                  {v.measure}
+                </p>
+              </div>
+
+              {/* Right */}
+              <div className="space-y-2 text-sm text-on-surface-variant">
+
+                <div className="flex gap-2">
+                  <span className="font-medium text-on-surface min-w-[90px]">
+                    Định nghĩa
+                  </span>
+
+                  <span>{v.desc}</span>
+                </div>
+
+                <div className="flex gap-2">
+                  <span className="font-medium text-on-surface min-w-[90px]">
+                    Ví dụ
+                  </span>
+
+                  <span>{v.fintech}</span>
+                </div>
+
+                <div className="flex gap-2">
+                  <span className="font-medium text-amber-600 min-w-[90px]">
+                    Lưu ý
+                  </span>
+
+                  <span>{v.warning}</span>
+                </div>
+
+              </div>
             </div>
           ))}
+
         </div>
 
         <Note>
@@ -786,7 +828,7 @@ Dưới 30    36,500     15,199  22,000     55,000   21,000`}
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
           CRM Manager Linh hỏi: <em>"Tôi muốn nhắm vào top 25% user chi tiêu nhiều nhất
-          để gửi voucher Savings. Ngưỡng nào tôi cần dùng?"</em>
+            để gửi voucher Savings. Ngưỡng nào tôi cần dùng?"</em>
         </p>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
@@ -906,13 +948,13 @@ P99:  7,775,500 VND`}
           ].map((t) => {
             const borderCls = t.variant === 'error'
               ? 'border-error-container' : t.variant === 'warn'
-              ? 'border-outline-variant/30' : 'border-secondary/30'
+                ? 'border-outline-variant/30' : 'border-secondary/30'
             const bgCls = t.variant === 'error'
               ? 'bg-error-container/20' : t.variant === 'warn'
-              ? 'bg-surface-container' : 'bg-secondary/5'
+                ? 'bg-surface-container' : 'bg-secondary/5'
             const iconCls = t.variant === 'error'
               ? 'text-on-error-container' : t.variant === 'warn'
-              ? 'text-on-surface-variant' : 'text-secondary'
+                ? 'text-on-surface-variant' : 'text-secondary'
             return (
               <div key={t.type} className={`border rounded-xl overflow-hidden ${borderCls}`}>
                 <div className={`px-5 py-3 flex items-center gap-2 ${bgCls}`}>
@@ -1071,10 +1113,29 @@ Amount:       8,500,000 VND
         <SectionTitle id="correlation">10. Correlation</SectionTitle>
 
         <ScenarioBlock>
-          <p>
-            Product Manager hỏi: <em>"User giao dịch nhiều hơn có chi tiêu tổng nhiều hơn không?
-            Nếu có, mình nên push feature nào để tăng transaction frequency?"</em>
+          <p className="leading-7">
+            Một Product Manager đặt câu hỏi:
+
+            <br /><br />
+
+            <em>
+              "User giao dịch nhiều hơn có chi tiêu tổng nhiều hơn không?
+              Nếu đúng, mình có thể làm gì để tăng transaction frequency?"
+            </em>
+
+            <br /><br />
+
+            Đây thực chất là hai bài toán khác nhau:
+
+            <br />
+
+            • <strong>Data Analysis:</strong> Frequency và Total Spending có mối quan hệ với nhau không?
+
+            <br />
+
+            • <strong>Product Experimentation:</strong> Nếu có, làm thế nào để thay đổi hành vi người dùng thông qua tính năng mới hoặc A/B Testing?
           </p>
+
           <p>
             Đây là câu hỏi về <strong>mối quan hệ</strong> giữa hai biến — không phải về từng biến riêng lẻ.
           </p>
@@ -1115,12 +1176,49 @@ avg_amount         0.77          0.95        1.00
         </Output>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-4">
-          Kết quả: user giao dịch nhiều hơn có tổng chi tiêu nhiều hơn (r=0.79 — strong positive).
-          Điều thú vị: txn_count cũng tương quan cao với avg_amount (r=0.77) — Power Users vừa giao dịch
-          thường xuyên vừa mua hàng giá trị lớn (Retail, thiết bị điện tử). Đây là dấu hiệu của
-          confounding variable: <em>user_segment</em> ảnh hưởng đến cả hai chiều.
-          Product Manager cần phân tích theo segment riêng trước khi kết luận bất kỳ điều gì.
+          Kết quả cho thấy <strong className="text-on-surface">
+            txn_count và total_amount có tương quan dương khá mạnh
+          </strong>{' '}
+          với hệ số <strong>r = 0.79</strong>.
+
+          Điều này có nghĩa là:
+
+          <br /><br />
+
+          <em>
+            User giao dịch nhiều hơn thường có xu hướng chi tiêu tổng nhiều hơn.
+          </em>
+
+          <br /><br />
+
+          Ngoài ra, <strong>txn_count</strong> cũng tương quan cao với{' '}
+          <strong>avg_amount</strong> (<strong>r = 0.77</strong>).
+
+          Điều này gợi ý rằng một số user không chỉ giao dịch thường xuyên hơn mà còn
+          chi tiêu nhiều hơn trong mỗi giao dịch. Đây có thể là nhóm{' '}
+          <strong>Power Users</strong> — những khách hàng đóng góp phần lớn TPV của hệ thống.
+
+          <br /><br />
+
+          Tuy nhiên, cần lưu ý rằng <strong>Correlation không đồng nghĩa với Causation</strong>.
+
+          Việc hai biến cùng tăng không có nghĩa rằng:
+
+          <br />
+
+          <em>
+            "Tăng transaction frequency sẽ chắc chắn làm tăng total spending."
+          </em>
+
+          <br /><br />
+
+          Có thể tồn tại các yếu tố khác như <em>user_segment</em>, ảnh hưởng đồng thời đến cả hai biến.
+
+          Vì vậy, Product Manager nên phân tích theo từng segment hoặc thực hiện
+          A/B Testing trước khi đưa ra quyết định sản phẩm.
         </p>
+
+
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
           {[
@@ -1136,20 +1234,7 @@ avg_amount         0.77          0.95        1.00
           ))}
         </div>
 
-        <WarningBlock title="⚠ Correlation ≠ Causation — Lỗi phổ biến nhất trong phân tích">
-          <p>
-            r=0.77 giữa txn_count và avg_amount <strong>không có nghĩa là</strong>{' '}
-            "tăng tần suất giao dịch sẽ làm user chi nhiều hơn mỗi lần."
-          </p>
-          <p>
-            Cả hai đều bị ảnh hưởng bởi một biến thứ ba: <em>user_segment</em>.
-            Power Users vừa giao dịch thường xuyên hơn, vừa mua hàng giá trị cao hơn — không phải vì
-            tần suất cao gây ra amount cao. Chỉ tăng push notification không tạo ra Power User.
-          </p>
-          <p>
-            Để xác nhận nhân quả, cần <strong>A/B Test</strong> — đó là Module 4.
-          </p>
-        </WarningBlock>
+
 
         <Mistakes items={[
           'Kết luận "feature X làm tăng retention" chỉ từ correlation — cần A/B test để xác nhận nhân quả.',
@@ -1170,7 +1255,7 @@ avg_amount         0.77          0.95        1.00
           SECTION 11 — Case Study
       ══════════════════════════════════════════════════════════════ */}
       <section aria-labelledby="case-study" className="mb-16">
-        <SectionTitle id="case-study">11. Case Study: QR TPV giảm 12% — tìm nguyên nhân</SectionTitle>
+        <SectionTitle id="case-study">11. Case Study: Transaction amount giảm 12% — tìm nguyên nhân</SectionTitle>
 
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
           Cuối tuần đầu tiên tại SnowTech. Bạn tổng hợp lại toàn bộ EDA và chuẩn bị trình bày
@@ -1182,7 +1267,7 @@ avg_amount         0.77          0.95        1.00
             {
               finding: 'Distribution: right-skewed',
               detail: 'Median QR transaction = 165K VND. Mean = 1.013M — bị inflate bởi Power Users. F&B là category phổ biến nhất (40% giao dịch) nhưng amount thấp nhất.',
-              implication: 'Nếu F&B transactions giảm, TPV giảm ít nhưng giao dịch count giảm nhiều. Nếu Retail giảm, TPV giảm nhiều hơn.',
+              implication: 'Nếu F&B transactions giảm, Transaction amount giảm ít nhưng giao dịch count giảm nhiều. Nếu Retail giảm, Transaction amount giảm nhiều hơn.',
             },
             {
               finding: 'Outlier: P_008 (8.5M VND)',
@@ -1192,12 +1277,12 @@ avg_amount         0.77          0.95        1.00
             {
               finding: 'Phân bổ địa lý: HCM + HN = 80%',
               detail: 'HCM: 40%, HN: 40%, DN: 20%. Không có outlier địa lý bất thường.',
-              implication: 'Nếu TPV giảm đều cả HCM lẫn HN → vấn đề toàn quốc. Nếu giảm tập trung ở một tỉnh → vấn đề local.',
+              implication: 'Nếu Transaction amount giảm đều cả HCM lẫn HN → vấn đề toàn quốc. Nếu giảm tập trung ở một tỉnh → vấn đề local.',
             },
             {
               finding: 'Correlation: txn_count vs total_amount = 0.79',
               detail: 'User giao dịch thường xuyên hơn → tổng chi tiêu cao hơn. txn_count và avg_amount đều strong (0.77) vì Power Users có cả hai chiều cao.',
-              implication: 'Nếu TPV giảm do Casual Users giảm tần suất F&B → chiến lược CRM: re-engage Casual Users. Cần phân tích theo segment để tránh kết luận sai.',
+              implication: 'Nếu Transaction amount giảm do Casual Users giảm tần suất F&B → chiến lược CRM: re-engage Casual Users. Cần phân tích theo segment để tránh kết luận sai.',
             },
           ].map((f, i) => (
             <div key={i} className="border border-outline-variant/30 rounded-xl p-5">
@@ -1219,8 +1304,8 @@ avg_amount         0.77          0.95        1.00
             <p className="font-ui-label text-ui-label text-on-surface mb-1">3 Insights chính</p>
             <ul className="space-y-1">
               {[
-                'QR transactions tập trung ở F&B (frequency cao, amount thấp). Power Users chiếm số ít nhưng đóng góp TPV không cân xứng.',
-                'Casual Users là nhóm có F&B transaction nhiều nhất — nếu nhóm này giảm frequency, TPV count giảm mạnh dù revenue impact nhỏ hơn.',
+                'QR transactions tập trung ở F&B (frequency cao, amount thấp). Power Users chiếm số ít nhưng đóng góp Transaction amount không cân xứng.',
+                'Casual Users là nhóm có F&B transaction nhiều nhất — nếu nhóm này giảm frequency, Transaction amount count giảm mạnh dù revenue impact nhỏ hơn.',
                 'Correlation txn_count–total_amount (0.79) và txn_count–avg_amount (0.77) đều cao → cần phân tích theo segment để tách biệt hiệu ứng frequency vs size.',
               ].map((item, i) => (
                 <li key={i} className="flex gap-2 font-body-md text-body-md text-on-surface-variant">
@@ -1241,7 +1326,7 @@ avg_amount         0.77          0.95        1.00
 
         <Note>
           EDA không kết thúc bằng một kết luận dứt khoát — nó kết thúc bằng những câu hỏi tốt hơn.
-          "QR TPV giảm 12%" → sau EDA → "Cần hiểu tại sao Casual Users giảm F&B transaction.
+          "Transaction amount giảm 12%" → sau EDA → "Cần hiểu tại sao Casual Users giảm F&B transaction.
           Cần survey — và cần Sampling để survey đúng cách." Đó là lý do Module 2 tồn tại.
         </Note>
       </section>
