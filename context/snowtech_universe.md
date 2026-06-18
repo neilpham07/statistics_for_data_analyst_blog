@@ -304,7 +304,7 @@ Daily Transactions
 
 ~3–5 triệu
 
-QR TPV
+TPV
 
 Hàng nghìn tỷ VND / tháng
 
@@ -346,7 +346,7 @@ Mỗi scenario phải có:
 
 Ví dụ:
 
-* QR TPV giảm 12%
+* TPV giảm 12%
 * Push CTR giảm liên tục
 * Merchant activation thấp
 * Loan default tăng

@@ -76,11 +76,11 @@ export const statisticsModules: StatisticsModule[] = [
   },
   {
     id: 3,
-    slug: 'statistical-inference',
+    slug: 'inference',
     title: 'Statistical Inference',
-    description: 'Kiểm định giả thuyết, p-value, confidence interval — nền tảng của mọi quyết định',
+    description: 'Confidence Interval, Margin of Error — khi nào có thể tin vào kết quả survey',
     difficulty: 'Intermediate',
-    hours: 10,
+    hours: 8,
   },
   {
     id: 4,
