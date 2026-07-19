@@ -18,3 +18,7 @@ tsconfig.tsbuildinfo
 # OS
 .DS_Store
 Thumbs.db
+
+# Project config
+CLAUDE.md
+.claude/

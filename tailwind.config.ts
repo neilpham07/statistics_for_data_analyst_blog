@@ -54,6 +54,7 @@ const config: Config = {
         'on-error-container': '#93000a',
       },
       fontFamily: {
+        arial: ['Arial', 'Helvetica', 'sans-serif'],
         display: ['var(--font-source-serif-4)', 'Georgia', 'serif'],
         'headline-lg': ['var(--font-source-serif-4)', 'Georgia', 'serif'],
         'headline-lg-mobile': ['var(--font-source-serif-4)', 'Georgia', 'serif'],
